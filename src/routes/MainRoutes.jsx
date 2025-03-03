@@ -1,12 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ROUTES from "./routePaths";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
-import AdminDashboard from "../pages/AdminDashboard";
-import TeacherDashboard from "../pages/TeacherDashboard";
-import ParentDashboard from "../pages/ParentDashboard";
-import AuthRoutes from "./AuthRoutes";
+import { BrowserRouter as Router, Routes, Route } from "react-router";
+import ROUTES from "./routes";
+import Home from "../pages/home/Home";
+import Login from "../pages/auth/Login";
+import Signup from "../pages/auth/Signup";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+// import AuthRoutes from "./AuthRoutes";
 
 const MainRoutes = () => {
   return (
@@ -18,14 +16,15 @@ const MainRoutes = () => {
         <Route path={ROUTES.SIGNUP} element={<Signup />} />
 
         {/* Protected Routes */}
-        <Route element={<AuthRoutes />}>
-          <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboard />} />
+        <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboard />} />
+
+        {/* <Route path={ROUTES.ADMIN_DASHBOARD}>
           <Route
             path={ROUTES.TEACHER_DASHBOARD}
             element={<TeacherDashboard />}
           />
           <Route path={ROUTES.PARENT_DASHBOARD} element={<ParentDashboard />} />
-        </Route>
+        </Route> */}
       </Routes>
     </Router>
   );

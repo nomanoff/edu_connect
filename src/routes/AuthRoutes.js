@@ -1,9 +1,13 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
-import ROUTES from "./routePaths";
+import { Navigate, Outlet } from "react-router";
+import { useState } from "react";
+
+import ROUTES from "./routes";
 
 const AuthRoutes = () => {
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  //   const { isAuthenticated, user } = useSelector((state) => state.auth);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState({ role: "admin" });
 
   if (!isAuthenticated) {
     return <Navigate to={ROUTES.LOGIN} />;
