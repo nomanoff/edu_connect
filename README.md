@@ -1,12 +1,34 @@
-# React + Vite
+# Edu Connect Web Frontend with Vite ⚡️ and React ⚛️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+## Documentation on Notion
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<h3 align="center">
+  <span> · </span>
+  <a href="https://nmnjnv.notion.site/Capstone-Project-EduConnect-1a8d9acb32c88063a7a2cb1d2e5f74ef">Documentation</a>
+  <span> · </span>
+</h3>
 
-## Expanding the ESLint configuration
+## Branches
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `develop` -> PR this branch for everything. ✅
+- `main` -> Don't touch, this is what's running in production. ❌
+
+## Contribution guide
+
+**1.** **Fork** the repository and work on your task,
+
+then make your pull requests to the `develop` branch for the reviewing process.
+
+## Running the app
+
+After forking, install **npm** by running `npm install`. Then, run:
+
+- `npm run dev`
+
+## Reviewer(s)
+
+Contributor(s) helping to review/merge pull requests for now:
+
+- [@nomanoff](https://github.com/nomanoff)
