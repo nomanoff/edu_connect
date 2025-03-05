@@ -1,5 +1,5 @@
-import EdButton from "../../component/EdButton";
-import EdText from "../../component/EDText";
+import EdButton from "../../components/EdButton";
+import EdText from "../../components/EDText";
 
 const Main = () => {
   return (
