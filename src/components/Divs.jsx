@@ -71,6 +71,12 @@ font-size: 14px;
 color: gray;
 `;
 
+export const FlexContainer = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+`;
+
 
 export const CTAContainer = styled.div`
 background: linear-gradient(to right, #007bff, #00aaff);
@@ -82,7 +88,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 margin-top: 50px;
-margin-left: 145px;
+
 `;
 
 
@@ -92,7 +98,7 @@ background: #00274d;
 color: white;
 padding: 40px 10%;
 text-align: left;
-width: 1158px;
+width: 80%;
 height: 270px;
 margin-top: 100px;
 `;

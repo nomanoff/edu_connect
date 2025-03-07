@@ -12,6 +12,9 @@ import { FooterContent } from "../../components/Divs";
 import { FooterSection } from "../../components/Divs";
 import { SocialIcons } from "../../components/Divs";
 
+import { FlexContainer } from '../../components/Divs';
+
+
 import { CTAButton } from "../../components/Buttons";
 
 import { Quote } from "../../components/Tags";
@@ -22,6 +25,7 @@ import { Copyright } from "../../components/Tags";
 
 import { Title } from "../../components/Titles";
 import { Divider } from "../../components/Titles";
+
 
 import {
   FaFacebookF,
@@ -82,6 +86,8 @@ export default function Footer() {
         </CardsContainer>
       </Section>
 
+      <FlexContainer>
+
       <CTAContainer>
         <h2>Ready to Transform Communication?</h2>
         <p>
@@ -90,6 +96,7 @@ export default function Footer() {
         </p>
         <CTAButton>Get Started Today →</CTAButton>
       </CTAContainer>
+      </FlexContainer>
 
       <FooterContainer>
         <FooterContent>
