@@ -33,7 +33,7 @@ const HowItWorks = () => {
     <Container>
       <Typography variant="h4" fontWeight="bold" gutterBottom>How It Works</Typography>
       <Grid container spacing={20} justifyContent="center">
-        {steps.map((step, index) => (
+        {steps?.map((step, index) => (
           <Grid item xs={12} sm={4} key={index}>
             <CenteredBox>
               <StyledAvatar>{step.icon}</StyledAvatar>
