@@ -6,6 +6,7 @@ const Title = () => {
       width={"calc(100% - 40px)"}
       display={"flex"}
       justifyContent={"space-between"}
+      borderRadius={"5px"}
     >
       <EdDiv width={"auto"} boxShadow={"none"} padding={"0"}>
         <input
