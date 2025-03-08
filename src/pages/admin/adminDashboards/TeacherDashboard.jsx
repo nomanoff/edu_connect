@@ -1,24 +1,9 @@
-import EdDiv, { EdButton_admin, EdH1 } from "../EdStyled";
-import MainParticipants from "./MainParticipants";
-import Title from "./Title";
+import AddNewTeacher from "../../../components/adminComponents/AddNewTeacher";
+import TeachersList from "../../../components/adminComponents/TeachersList";
+import Title from "../../../components/adminComponents/Title";
+import EdDiv, { EdButton_admin, EdH1 } from "../../../components/EdStyled";
 
-
-const Dashboard = () => {
-  const participant = [
-    {
-      name: "Teachers",
-      quantity: "24 Active",
-    },
-    {
-      name: "Students",
-      quantity: "320 Enrolled",
-    },
-    {
-      name: "Attendance",
-      quantity: "92% Today",
-    },
-  ];
-
+const TeacherDashboard = () => {
   return (
     <EdDiv width={"100vw"} height={"100vh"} padding={"0"} display={"flex"}>
       <EdDiv
@@ -27,8 +12,7 @@ const Dashboard = () => {
         backgroundColor={"#0082f5"}
         padding={"0"}
       >
-        <EdH1
-         color={"#fff"} fontWeight={"900"}>
+        <EdH1 color={"#fff"} fontWeight={"900"}>
           EduConnect
         </EdH1>
         <EdDiv
@@ -49,37 +33,24 @@ const Dashboard = () => {
         <Title />
 
         <EdH1 fontWeight={"700"} textAlign={"left"} padding={"0"}>
-          Welcome, Adam
+          Manage Teachers
         </EdH1>
         <EdH1
           textAlign={"left"}
           padding={"0"}
           margin={"-15px 0 0 0"}
           fontSize={"1rem"}
+          fontWeight={"600"}
         >
-          Here's an overview of today's data.
+          View, add, and manage teachers.
         </EdH1>
 
-        <EdDiv
-          backgroundColor={"#ddd"}
-          justifyContent={"space-between"}
-          boxShadow={"none"}
-          padding={"0"}
-          margin={"10px 0"}
-          height={"80px"}
-          display={"flex"}
-        >
-          {participant.map((item, index) => (
-            <MainParticipants
-              key={index.toString()}
-              name={item.name}
-              quantity={item.quantity}
-            />
-          ))}
-        </EdDiv>
+        <TeachersList />
+
+        <AddNewTeacher />
       </EdDiv>
     </EdDiv>
   );
 };
 
-export default Dashboard;
+export default TeacherDashboard;

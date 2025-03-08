@@ -7,11 +7,16 @@ const StyledH1 = styled.h1`
   text-align: ${({ textAlign }) => textAlign || "center"};
   margin: ${({ margin }) => margin || margin};
   padding: ${({ padding }) => padding || "10px 0"};
+  background-color: ${({backgroundColor}) => backgroundColor || backgroundColor};
+  border: ${({border}) => border || border};
+  font-family: Arial, Helvetica, sans-serif;
   font-style: normal;
 `;
 
 const EdH1 = ({
   variant = "text",
+  border,
+  backgroundColor,
   padding,
   children,
   fontSize,
@@ -26,6 +31,8 @@ const EdH1 = ({
       <StyledH1
         fontSize={fontSize}
         fontWeight={fontWeight}
+        border={border}
+        backgroundColor={backgroundColor}
         margin={margin}
         padding={padding}
         color={color}
@@ -48,12 +55,16 @@ const StyledButton = styled.button`
   text-align: ${({ textAlign }) => textAlign || "left"};
   font-size: ${({ fontSize }) => fontSize || "1rem"};
   padding: ${({ padding }) => padding || "20px"};
+  margin: ${({margin}) => margin || margin};
+  border-radius: ${({borderRadius}) => borderRadius || borderRadius};
 `;
 
 const EdButton_admin = ({
   variant = "btn",
   children,
   backgroundColor,
+  borderRadius,
+  margin,
   color,
   width,
   textAlign,
@@ -68,7 +79,9 @@ const EdButton_admin = ({
         color={color}
         width={width}
         textAlign={textAlign}
+        margin={margin}
         fontSize={fontSize}
+        borderRadius={borderRadius}
         padding={padding}
         {...props}
       >

@@ -1,10 +1,18 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router";
+
 import ROUTES from "./routes";
 import Home from "../pages/home/Home";
 import Login from "../pages/auth/Login";
 import Signup from "../pages/auth/Signup";
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import TeacherDashboard from "../pages/admin/adminDashboards/TeacherDashboard";
 // import AuthRoutes from "./AuthRoutes";
+
+const AdminLayout = () => (
+  <>
+    <Outlet />
+  </>
+);
 
 const MainRoutes = () => {
   return (
@@ -17,6 +25,11 @@ const MainRoutes = () => {
 
         {/* Protected Routes */}
         <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboard />} />
+
+        <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminLayout />}>
+          <Route path="teacher" element={<TeacherDashboard />} />
+          {/* <Route path={ROUTES.PARENT_DASHBOARD} element={<ParentDashboard />} /> */}
+        </Route>
 
         {/* <Route path={ROUTES.ADMIN_DASHBOARD}>
           <Route
