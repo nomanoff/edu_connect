@@ -1,6 +1,7 @@
-import EdDiv, { EdH1, EdButton_admin } from "../../pages/admin/EdStyled";
-import Title from "../../pages/admin/Title";
+import EdDiv, { EdButton_admin, EdH1 } from "../EdStyled";
 import MainParticipants from "./MainParticipants";
+import Title from "./Title";
+
 
 const Dashboard = () => {
   const participant = [
@@ -26,7 +27,8 @@ const Dashboard = () => {
         backgroundColor={"#0082f5"}
         padding={"0"}
       >
-        <EdH1 color={"#fff"} fontWeight={"900"}>
+        <EdH1
+         color={"#fff"} fontWeight={"900"}>
           EduConnect
         </EdH1>
         <EdDiv

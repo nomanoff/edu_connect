@@ -1,4 +1,4 @@
-import EdDiv, { EdButton_admin } from "./EdStyled";
+import EdDiv, { EdButton_admin } from "../EdStyled";
 
 const Title = () => {
   return (
