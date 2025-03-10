@@ -6,6 +6,7 @@ import Login from "../pages/auth/Login";
 import Signup from "../pages/auth/Signup";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import TeacherDashboard from "../pages/admin/adminDashboards/TeacherDashboard";
+import AttendanceReports from '../pages/admin/AttendanceReports';
 // import AuthRoutes from "./AuthRoutes";
 
 const AdminLayout = () => (
@@ -25,6 +26,9 @@ const MainRoutes = () => {
 
         {/* Protected Routes */}
         <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboard />} />
+        <Route path={ROUTES.ATTENDANCE_REPORTS} element={<AttendanceReports/>} />
+        
+
 
         <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminLayout />}>
           <Route path="teacher" element={<TeacherDashboard />} />

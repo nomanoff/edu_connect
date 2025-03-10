@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Header from "../../components/Header"; // ✅ Header import qilindi
 
 const Container = styled.div`
   display: flex;
@@ -14,6 +15,12 @@ const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+`;
+
+const ContentWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 `;
 
 const MainContent = styled.div`
@@ -76,79 +83,85 @@ const Dashboard = () => {
         <p>Settings</p>
         <p>Logout</p>
       </Sidebar>
-      <MainContent>
-        <h1>Reports & Attendance</h1>
 
-        <Card>
-          <Title>Attendance Reports</Title>
-          <Table>
-            <thead>
-              <tr>
-                <Th>Student Name</Th>
-                <Th>Class</Th>
-                <Th>Attendance %</Th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <Td>Alice Johnson</Td>
-                <Td>Grade 8 - Mathematics</Td>
-                <Td>
-                  <ProgressBarContainer>
-                    <ProgressBar width="85%" color="blue" />
-                  </ProgressBarContainer>
-                  85%
-                </Td>
-              </tr>
-              <tr>
-                <Td>Michael Brown</Td>
-                <Td>Grade 7 - Science</Td>
-                <Td>
-                  <ProgressBarContainer>
-                    <ProgressBar width="92%" color="blue" />
-                  </ProgressBarContainer>
-                  92%
-                </Td>
-              </tr>
-            </tbody>
-          </Table>
-        </Card>
+      <ContentWrapper>
+        {/* ✅ Header komponenti qo'shildi */}
+        <Header />
 
-        <Card>
-          <Title>Performance Overview</Title>
-          <Table>
-            <thead>
-              <tr>
-                <Th>Student Name</Th>
-                <Th>Class</Th>
-                <Th>Performance</Th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <Td>Alice Johnson</Td>
-                <Td>Grade 8 - Mathematics</Td>
-                <Td>
-                  <ProgressBarContainer>
-                    <ProgressBar width="78%" color="green" />
-                  </ProgressBarContainer>
-                  78%
-                </Td>
-              </tr>
-              <tr>
-                <Td>Michael Brown</Td>
-                <Td>Grade 7 - Science</Td>
-                <Td>
-                  <ProgressBarContainer>
-                    <ProgressBar width="88%" color="green" />
-                  </ProgressBarContainer>
-                  88%
-                </Td>
-              </tr>
-            </tbody>
-          </Table>
-        </Card>
-      </MainContent>
+        <MainContent>
+          <h1>Reports & Attendance</h1>
+
+          <Card>
+            <Title>Attendance Reports</Title>
+            <Table>
+              <thead>
+                <tr>
+                  <Th>Student Name</Th>
+                  <Th>Class</Th>
+                  <Th>Attendance %</Th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <Td>Alice Johnson</Td>
+                  <Td>Grade 8 - Mathematics</Td>
+                  <Td>
+                    <ProgressBarContainer>
+                      <ProgressBar width="85%" color="blue" />
+                    </ProgressBarContainer>
+                    85%
+                  </Td>
+                </tr>
+                <tr>
+                  <Td>Michael Brown</Td>
+                  <Td>Grade 7 - Science</Td>
+                  <Td>
+                    <ProgressBarContainer>
+                      <ProgressBar width="92%" color="blue" />
+                    </ProgressBarContainer>
+                    92%
+                  </Td>
+                </tr>
+              </tbody>
+            </Table>
+          </Card>
+
+          <Card>
+            <Title>Performance Overview</Title>
+            <Table>
+              <thead>
+                <tr>
+                  <Th>Student Name</Th>
+                  <Th>Class</Th>
+                  <Th>Performance</Th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <Td>Alice Johnson</Td>
+                  <Td>Grade 8 - Mathematics</Td>
+                  <Td>
+                    <ProgressBarContainer>
+                      <ProgressBar width="78%" color="green" />
+                    </ProgressBarContainer>
+                    78%
+                  </Td>
+                </tr>
+                <tr>
+                  <Td>Michael Brown</Td>
+                  <Td>Grade 7 - Science</Td>
+                  <Td>
+                    <ProgressBarContainer>
+                      <ProgressBar width="88%" color="green" />
+                    </ProgressBarContainer>
+                    88%
+                  </Td>
+                </tr>
+              </tbody>
+            </Table>
+          </Card>
+        </MainContent>
+      </ContentWrapper>
     </Container>
   );
 };
