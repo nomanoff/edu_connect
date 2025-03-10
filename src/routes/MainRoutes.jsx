@@ -7,6 +7,7 @@ import Signup from "../pages/auth/Signup";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import TeacherDashboard from "../pages/admin/adminDashboards/TeacherDashboard";
 import AttendanceReports from '../pages/admin/AttendanceReports';
+import ManageStudents from "../pages/admin/ManageStudents";
 // import AuthRoutes from "./AuthRoutes";
 
 const AdminLayout = () => (
@@ -34,6 +35,7 @@ const MainRoutes = () => {
           <Route path="teacher" element={<TeacherDashboard />} />
           {/* <Route path={ROUTES.PARENT_DASHBOARD} element={<ParentDashboard />} /> */}
         </Route>
+        <Route path={ROUTES. MANAGE_STUDENTS} element={<ManageStudents/>} />
 
         {/* <Route path={ROUTES.ADMIN_DASHBOARD}>
           <Route
