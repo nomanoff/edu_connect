@@ -5,6 +5,7 @@ const ROUTES = {
   ADMIN_DASHBOARD: "/admin",
   TEACHER_DASHBOARD: "/teacher",
   PARENT_DASHBOARD: "/parent",
+  ATTENDANCE_REPORTS: "/attendanceReports",
 };
 
 export default ROUTES;
