@@ -1,4 +1,4 @@
-import EdDiv, { EdH1 } from "../../pages/admin/EdStyled";
+import EdDiv, { EdH1 } from "../EdStyled";
 
 const MainParticipants = (props) => {
   return (
