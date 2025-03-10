@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Header from "../../components/Header"; // ✅ Header import qilindi
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Header from "../../components/adminComponents/Header";
 
 const Container = styled.div`
   display: flex;
@@ -15,6 +17,16 @@ const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  p {
+    cursor: pointer;
+    transition: color 0.3s ease, font-size 0.2s ease;
+  }
+
+  p:hover {
+    color: #ddd;
+    font-size: 1.1em;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -27,6 +39,40 @@ const MainContent = styled.div`
   flex: 1;
   background: #f4f4f4;
   padding: 20px;
+`;
+
+const FiltersContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+`;
+
+const DateLabel = styled.span`
+  font-weight: bold;
+`;
+
+const StyledDatePicker = styled(DatePicker)`
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+`;
+
+const ExportButton = styled.button`
+  background: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  &:hover {
+    background: #218838;
+  }
 `;
 
 const Card = styled.div`
@@ -67,11 +113,14 @@ const ProgressBarContainer = styled.div`
 
 const ProgressBar = styled.div`
   height: 100%;
-  width: ${props => props.width || "0%"};
-  background: ${props => (props.color === "green" ? "#28a745" : "#007bff")};
+  width: ${(props) => props.width || "0%"};
+  background: ${(props) => (props.color === "green" ? "#28a745" : "#007bff")};
 `;
 
 const Dashboard = () => {
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
   return (
     <Container>
       <Sidebar>
@@ -85,11 +134,24 @@ const Dashboard = () => {
       </Sidebar>
 
       <ContentWrapper>
-        {/* ✅ Header komponenti qo'shildi */}
         <Header />
-
         <MainContent>
           <h1>Reports & Attendance</h1>
+
+      
+          <FiltersContainer>
+            <DateLabel>Start Date:</DateLabel>
+            <StyledDatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+            />
+            <DateLabel>End Date:</DateLabel>
+            <StyledDatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+            />
+            <ExportButton>📂 Export Data</ExportButton>
+          </FiltersContainer>
 
           <Card>
             <Title>Attendance Reports</Title>
