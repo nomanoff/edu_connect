@@ -85,9 +85,7 @@ export default function Footer() {
           </Card>
         </CardsContainer>
       </Section>
-
       <FlexContainer>
-
       <CTAContainer>
         <h2>Ready to Transform Communication?</h2>
         <p>
@@ -97,7 +95,6 @@ export default function Footer() {
         <CTAButton>Get Started Today →</CTAButton>
       </CTAContainer>
       </FlexContainer>
-
       <FooterContainer>
         <FooterContent>
           <FooterSection>
