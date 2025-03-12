@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router";
+import { BrowserRouter as Router, Routes, Route } from "react-router";
 
 import ROUTES from "./routes";
+
 import Home from "../pages/home/Home";
 import Login from "../pages/auth/Login";
 import Signup from "../pages/auth/Signup";
@@ -11,8 +12,6 @@ import AttendanceReports from "../pages/admin/AttendanceReports";
 import ManageStudents from "../pages/admin/ManageStudents";
 import ProtectedRoutes from "./ProtectedRoutes";
 // import AuthRoutes from "./AuthRoutes";
-
-import Layout from "../components/Layout";
 
 // const MainRoutes = () => {
 //   return (
@@ -69,7 +68,7 @@ const MainRoutes = ({ isAuthenticated, userRole }) => {
               />
             }
           >
-            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="" element={<AdminDashboard />} />
             <Route path="manage-teachers" element={<TeacherDashboard />} />
             <Route path="manage-students" element={<ManageStudents />} />
             <Route path="attendance-reports" element={<AttendanceReports />} />

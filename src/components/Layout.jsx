@@ -7,7 +7,7 @@ const Layout = ({ userRole, children }) => {
 
   const menus = {
     admin: [
-      { name: "Dashboard", path: "/admin/dashboard" },
+      { name: "Dashboard", path: "/admin" },
       { name: "Manage Teachers", path: "/admin/manage-teachers" },
       { name: "Manage Students", path: "/admin/manage-students" },
       { name: "Reports & Attendance", path: "/admin/attendance-reports" },
