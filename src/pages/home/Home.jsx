@@ -85,7 +85,7 @@ const Button = styled.button`
 
 const HeroImage = styled.img`
   width: 550px;
-  height: 380px;
+  height: 360px;
   border-radius: 10px;
 `;
 
@@ -113,8 +113,9 @@ const Home = () => {
             Keep track of attendance, student performance, and class updates effortlessly.
           </Description>
           <ButtonGroup>
-            <Button primary>Sign Up as a Teacher</Button>
-            <Button>Sign Up as a Parent</Button>
+            <Button primary>Sign Up</Button>
+            <Button>Log In  </Button>
+            
           </ButtonGroup>
         </HeroText>
         <HeroImage src="https://www.datocms-assets.com/112519/1713260156-1b-classroom-interactive-main-image.jpeg" />

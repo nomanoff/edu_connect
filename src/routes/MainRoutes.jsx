@@ -6,6 +6,7 @@ import Home from "../pages/home/Home";
 import Login from "../pages/auth/Login";
 import Signup from "../pages/auth/Signup";
 
+
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import TeacherDashboard from "../pages/admin/adminDashboards/TeacherDashboard";
 import AttendanceReports from "../pages/admin/AttendanceReports";
