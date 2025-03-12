@@ -8,7 +8,7 @@ const ProtectedRoutes = ({ isAuthenticated, userRole }) => {
     return navigate(ROUTES.LOGIN);
   }
   return (
-    <Layout userRole={userRole}>
+    <Layout userRole={userRole}>        
       <Outlet />
     </Layout>
   );
