@@ -1,4 +1,22 @@
 import { useNavigate } from "react-router";
+import { styled } from "styled-components";
+
+import Header from "./Header";
+import SideBar from "./SideBar";
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  border: 10px solid green;
+  display: flex;
+`;
+
+const MainWrapper = styled.main`
+  width: calc(100% - 300px);
+  height: calc(100vh - 50px);
+  border: 3px solid green;
+`;
+const PageWrapper = styled.main``;
 
 const Layout = ({ userRole, children }) => {
   const navigate = useNavigate();
@@ -7,7 +25,7 @@ const Layout = ({ userRole, children }) => {
 
   const menus = {
     admin: [
-      { name: "Dashboard", path: "/admin/dashboard" },
+      { name: "Dashboard", path: "/admin" },
       { name: "Manage Teachers", path: "/admin/manage-teachers" },
       { name: "Manage Students", path: "/admin/manage-students" },
       { name: "Reports & Attendance", path: "/admin/attendance-reports" },
@@ -27,26 +45,14 @@ const Layout = ({ userRole, children }) => {
   };
 
   return (
-    <div className="dashboard-layout">
-      <aside style={{ border: "5px solid blue" }} className="sidebar">
-        <h2>EduConnect</h2>
-        {menus[userRole].map((item) => (
-          <button key={item.path} onClick={() => navigate(item.path)}>
-            {item.name}
-          </button>
-        ))}
-      </aside>
+    <Wrapper>
+      <SideBar menus={menus} userRole={userRole} />
 
-      <main className="content">
-        <header style={{ border: "5px solid red" }} className="header">
-          <h3>
-            Welcome, {userRole.charAt(0).toUpperCase() + userRole.slice(1)}
-          </h3>
-        </header>
-
-        {children}
-      </main>
-    </div>
+      <MainWrapper>
+        <Header />
+        <PageWrapper className="content">{children}</PageWrapper>
+      </MainWrapper>
+    </Wrapper>
   );
 };
 
