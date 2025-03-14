@@ -1,21 +1,25 @@
 import { styled } from "styled-components";
 import { useNavigate } from "react-router";
+import { EdButton_admin, EdH1 } from "./EdStyled";
 
 const Wrapper = styled.aside`
   width: 300px;
   height: 100vh;
-  border: 5px solid blue;
+  background-color: #0082f5;
+  padding: 0;
 `;
 
 const SideBar = ({ menus, userRole }) => {
   const navigate = useNavigate();
   return (
     <Wrapper>
-      <h2>EduConnect</h2>
+      <EdH1 color={"#fff"} fontWeight={"900"}>
+        EduConnect
+      </EdH1>
       {menus[userRole].map((item) => (
-        <button key={item.path} onClick={() => navigate(item.path)}>
+        <EdButton_admin key={item.path} onClick={() => navigate(item.path)}>
           {item.name}
-        </button>
+        </EdButton_admin>
       ))}
     </Wrapper>
   );
