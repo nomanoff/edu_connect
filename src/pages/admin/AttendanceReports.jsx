@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Header from "../../components/adminComponents/Header";
+
 
 const Container = styled.div`
   display: flex;
@@ -123,18 +123,10 @@ const Dashboard = () => {
 
   return (
     <Container>
-      <Sidebar>
-        <h2>EduConnect</h2>
-        <p>Dashboard</p>
-        <p>Manage Teachers</p>
-        <p>Manage Students</p>
-        <p>Reports & Attendance</p>
-        <p>Settings</p>
-        <p>Logout</p>
-      </Sidebar>
+
 
       <ContentWrapper>
-        <Header />
+        
         <MainContent>
           <h1>Reports & Attendance</h1>
 
