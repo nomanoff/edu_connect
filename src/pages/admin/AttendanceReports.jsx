@@ -130,7 +130,6 @@ const Dashboard = () => {
         <MainContent>
           <h1>Reports & Attendance</h1>
 
-      
           <FiltersContainer>
             <DateLabel>Start Date:</DateLabel>
             <StyledDatePicker
