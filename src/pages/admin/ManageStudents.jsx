@@ -116,8 +116,6 @@ const Select = styled.select`
 const ManageStudets = () => {
   return (
     <Container>
-
-
       <Content>
 
         <h2>Manage Student</h2>
