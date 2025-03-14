@@ -57,7 +57,13 @@ const StyledButton = styled.button`
   padding: ${({ padding }) => padding || "20px"};
   margin: ${({margin}) => margin || margin};
   border-radius: ${({borderRadius}) => borderRadius || borderRadius};
+  transition: color 0.3s ease, font-size 0.2s ease;
+  &:hover{
+    color: #ddd;
+    font-size: 1.1em;
+  }
 `;
+
 
 const EdButton_admin = ({
   variant = "btn",
