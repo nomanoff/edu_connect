@@ -14,7 +14,6 @@ const Wrapper = styled.div`
 const MainWrapper = styled.main`
   width: calc(100% - 300px);
   height: calc(100vh - 50px);
-  border: 3px solid green;
 `;
 const PageWrapper = styled.main``;
 
