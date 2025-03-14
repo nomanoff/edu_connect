@@ -1,4 +1,3 @@
-
 import React from "react";
 import styled from "styled-components";
 
@@ -117,18 +116,6 @@ const Select = styled.select`
 const ManageStudets = () => {
   return (
     <Container>
-      <Sidebar>
-        <SidebarTitle>EduConnect</SidebarTitle>
-        <SidebarMenu>
-          <SidebarItem>Dashboard</SidebarItem>
-          <SidebarItem style={{ background: "#0066cc" }}>Manage Teachers</SidebarItem>
-          <SidebarItem>Manage Students</SidebarItem>
-          <SidebarItem>Reports & Attendance</SidebarItem>
-          <SidebarItem>Settings</SidebarItem>
-          <SidebarItem>Logout</SidebarItem>
-        </SidebarMenu>
-      </Sidebar>
-
       <Content>
         <Header>
           <SearchInput type="text" placeholder="Search teachers..." />

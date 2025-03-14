@@ -8,7 +8,6 @@ import SideBar from "./SideBar";
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
-  border: 10px solid green;
   display: flex;
 `;
 

@@ -2,7 +2,6 @@ import EdDiv, { EdButton_admin, EdH1 } from "../EdStyled";
 import MainParticipants from "./MainParticipants";
 import Title from "./Title";
 
-
 const Dashboard = () => {
   const participant = [
     {
@@ -21,30 +20,6 @@ const Dashboard = () => {
 
   return (
     <EdDiv width={"100vw"} height={"100vh"} padding={"0"} display={"flex"}>
-      <EdDiv
-        width={"300px"}
-        boxShadow={"none"}
-        backgroundColor={"#0082f5"}
-        padding={"0"}
-      >
-        <EdH1
-         color={"#fff"} fontWeight={"900"}>
-          EduConnect
-        </EdH1>
-        <EdDiv
-          width={"calc(100% - 40px)"}
-          backgroundColor={"#0082f5"}
-          boxShadow={"none"}
-        >
-          <EdButton_admin>Dashboard</EdButton_admin>
-          <EdButton_admin>Manage Teachers</EdButton_admin>
-          <EdButton_admin>Manage Students</EdButton_admin>
-          <EdButton_admin>Reports & Attendance</EdButton_admin>
-          <EdButton_admin>Settings</EdButton_admin>
-          <EdButton_admin>Logout</EdButton_admin>
-        </EdDiv>
-      </EdDiv>
-
       <EdDiv backgroundColor={"#ddd"} width={"calc(100% - 300px)"}>
         <Title />
 
