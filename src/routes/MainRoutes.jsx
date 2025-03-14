@@ -6,11 +6,13 @@ import Home from "../pages/home/Home";
 import Login from "../pages/auth/Login";
 import Signup from "../pages/auth/Signup";
 
+
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import TeacherDashboard from "../pages/admin/adminDashboards/TeacherDashboard";
 import AttendanceReports from "../pages/admin/AttendanceReports";
 import ManageStudents from "../pages/admin/ManageStudents";
 import ProtectedRoutes from "./ProtectedRoutes";
+import Parent from "../pages/admin/Parent";
 // import AuthRoutes from "./AuthRoutes";
 
 // const MainRoutes = () => {
@@ -72,6 +74,7 @@ const MainRoutes = ({ isAuthenticated, userRole }) => {
             <Route path="manage-teachers" element={<TeacherDashboard />} />
             <Route path="manage-students" element={<ManageStudents />} />
             <Route path="attendance-reports" element={<AttendanceReports />} />
+            <Route path="parent" element={<Parent />} />
           </Route>
         )}
       </Routes>
