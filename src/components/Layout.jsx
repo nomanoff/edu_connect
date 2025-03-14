@@ -28,6 +28,7 @@ const Layout = ({ userRole, children }) => {
       { name: "Manage Teachers", path: "/admin/manage-teachers" },
       { name: "Manage Students", path: "/admin/manage-students" },
       { name: "Reports & Attendance", path: "/admin/attendance-reports" },
+      { name: "Parents", path: "/admin/Parent"},
       { name: "Settings", path: "/admin/settings" },
       { name: "Parent" , path: "/admin/parent"}
     ],
