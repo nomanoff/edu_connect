@@ -14,7 +14,7 @@ const Sidebar = styled.div`
 `;
 
 const SidebarTitle = styled.h1`
-  font-size: 1.8rem;N
+  font-size: 1.8rem;
   font-weight: bold;
   
 `;
@@ -118,13 +118,6 @@ const ManageStudets = () => {
   return (
     <Container>
       <Content>
-        <Header>
-          <SearchInput type="text" placeholder="Search teachers..." />
-          <div>
-            <Button>🔔 Notifications</Button>
-            <Button>👤 Admin</Button>
-          </div>
-        </Header>
 
         <h2>Manage Student</h2>
         <p>View, add, and manage student.</p>
