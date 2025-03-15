@@ -94,6 +94,8 @@ margin-top: 50px;
 
 
 export const FooterContainer = styled.footer`
+ max-width: 1100px; /* yoki o'zingiz xohlagan miqdor */
+  margin: 0 auto; /* Markazga joylash */
 background: #00274d;
 color: white;
 padding: 40px 10%;

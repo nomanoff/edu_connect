@@ -10,7 +10,8 @@ import {
 } from "@mui/icons-material";
 import { styled } from "@mui/system";
 
-const Container = styled(Box)({ textAlign: "center", padding: "32px 24px" });
+const Container = styled(Box)({ textAlign: "center", padding: "32px 24px" , maxWidth: "1340px", /* yoki o'zingiz xohlagan miqdor */
+  margin: "0 auto" /* Markazga joylash */});
 const Section = styled(Box)({ marginTop: "70px", padding: "35px", backgroundColor: "#fff", borderRadius: "10px" });
 const StyledAvatar = styled(Avatar)({ backgroundColor: "#007BFF", width: "48px", height: "48px" });
 const CenteredBox = styled(Box)({ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "30px" });
@@ -30,7 +31,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <Container>
+    <Container id="features">
       <Typography variant="h4" fontWeight="bold" gutterBottom>How It Works</Typography>
       <Grid container spacing={20} justifyContent="center">
         {steps?.map((step, index) => (

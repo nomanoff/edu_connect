@@ -3,8 +3,12 @@ import Features from "./Features";
 import Footer from "./Footer";
 import styled from "styled-components";
 
+
 const Header = styled.header`
   background-color: rgb(0, 158, 245);
+   max-width: 1340px; /* yoki o'zingiz xohlagan miqdor */
+  margin: 0 auto; /* Markazga joylash */
+  width: 100%;
   display: flex;
   gap: 25px;
   align-items: center;
@@ -22,7 +26,6 @@ const NavLink = styled.a`
   color: white;
   cursor: pointer;
   margin-left: ${(props) => props.ml || "0px"};
-
   &:hover {
     text-decoration: underline;
   }
@@ -40,6 +43,8 @@ const SignUpButton = styled.button`
 
 const HeroSection = styled.div`
   display: flex;
+  max-width: 1340px; /* yoki o'zingiz xohlagan miqdor */
+  margin: 0 auto; /* Markazga joylash */
   align-items: center;
   justify-content: space-between;
   padding: 50px;
@@ -93,12 +98,13 @@ const Home = () => {
   return (
     <>
     <Header>
-        <Title>📖EduConnect</Title>
-        <NavLink ml="710px">Home</NavLink>
-        <NavLink>Features</NavLink>
-        <NavLink>About</NavLink>
-        <NavLink>Login</NavLink>
-        <SignUpButton>Sign Up</SignUpButton>
+        <Title id="home">📖EduConnect</Title>
+        <NavLink href="#home" ml="710px">Home</NavLink>
+<NavLink href="#features">Features</NavLink>
+<NavLink href="#about">About</NavLink>
+<NavLink href="#contact">Contact</NavLink>
+
+        <NavLink href="#"><SignUpButton>Sign Up</SignUpButton></NavLink>
       </Header>
 
       <HeroSection>
