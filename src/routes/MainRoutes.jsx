@@ -77,7 +77,8 @@ const MainRoutes = ({ isAuthenticated, userRole }) => {
             <Route path="manage-students" element={<ManageStudents />} />
             <Route path="attendance-reports" element={<AttendanceReports />} />
             <Route path="settings" element={<Settings />} />
-            <Route path="manage-classes" element={<ManageClasses />} />
+            <Route path="manageClasses" element={<ManageClasses />} />
+
             <Route path="parent" element={<Parent />} />
           </Route>
         )}
