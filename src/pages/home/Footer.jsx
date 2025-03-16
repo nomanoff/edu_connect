@@ -34,11 +34,15 @@ import {
   FaLinkedinIn,
 } from "react-icons/fa";
 
+
+
+
 export default function Footer() {
   return (
     <>
+    
       <Section>
-        <Title>
+        <Title id="about">
           <h2>What People Say</h2>
         </Title>
         <CardsContainer>
@@ -144,6 +148,7 @@ export default function Footer() {
         <Divider />
         <Copyright>© 2025 EduConnect. All rights reserved.</Copyright>
       </FooterContainer>
+     
     </>
   );
 }
