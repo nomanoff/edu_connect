@@ -4,6 +4,7 @@ import styled from "styled-components";
 const Container = styled.div`
   padding: 24px;
   max-width: 120px;
+  max-width: 1200px;
   margin: 0 auto;
 `;
 
