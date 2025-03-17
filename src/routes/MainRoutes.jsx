@@ -12,7 +12,9 @@ import TeacherDashboard from "../pages/admin/adminDashboards/TeacherDashboard";
 import AttendanceReports from "../pages/admin/AttendanceReports";
 import ManageStudents from "../pages/admin/ManageStudents";
 import ProtectedRoutes from "./ProtectedRoutes";
+import Settings from "../pages/admin/Settings";
 import Parent from "../pages/admin/Parent";
+
 // import AuthRoutes from "./AuthRoutes";
 
 // const MainRoutes = () => {
@@ -74,6 +76,7 @@ const MainRoutes = ({ isAuthenticated, userRole }) => {
             <Route path="manage-teachers" element={<TeacherDashboard />} />
             <Route path="manage-students" element={<ManageStudents />} />
             <Route path="attendance-reports" element={<AttendanceReports />} />
+            <Route path="settings" element={<Settings />} />
             <Route path="parent" element={<Parent />} />
           </Route>
         )}
