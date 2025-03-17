@@ -8,7 +8,7 @@ import Signup from "../pages/auth/Signup";
 
 
 import AdminDashboard from "../pages/admin/AdminDashboard";
-import TeacherDashboard from "../pages/admin/adminDashboards/TeacherDashboard";
+import TeacherDashboard from "../pages/admin/TeacherDashboard";
 import AttendanceReports from "../pages/admin/AttendanceReports";
 import ManageStudents from "../pages/admin/ManageStudents";
 import ProtectedRoutes from "./ProtectedRoutes";

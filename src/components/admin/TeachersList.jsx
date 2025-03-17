@@ -1,5 +1,19 @@
-import EdDiv, { EdH1 } from "../EdStyled";
+import styled from "styled-components";
+
+import { EdH1 } from "../EdStyled";
 import TeacherParticipants from "./TeacherParticipants";
+
+const Wrapper = styled.div`
+  width: calc(100% - 40px);
+  border-radius: 5px;
+  margin: 20px;
+  box-shadow: 2px 2px 2px #808080;
+  padding: 20px;
+`;
+
+const MainWrapper = styled.main`
+  padding: 0;
+`
 
 const TeachersList = () => {
   const teachers = [
@@ -7,7 +21,7 @@ const TeachersList = () => {
     { name: "Sarah Smith", email: "sarah@example.com", subject: "Science" },
   ];
   return (
-    <EdDiv width={"calc(100% - 40px)"} borderRadius={"5px"} margin={"10px 0"}>
+    <Wrapper>
       <EdH1
         textAlign={"left"}
         padding={"0"}
@@ -17,7 +31,7 @@ const TeachersList = () => {
       >
         Teachers List
       </EdH1>
-      <EdDiv boxShadow={"none"} padding={"0"}>
+      <MainWrapper boxShadow={"none"} padding={"0"}>
         <table
           style={{
             width: "100%",
@@ -57,7 +71,7 @@ const TeachersList = () => {
                   border: "2px solid #999",
                 }}
               >
-                Subject
+                Token
               </th>
               <th
                 style={{
@@ -76,8 +90,8 @@ const TeachersList = () => {
             ))}
           </tbody>
         </table>
-      </EdDiv>
-    </EdDiv>
+      </MainWrapper>
+    </Wrapper>
   );
 };
 

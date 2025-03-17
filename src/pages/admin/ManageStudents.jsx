@@ -14,7 +14,7 @@ const Sidebar = styled.div`
 `;
 
 const SidebarTitle = styled.h1`
-  font-size: 1.8rem;N
+  font-size: 1.8rem;
   font-weight: bold;
   
 `;
