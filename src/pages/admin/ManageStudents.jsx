@@ -126,6 +126,54 @@ export default function ManageStudents() {
             <option value="">Select Class</option>
             <option value="Grade 10 - Math">Grade 10 - Math</option>
             <option value="Grade 9 - Science">Grade 9 - Science</option>
+      <Content>
+
+        <h2>Manage Student</h2>
+        <p>View, add, and manage student.</p>
+
+        <Section>
+          <h3>Student List</h3>
+          <Table>
+            <thead>
+              <tr>
+                <Th>Name</Th>
+                <Th>Email</Th>
+                <Th>Subject</Th>
+                <Th>Actions</Th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <Td>John Doe</Td>
+                <Td>john@example.com</Td>
+                <Td>Mathematics</Td>
+                <Td>
+                  <Button>Edit</Button>
+                  <Button>Remove</Button>
+                </Td>
+              </tr>
+              <tr>
+                <Td>Sarah Smith</Td>
+                <Td>sarah@example.com</Td>
+                <Td>Science</Td>
+                <Td>
+                  <Button>Edit</Button>
+                  <Button>Remove</Button>
+                </Td>
+              </tr>
+            </tbody>
+          </Table>
+        </Section>
+
+        <Section>
+          <h3>Add New Teacher</h3>
+          <Input type="text" placeholder="Enter teacher's name" />
+          <Input type="email" placeholder="Enter teacher's email" />
+          <Select>
+            <option>Mathematics</option>
+            <option>Science</option>
+            <option>English</option>
+            <option>History</option>
           </Select>
           <Button onClick={addStudent}>+ Add Student</Button>
         </Form>
