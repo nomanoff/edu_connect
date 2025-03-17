@@ -20,7 +20,6 @@ const Dashboard = () => {
 
   return (
     <EdDiv width={"100vw"} height={"100vh"} padding={"0"} display={"flex"}>
-     
 
       <EdDiv backgroundColor={"#ddd"} width={"calc(100% - 300px)"}>
       

@@ -8,6 +8,7 @@ const ROUTES = {
   ATTENDANCE_REPORTS: "/attendanceReports",
   MANAGE_STUDENTS: "/manageStudents",
   SETTINGS: "/settings",
+  PARENT: "/parent",
 };
 
 export default ROUTES;
