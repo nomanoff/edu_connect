@@ -17,8 +17,12 @@ import Settings from "../pages/admin/Settings";
 
 // parent imports
 import ParentDashboard from "../pages/parent/ParentDashboard";
+
+// teacher imports
 import TeacherDashboard from "../pages/teacher/TeacherDashboard";
 import TeacherClassList from "../pages/teacher/TeacherClassList";
+import Attendance from "../pages/teacher/Attendance";
+import Assignments from "../pages/teacher/Assignments";
 
 const MainRoutes = ({ isAuthenticated, userRole }) => {
   return (
@@ -53,21 +57,6 @@ const MainRoutes = ({ isAuthenticated, userRole }) => {
           </Route>
         )}
 
-        {/* Parent Routes */}
-        {isAuthenticated && userRole === "parent" && (
-          <Route
-            path="parent"
-            element={
-              <ProtectedRoutes
-                isAuthenticated={isAuthenticated}
-                userRole={userRole}
-              />
-            }
-          >
-            <Route path="" element={<ParentDashboard />} />
-          </Route>
-        )}
-
         {/* Teacher Routes */}
         {isAuthenticated && userRole === "teacher" && (
           <Route
@@ -81,6 +70,23 @@ const MainRoutes = ({ isAuthenticated, userRole }) => {
           >
             <Route path="" element={<TeacherDashboard />} />
             <Route path="class-list" element={<TeacherClassList />} />
+            <Route path="attendance" element={<Attendance />} />
+            <Route path="assignments" element={<Assignments />} />
+          </Route>
+        )}
+
+        {/* Parent Routes */}
+        {isAuthenticated && userRole === "parent" && (
+          <Route
+            path="parent"
+            element={
+              <ProtectedRoutes
+                isAuthenticated={isAuthenticated}
+                userRole={userRole}
+              />
+            }
+          >
+            <Route path="" element={<ParentDashboard />} />
           </Route>
         )}
       </Routes>
