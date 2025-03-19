@@ -7,8 +7,9 @@ const StyledH1 = styled.h1`
   text-align: ${({ textAlign }) => textAlign || "center"};
   margin: ${({ margin }) => margin || margin};
   padding: ${({ padding }) => padding || "10px 0"};
-  background-color: ${({backgroundColor}) => backgroundColor || backgroundColor};
-  border: ${({border}) => border || border};
+  background-color: ${({ backgroundColor }) =>
+    backgroundColor || backgroundColor};
+  border: ${({ border }) => border || border};
   font-family: Arial, Helvetica, sans-serif;
   font-style: normal;
 `;
@@ -55,15 +56,22 @@ const StyledButton = styled.button`
   text-align: ${({ textAlign }) => textAlign || "left"};
   font-size: ${({ fontSize }) => fontSize || "1rem"};
   padding: ${({ padding }) => padding || "20px"};
-  margin: ${({margin}) => margin || margin};
-  border-radius: ${({borderRadius}) => borderRadius || borderRadius};
+  margin: ${({ margin }) => margin || margin};
+  border-radius: ${({ borderRadius }) => borderRadius || borderRadius};
   transition: color 0.3s ease, font-size 0.2s ease;
-  &:hover{
+  &:hover {
     color: #ddd;
     font-size: 1.1em;
   }
+  &:active,
+  &:focus {
+    background-color: #0056b3;
+    width: calc(100% - 40px);
+    margin-left: 20px;
+    border-radius: 10px;
+    /* padding: 20px 0; */
+  }
 `;
-
 
 const EdButton_admin = ({
   variant = "btn",
@@ -98,56 +106,4 @@ const EdButton_admin = ({
   return null;
 };
 
-const StyledDiv = styled.div`
-  padding: ${({ padding }) => padding || "20px"};
-  width: ${({ width }) => width || "100%"};
-  background-color: ${({ backgroundColor }) => backgroundColor || "#fff"};
-  box-shadow: ${({ boxShadow }) => boxShadow || "2px 2px 5px #808080"};
-  margin: ${({ margin }) => margin || "0"};
-  color: ${({ color }) => color || "#000"};
-  height: ${({ height }) => height || "auto"};
-  display: ${({ display }) => (display ? display : display)};
-  border-radius: ${({borderRadius}) => (borderRadius || borderRadius)};
-  justify-content: ${({ justifyContent }) =>
-    justifyContent ? justifyContent : justifyContent};
-`;
-
-const EdDiv = ({
-  variant = "container",
-  children,
-  display,
-  justifyContent,
-  height,
-  padding,
-  backgroundColor,
-  boxShadow,
-  borderRadius,
-  color,
-  width,
-  margin,
-  ...props
-}) => {
-  if (variant === "container") {
-    return (
-      <StyledDiv
-        padding={padding}
-        justifyContent={justifyContent}
-        display={display}
-        height={height}
-        backgroundColor={backgroundColor}
-        boxShadow={boxShadow}
-        color={color}
-        width={width}
-        margin={margin}
-        borderRadius={borderRadius}
-        {...props}
-      >
-        {children}
-      </StyledDiv>
-    );
-  }
-  return null;
-};
-
-export default EdDiv;
 export { EdH1, EdButton_admin };

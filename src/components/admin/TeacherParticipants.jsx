@@ -52,15 +52,6 @@ const TeacherParticipants = ({ teacher }) => (
         margin={"0 7px"}
         borderRadius={"5px"}
       >
-        Edit
-      </EdButton_admin>
-      <EdButton_admin
-        width={"auto"}
-        height={"0px"}
-        padding={"5px 9px"}
-        margin={"0 7px"}
-        borderRadius={"5px"}
-      >
         Remove
       </EdButton_admin>
     </td>

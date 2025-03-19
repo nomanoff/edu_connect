@@ -2,20 +2,24 @@ import { useNavigate } from "react-router";
 import { styled } from "styled-components";
 
 
-import Header from "../components/adminComponents/Header";
+import Header from "./admin/Header";
 import SideBar from "./SideBar";
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
+  position: relative;
 `;
 
 const MainWrapper = styled.main`
   width: calc(100% - 300px);
   height: calc(100vh - 50px);
+  margin-left: 300px;
 `;
-const PageWrapper = styled.main``;
+const PageWrapper = styled.main`
+margin-top: 50px;
+`;
 
 const Layout = ({ userRole, children }) => {
   const navigate = useNavigate();

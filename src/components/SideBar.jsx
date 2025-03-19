@@ -7,6 +7,9 @@ const Wrapper = styled.aside`
   height: 100vh;
   background-color: #0082f5;
   padding: 0;
+  position: fixed;
+  overflow-y: auto;
+  z-index: 100;
 `;
 
 const SideBar = ({ menus, userRole }) => {
