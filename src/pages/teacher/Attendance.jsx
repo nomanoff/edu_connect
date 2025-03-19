@@ -4,18 +4,16 @@ import { EdH1 } from "../../components/EdStyled";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
-  min-height: calc(100vh - 54.5px);
 `;
 
-const AdminDashboard = () => {
+const Attendance = () => {
   return (
     <Wrapper>
       <EdH1 fontWeight={"700"} textAlign={"left"} padding={"20px"}>
-        Welcome, Adam
+        Student Attendance
       </EdH1>
     </Wrapper>
   );
 };
 
-export default AdminDashboard;
+export default Attendance;

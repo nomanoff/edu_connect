@@ -8,14 +8,14 @@ const Wrapper = styled.div`
   min-height: calc(100vh - 54.5px);
 `;
 
-const AdminDashboard = () => {
+const ManageClasses = () => {
   return (
     <Wrapper>
       <EdH1 fontWeight={"700"} textAlign={"left"} padding={"20px"}>
-        Welcome, Adam
+        Manage classes
       </EdH1>
     </Wrapper>
   );
 };
 
-export default AdminDashboard;
+export default ManageClasses;

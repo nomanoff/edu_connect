@@ -1,7 +1,3 @@
-
-
-
-
 import React from "react";
 import styled from "styled-components";
 
@@ -78,7 +74,7 @@ const Button = styled.button`
   }
 `;
 
-const Dashboard = () => {
+const ParentDashboard = () => {
   return (
     <Container>
       <Header>Child: Alice Johnson</Header>
@@ -87,7 +83,7 @@ const Dashboard = () => {
         <InfoBox>Performance: Grade A</InfoBox>
         <InfoBox>Homework Completion: ✅ 8/10 Assignments Done</InfoBox>
       </InfoContainer>
-      
+
       <Table>
         <thead>
           <tr>
@@ -110,7 +106,7 @@ const Dashboard = () => {
           </tr>
         </tbody>
       </Table>
-      
+
       <Table>
         <thead>
           <tr>
@@ -132,10 +128,15 @@ const Dashboard = () => {
           </tr>
         </tbody>
       </Table>
-      
+
       <MessageBox>
-        <p><strong>Teacher:</strong> Please ensure Alice submits the next assignment.</p>
-        <p><strong>Parent:</strong> Thanks for the update! I will remind her.</p>
+        <p>
+          <strong>Teacher:</strong> Please ensure Alice submits the next
+          assignment.
+        </p>
+        <p>
+          <strong>Parent:</strong> Thanks for the update! I will remind her.
+        </p>
         <InputContainer>
           <Input type="text" placeholder="Type your message..." />
           <Button>Send</Button>
@@ -145,4 +146,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default ParentDashboard;

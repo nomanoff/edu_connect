@@ -1,21 +1,25 @@
 import styled from "styled-components";
 
+import AddNewTeacher from "../../components/admin/AddNewTeacher";
+import TeachersList from "../../components/admin/TeachersList";
 import { EdH1 } from "../../components/EdStyled";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
-  min-height: calc(100vh - 54.5px);
 `;
 
-const AdminDashboard = () => {
+const ManageTeachers = () => {
   return (
     <Wrapper>
       <EdH1 fontWeight={"700"} textAlign={"left"} padding={"20px"}>
-        Welcome, Adam
+        Manage Teachers
       </EdH1>
+
+      <AddNewTeacher />
+
+      <TeachersList />
     </Wrapper>
   );
 };
 
-export default AdminDashboard;
+export default ManageTeachers;
