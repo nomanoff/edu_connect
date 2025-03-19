@@ -8,10 +8,10 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const TeacherDashboard = () => {
+const ManageTeachers = () => {
   return (
     <Wrapper>
-      <EdH1 fontWeight={"700"} textAlign={"left"}  padding={"20px"}>
+      <EdH1 fontWeight={"700"} textAlign={"left"} padding={"20px"}>
         Manage Teachers
       </EdH1>
 
@@ -22,4 +22,4 @@ const TeacherDashboard = () => {
   );
 };
 
-export default TeacherDashboard;
+export default ManageTeachers;
