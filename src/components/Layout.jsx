@@ -1,6 +1,4 @@
-import { useNavigate } from "react-router";
 import { styled } from "styled-components";
-
 
 import Header from "./admin/Header";
 import SideBar from "./SideBar";
@@ -18,34 +16,28 @@ const MainWrapper = styled.main`
   margin-left: 300px;
 `;
 const PageWrapper = styled.main`
-margin-top: 50px;
+  margin-top: 50px;
 `;
 
 const Layout = ({ userRole, children }) => {
-  const navigate = useNavigate();
-
-  console.log("user role: ", userRole);
-
   const menus = {
     admin: [
       { name: "Dashboard", path: "/admin" },
+      { name: "Manage Classes", path: "/admin/manage-classes" },
       { name: "Manage Teachers", path: "/admin/manage-teachers" },
       { name: "Manage Students", path: "/admin/manage-students" },
       { name: "Reports & Attendance", path: "/admin/attendance-reports" },
-      { name: "Parents", path: "/admin/Parent"},
       { name: "Settings", path: "/admin/settings" },
-      { name: "Parent" , path: "/admin/parent"}
     ],
     teacher: [
-      { name: "Dashboard", path: "/teacher/dashboard" },
-      { name: "My Classes", path: "/teacher/classes" },
+      { name: "Dashboard", path: "/teacher" },
+      { name: "My Classes", path: "/teacher/class-list" },
       { name: "Attendance", path: "/teacher/attendance" },
       { name: "Assignments", path: "/teacher/assignments" },
     ],
     parent: [
-      { name: "Dashboard", path: "/parent/dashboard" },
+      { name: "Dashboard", path: "/parent" },
       { name: "Child's Progress", path: "/parent/progress" },
-      { name: "Messages", path: "/parent/messages" },
     ],
   };
 
@@ -56,14 +48,9 @@ const Layout = ({ userRole, children }) => {
       <MainWrapper>
         <Header />
         <PageWrapper className="content">{children}</PageWrapper>
-
       </MainWrapper>
     </Wrapper>
   );
 };
 
 export default Layout;
-
-
-
-
