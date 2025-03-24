@@ -1,122 +1,135 @@
-import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  display: flex;
-  height: 100vh;
+  padding: 24px;
+  max-width: 120px;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
-const Sidebar = styled.div`
-  width: 20%;
-  background-color: #0082f5;
-  color: white;
-  padding: 20px;
+const Title = styled.h1`
+  text-align: left;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: -15px;
 `;
 
-const SidebarTitle = styled.h1`
+
+const Subtitle = styled.p`
+  margin-bottom: -12px;
+  color: #666;
   font-size: 1.8rem;
   font-weight: bold;
-  
 `;
 
-const SidebarMenu = styled.ul`
-  margin-top: 20px;
-  list-style: none;
-  padding: 0;
-`;
 
-const SidebarItem = styled.li`
-  padding: 10px;
-  cursor: pointer;
-  &:hover {
-    background-color: #0066cc;
-  }
-`;
-
-const Content = styled.div`
-  width: 80%;
-  padding: 20px;
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const SearchInput = styled.input`
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 30%;
-`;
-
-const Button = styled.button`
-  padding: 8px 12px;
-  border: none;
-  background: white;
-  cursor: pointer;
-  &:hover {
-    background: #f0f0f0;
-  }
-`;
-
-const LargeButton = styled(Button)`
-  width: 100%;
-  padding: 12px;
-  background: #0082f5;
-  color: white;
-  font-size: 1rem;
-  text-align: center;
-  border-radius: 5px;
-  margin-top: 10px;
-  &:hover {
-    background: #0066cc;
-  }
-`;
-
-const Section = styled.div`
-  background: white;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+const Card = styled.div`
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: -16px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 18px;
 `;
 
 const Th = styled.th`
-  background: #0082f5;
-  color: white;
-  padding: 10px;
+  background: #007bff;
+  color: #fff;
+  padding: 12px;
+  text-align: left;
+  font-size: 18px;
 `;
 
 const Td = styled.td`
-  border: 1px solid #ddd;
-  padding: 10px;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+`;
+
+const Form = styled.div`
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
 `;
 
 const Input = styled.input`
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
+  padding: 8px;
+  width: 200px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
 `;
 
 const Select = styled.select`
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
+  padding: 8px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
 `;
 
-const ManageStudets = () => {
+const Button = styled.button`
+  background: #007bff;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: #0056b3;
+  }
+`;
+
+export default function ManageStudents() {
+  const [students, setStudents] = useState([
+    { name: "John Doe", email: "john@example.com", class: "Grade 10 - Math" },
+    { name: "Jane Smith", email: "jane@example.com", class: "Grade 9 - Science" },
+  ]);
+  const [newStudent, setNewStudent] = useState({ name: "", email: "", class: "" });
+  const [assignClass, setAssignClass] = useState("");
+  const [assignEmail, setAssignEmail] = useState("");
+
+  const addStudent = () => {
+    if (newStudent.name && newStudent.email && newStudent.class) {
+      setStudents([...students, newStudent]);
+      setNewStudent({ name: "", email: "", class: "" });
+    }
+  };
+
   return (
     <Container>
+      <Title>Manage Students</Title>
+      <Subtitle>Assign and manage students in your classes.</Subtitle>
+      <Card>
+        <h2 style={{ fontWeight: "bold", marginBottom: "8px" }}>Add New Student</h2>
+        <Form>
+          <Input
+            placeholder="Student Name"
+            value={newStudent.name}
+            onChange={(e) => setNewStudent({ ...newStudent, name: e.target.value })}
+          />
+          <Input
+            placeholder="Student Email"
+            value={newStudent.email}
+            onChange={(e) => setNewStudent({ ...newStudent, email: e.target.value })}
+          />
+          <Select
+            value={newStudent.class}
+            onChange={(e) => setNewStudent({ ...newStudent, class: e.target.value })}
+          >
+            <option value="">Select Class</option>
+            <option value="Grade 10 - Math">Grade 10 - Math</option>
+            <option value="Grade 9 - Science">Grade 9 - Science</option>
       <Content>
 
         <h2>Manage Student</h2>
@@ -166,11 +179,46 @@ const ManageStudets = () => {
             <option>English</option>
             <option>History</option>
           </Select>
-          <LargeButton>Add Teacher</LargeButton>
-        </Section>
-      </Content>
+          <Button onClick={addStudent}>+ Add Student</Button>
+        </Form>
+      </Card>
+      <Card>
+        <h2 style={{ fontWeight: "bold", marginBottom: "8px" }}>My Students</h2>
+        <Table>
+          <thead>
+            <tr>
+              <Th>Student Name</Th>
+              <Th>Email</Th>
+              <Th>Class</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {students.map((student, index) => (
+              <tr key={index}>
+                <Td>{student.name}</Td>
+                <Td>{student.email}</Td>
+                <Td>{student.class}</Td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Card>
+      <Card>
+        <h2 style={{ fontWeight: "bold", marginBottom: "8px" }}>Assign Students to Class</h2>
+        <Form>
+          <Select value={assignClass} onChange={(e) => setAssignClass(e.target.value)}>
+            <option value="">Select Class</option>
+            <option value="Grade 10 - Math">Grade 10 - Math</option>
+            <option value="Grade 9 - Science">Grade 9 - Science</option>
+          </Select>
+          <Input
+            placeholder="Enter Student Email"
+            value={assignEmail}
+            onChange={(e) => setAssignEmail(e.target.value)}
+          />
+          <Button>+ Assign Student</Button>
+        </Form>
+      </Card>
     </Container>
   );
-};
-
-export default ManageStudets;
+}
