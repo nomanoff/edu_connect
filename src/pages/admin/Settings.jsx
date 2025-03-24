@@ -1,129 +1,67 @@
 import React from "react";
 import styled from "styled-components";
-const SettingsContainer = styled.div`
+
+const Container = styled.div`
+  width: 100%;
   padding: 20px;
-  max-width: 800px; 
-  max-height: 90vh; 
-  margin: auto;
-  overflow-y: auto; 
+  background-color: white;
 `;
 
-const Section = styled.div`
-  background: #fff;
+const Card = styled.div`
+  background: white;
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
-  width: 700px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
 `;
 
-const SectionTitle = styled.h2`
-  font-size: 20px; 
+const Title = styled.h2`
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 `;
 
 const Label = styled.label`
-  font-weight: bold;
   display: block;
-  font-size: 16px;
-  margin-bottom: 8px;
+  font-weight: bold;
+  margin: 10px 0 5px;
 `;
 
 const Input = styled.input`
-  width: 97%;
-  padding: 12px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 5px;
   font-size: 16px;
   margin-bottom: 15px;
-`;
-
-const FileInput = styled.input`
-  display: block;
-  width: 100%; 
-  margin-top: 5px;
-  font-size: 16px;
 `;
 
 const Button = styled.button`
-  background: #007bff;
+  background-color: #007bff;
   color: white;
+  padding: 10px 15px;
   border: none;
-  padding: 12px;
-  border-radius: 6px;
+  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 16px;
-  display: block;
-  width: 100%;
-  text-align: center;
-  margin-top: 10px;
   &:hover {
-    background: #0056b3;
+    background-color: #0056b3;
   }
-`;
-
-const Select = styled.select`
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-  margin-bottom: 15px;
-`;
-
-const CheckboxContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Checkbox = styled.input`
-  width: 18px;
-  height: 18px;
 `;
 
 const Settings = () => {
   return (
-    <SettingsContainer>
-      <h1>Settings</h1>
-
-
-      <Section>
-        <SectionTitle>General Settings</SectionTitle>
+    <Container>
+      <Title>Settings</Title>
+      <Card>
         <Label>Academy Name</Label>
         <Input type="text" placeholder="Enter Academy Name" />
-        <Label>Upload Logo</Label>
-        <FileInput type="file" />
+        <Label>Academy Address</Label>
+        <Input type="text" placeholder="Academy Address" />
         <Button>Save Changes</Button>
-      </Section>
-
-     
-      <Section>
-        <SectionTitle>User & Permissions</SectionTitle>
-        <Label>Assign Role</Label>
-        <Select>
-          <option>Admin</option>
-          <option>User</option>
-        </Select>
-        <Button>Update Role</Button>
-      </Section>
-
-
-      <Section>
-        <SectionTitle>Theme & Display</SectionTitle>
-        <Label>Language</Label>
-        <Select>
-          <option>English</option>
-          <option>Spanish</option>
-        </Select>
-        <CheckboxContainer>
-          <span>Enable Dark Mode</span>
-          <Checkbox type="checkbox" />
-        </CheckboxContainer>
-        <Button>Apply Changes</Button>
-      </Section>
-    </SettingsContainer>
+      </Card>
+    </Container>
   );
 };
 
