@@ -40,6 +40,64 @@ height: 30px;
 
 const Progress = ({ label, percent }) => {
   return (
+
+    <Container>
+
+
+      <ContentWrapper>
+        
+        <MainContent>
+          <h1>Reports & Attendance</h1>
+
+          <FiltersContainer>
+            <DateLabel>Start Date:</DateLabel>
+            <StyledDatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+            />
+            <DateLabel>End Date:</DateLabel>
+            <StyledDatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+            />
+            <ExportButton>📂 Export Data</ExportButton>
+          </FiltersContainer>
+
+          <Card>
+            <Title>Attendance Reports</Title>
+            <Table>
+              <thead>
+                <tr>
+                  <Th>Student Name</Th>
+                  <Th>Class</Th>
+                  <Th>Attendance %</Th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <Td>Alice Johnson</Td>
+                  <Td>Grade 8 - Mathematics</Td>
+                  <Td>
+                    <ProgressBarContainer>
+                      <ProgressBar width="85%" color="blue" />
+                    </ProgressBarContainer>
+                    85%
+                  </Td>
+                </tr>
+                <tr>
+                  <Td>Michael Brown</Td>
+                  <Td>Grade 7 - Science</Td>
+                  <Td>
+                    <ProgressBarContainer>
+                      <ProgressBar width="92%" color="blue" />
+                    </ProgressBarContainer>
+                    92%
+                  </Td>
+                </tr>
+              </tbody>
+            </Table>
+          </Card>
+
     <ProgressContainer>
       <ProgressBar>
         <ProgressFill percent={percent} />
@@ -50,6 +108,7 @@ const Progress = ({ label, percent }) => {
     </ProgressContainer>
   );
 };
+
 
 const App = () => {
   return (

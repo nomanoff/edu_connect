@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 const Container = styled.div`
   padding: 24px;
-  max-width: 120px;
   max-width: 1200px;
   margin: 0 auto;
 `;
@@ -15,7 +14,6 @@ const Title = styled.h1`
   margin-bottom: -15px;
 `;
 
-
 const Subtitle = styled.p`
   margin-bottom: -12px;
   color: #666;
@@ -23,12 +21,11 @@ const Subtitle = styled.p`
   font-weight: bold;
 `;
 
-
 const Card = styled.div`
   background: #fff;
   padding: 16px;
   border-radius: 8px;
-  margin-bottom: -16px;
+  margin-bottom: 16px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 `;
 
@@ -90,6 +87,10 @@ const Button = styled.button`
   }
 `;
 
+const Section = styled.div`
+  margin-top: 20px;
+`;
+
 export default function ManageStudents() {
   const [students, setStudents] = useState([
     { name: "John Doe", email: "john@example.com", class: "Grade 10 - Math" },
@@ -110,6 +111,7 @@ export default function ManageStudents() {
     <Container>
       <Title>Manage Students</Title>
       <Subtitle>Assign and manage students in your classes.</Subtitle>
+
       <Card>
         <h2 style={{ fontWeight: "bold", marginBottom: "8px" }}>Add New Student</h2>
         <Form>
@@ -130,58 +132,11 @@ export default function ManageStudents() {
             <option value="">Select Class</option>
             <option value="Grade 10 - Math">Grade 10 - Math</option>
             <option value="Grade 9 - Science">Grade 9 - Science</option>
-      <Content>
-
-        <h2>Manage Student</h2>
-        <p>View, add, and manage student.</p>
-
-        <Section>
-          <h3>Student List</h3>
-          <Table>
-            <thead>
-              <tr>
-                <Th>Name</Th>
-                <Th>Email</Th>
-                <Th>Subject</Th>
-                <Th>Actions</Th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <Td>John Doe</Td>
-                <Td>john@example.com</Td>
-                <Td>Mathematics</Td>
-                <Td>
-                  <Button>Edit</Button>
-                  <Button>Remove</Button>
-                </Td>
-              </tr>
-              <tr>
-                <Td>Sarah Smith</Td>
-                <Td>sarah@example.com</Td>
-                <Td>Science</Td>
-                <Td>
-                  <Button>Edit</Button>
-                  <Button>Remove</Button>
-                </Td>
-              </tr>
-            </tbody>
-          </Table>
-        </Section>
-
-        <Section>
-          <h3>Add New Teacher</h3>
-          <Input type="text" placeholder="Enter teacher's name" />
-          <Input type="email" placeholder="Enter teacher's email" />
-          <Select>
-            <option>Mathematics</option>
-            <option>Science</option>
-            <option>English</option>
-            <option>History</option>
           </Select>
           <Button onClick={addStudent}>+ Add Student</Button>
         </Form>
       </Card>
+
       <Card>
         <h2 style={{ fontWeight: "bold", marginBottom: "8px" }}>My Students</h2>
         <Table>
@@ -203,6 +158,7 @@ export default function ManageStudents() {
           </tbody>
         </Table>
       </Card>
+
       <Card>
         <h2 style={{ fontWeight: "bold", marginBottom: "8px" }}>Assign Students to Class</h2>
         <Form>
@@ -219,6 +175,55 @@ export default function ManageStudents() {
           <Button>+ Assign Student</Button>
         </Form>
       </Card>
+
+      <Section>
+        <h3>Student List</h3>
+        <Table>
+          <thead>
+            <tr>
+              <Th>Name</Th>
+              <Th>Email</Th>
+              <Th>Subject</Th>
+              <Th>Actions</Th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <Td>John Doe</Td>
+              <Td>john@example.com</Td>
+              <Td>Mathematics</Td>
+              <Td>
+                <Button>Edit</Button>
+                <Button>Remove</Button>
+              </Td>
+            </tr>
+            <tr>
+              <Td>Sarah Smith</Td>
+              <Td>sarah@example.com</Td>
+              <Td>Science</Td>
+              <Td>
+                <Button>Edit</Button>
+                <Button>Remove</Button>
+              </Td>
+            </tr>
+          </tbody>
+        </Table>
+      </Section>
+
+      <Section>
+        <h3>Add New Teacher</h3>
+        <Form>
+          <Input type="text" placeholder="Enter teacher's name" />
+          <Input type="email" placeholder="Enter teacher's email" />
+          <Select>
+            <option>Mathematics</option>
+            <option>Science</option>
+            <option>English</option>
+            <option>History</option>
+          </Select>
+          <Button>+ Add Teacher</Button>
+        </Form>
+      </Section>
     </Container>
   );
 }
