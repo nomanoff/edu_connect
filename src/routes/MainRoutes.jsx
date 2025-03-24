@@ -14,6 +14,11 @@ import ManageTeachers from "../pages/admin/ManageTeachers";
 import ManageStudents from "../pages/admin/ManageStudents";
 import AttendanceReports from "../pages/admin/AttendanceReports";
 import Settings from "../pages/admin/Settings";
+import ProtectedRoutes from "./ProtectedRoutes";
+import Settings from "../pages/admin/Settings";
+import Parent from "../pages/admin/Parent";
+import ManageClasses from "../pages/admin/adminDashboards/ManageClasses";
+// import AuthRoutes from "./AuthRoutes";
 
 // parent imports
 import ParentDashboard from "../pages/parent/ParentDashboard";
@@ -87,6 +92,8 @@ const MainRoutes = ({ isAuthenticated, userRole }) => {
             }
           >
             <Route path="" element={<ParentDashboard />} />
+            <Route path="manage-classes" element={<ManageClasses />} />
+            <Route path="parent" element={<Parent />} />
           </Route>
         )}
       </Routes>
