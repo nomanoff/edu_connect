@@ -4,20 +4,21 @@ import styled from "styled-components";
 const Container = styled.div`
   max-width: 900px;
   margin: auto;
-  padding: 20px;
+  padding: 14px;
   font-family: Arial, sans-serif;
 `;
 
 const Section = styled.div`
   background: #fff;
-  padding: 20px;
+  padding: 14px;
   border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 14px;
 `;
 
 const Title = styled.h2`
   margin-bottom: 10px;
+  font-size: 18px;
 `;
 
 const Form = styled.div`
@@ -30,23 +31,27 @@ const Input = styled.input`
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 15px;
 `;
 
 const Select = styled.select`
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 15px;
 `;
 
 const Button = styled.button`
   background: ${(props) => (props.danger ? "#d9534f" : "#007bff")};
   color: white;
   border: none;
-  padding: 8px 12px;
+  padding: 8px 14px;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 15px;
   display: flex;
   align-items: center;
+  margin-top: 5px;
   gap: 5px;
 
   &:hover {
@@ -58,6 +63,7 @@ const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
+  font-size: 15px;
 `;
 
 const Th = styled.th`
@@ -80,7 +86,6 @@ const RemoveIcon = styled.span`
 const ManageClasses = () => {
   return (
     <Container>
-      {/* Create New Class */}
       <Section>
         <Title>Create New Class</Title>
         <Form>
@@ -94,7 +99,6 @@ const ManageClasses = () => {
         </Form>
       </Section>
 
-      {/* My Classes */}
       <Section>
         <Title>My Classes</Title>
         <Table>
@@ -133,7 +137,6 @@ const ManageClasses = () => {
         </Table>
       </Section>
 
-      {/* Assign Students */}
       <Section>
         <Title>Assign Students</Title>
         <Form>
