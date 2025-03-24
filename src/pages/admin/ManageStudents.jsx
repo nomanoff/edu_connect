@@ -15,11 +15,14 @@ const Title = styled.h1`
   margin-bottom: -15px;
 `;
 
+
 const Subtitle = styled.p`
   margin-bottom: -12px;
   color: #666;
-  font-size: 18px;
+  font-size: 1.8rem;
+  font-weight: bold;
 `;
+
 
 const Card = styled.div`
   background: #fff;
