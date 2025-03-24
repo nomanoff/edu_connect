@@ -147,7 +147,7 @@ const ManageClasses = () => {
           <Button>+ Assign Student</Button>
         </Form>
         <Title>Students in Grade 10 - Math</Title>
-        <ul>
+        <ul style={{marginLeft: '20px'}}>
           <li>
             John Doe{" "}
             <Button danger>

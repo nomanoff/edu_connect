@@ -14,18 +14,19 @@ import ManageTeachers from "../pages/admin/ManageTeachers";
 import ManageStudents from "../pages/admin/ManageStudents";
 import AttendanceReports from "../pages/admin/AttendanceReports";
 import Settings from "../pages/admin/Settings";
-import ProtectedRoutes from "./ProtectedRoutes";
-import Settings from "../pages/admin/Settings";
-import Parent from "../pages/admin/Parent";
-import ManageClasses from "../pages/admin/adminDashboards/ManageClasses";
+// import ProtectedRoutes from "./ProtectedRoutes";
+// import Parent from "../pages/admin/Parent";
 // import AuthRoutes from "./AuthRoutes";
 
 // parent imports
 import ParentDashboard from "../pages/parent/ParentDashboard";
 
+
+
+
 // teacher imports
 import TeacherDashboard from "../pages/teacher/TeacherDashboard";
-import TeacherClassList from "../pages/teacher/TeacherClassList";
+import TeacherClassList from "../pages/teacher/ManageClasses";
 import Attendance from "../pages/teacher/Attendance";
 import Assignments from "../pages/teacher/Assignments";
 
