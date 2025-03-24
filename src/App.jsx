@@ -5,9 +5,7 @@ import "./App.css";
 function App() {
   const [authState, setAuthState] = useState({
     isAuthenticated: true,
-
     role: "admin"
-
   });
 
   return (
