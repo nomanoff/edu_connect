@@ -1,229 +1,166 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import {
+  Button,
+  TextField,
+  Card,
+  CardContent,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
 import styled from "styled-components";
 
 const Container = styled.div`
-  padding: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-`;
-
-const Title = styled.h1`
-  text-align: left;
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: -15px;
-`;
-
-const Subtitle = styled.p`
-  margin-bottom: -12px;
-  color: #666;
-  font-size: 1.8rem;
-  font-weight: bold;
-`;
-
-const Card = styled.div`
-  background: #fff;
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-`;
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 12px;
-  font-size: 18px;
-`;
-
-const Th = styled.th`
-  background: #007bff;
-  color: #fff;
-  padding: 12px;
-  text-align: left;
-  font-size: 18px;
-`;
-
-const Td = styled.td`
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-`;
-
-const Form = styled.div`
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
 `;
 
-const Input = styled.input`
-  padding: 8px;
-  width: 200px;
-  border: 2px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-`;
-
-const Select = styled.select`
-  padding: 8px;
-  border: 2px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-`;
-
-const Button = styled.button`
-  background: #007bff;
-  color: #fff;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s ease;
-
-  &:hover {
-    background: #0056b3;
-  }
+const Header = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
 `;
 
 const Section = styled.div`
-  margin-top: 20px;
+  border: 2px solid #ccc;
+  padding: 25px;
+  width: 450px;
+  background: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
-export default function ManageStudents() {
-  const [students, setStudents] = useState([
-    { name: "John Doe", email: "john@example.com", class: "Grade 10 - Math" },
-    { name: "Jane Smith", email: "jane@example.com", class: "Grade 9 - Science" },
-  ]);
-  const [newStudent, setNewStudent] = useState({ name: "", email: "", class: "" });
-  const [assignClass, setAssignClass] = useState("");
-  const [assignEmail, setAssignEmail] = useState("");
+const StudentList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
 
-  const addStudent = () => {
-    if (newStudent.name && newStudent.email && newStudent.class) {
-      setStudents([...students, newStudent]);
-      setNewStudent({ name: "", email: "", class: "" });
+const ClassCard = styled(Card)`
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background: #e0e0e0;
+  border-radius: 8px;
+`;
+
+const ClassOption = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #e0e0e0;
+  padding: 20px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: 0.3s;
+  font-size: 18px;
+  width: 400px;
+
+  &:hover {
+    background: #d6d6d6;
+    transform: scale(1.05);
+  }
+
+  button {
+    margin-left: 50px;
+  }
+`;
+
+const LeftSection = styled(Section)`
+  flex: 1;
+`;
+
+const RightSection = styled(Section)`
+  flex: 1;
+`;
+
+const ManageStudent = () => {
+  const [studentName, setStudentName] = useState("");
+  const [selectedClass, setSelectedClass] = useState("");
+  const [students, setStudents] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const classes = ["Frontend 001", "Frontend 002", "Frontend 003","Frontend 004"];
+
+  const handleAddStudent = () => {
+    if (studentName && selectedClass) {
+      setStudents([...students, { name: studentName, class: selectedClass }]);
+      setStudentName("");
+      setSelectedClass("");
     }
   };
 
   return (
-    <Container>
-      <Title>Manage Students</Title>
-      <Subtitle>Assign and manage students in your classes.</Subtitle>
-
-      <Card>
-        <h2 style={{ fontWeight: "bold", marginBottom: "8px" }}>Add New Student</h2>
-        <Form>
-          <Input
-            placeholder="Student Name"
-            value={newStudent.name}
-            onChange={(e) => setNewStudent({ ...newStudent, name: e.target.value })}
+    <div>
+      <Header>Manage Students</Header>
+      <Container>
+        <LeftSection>
+          <Typography variant="h6">Add class</Typography>
+          <TextField
+            label="Student Name"
+            variant="outlined"
+            fullWidth
+            value={studentName}
+            onChange={(e) => setStudentName(e.target.value)}
+            margin="normal"
           />
-          <Input
-            placeholder="Student Email"
-            value={newStudent.email}
-            onChange={(e) => setNewStudent({ ...newStudent, email: e.target.value })}
+          <TextField
+            label="Choose Class"
+            variant="outlined"
+            fullWidth
+            value={selectedClass}
+            InputProps={{ readOnly: true }}
+            margin="normal"
           />
-          <Select
-            value={newStudent.class}
-            onChange={(e) => setNewStudent({ ...newStudent, class: e.target.value })}
+          <Button variant="contained" color="secondary" onClick={() => setOpen(true)}>
+            Choose
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAddStudent}
+            fullWidth
+            disabled={!studentName || !selectedClass}
+            style={{ marginTop: "10px" }}
           >
-            <option value="">Select Class</option>
-            <option value="Grade 10 - Math">Grade 10 - Math</option>
-            <option value="Grade 9 - Science">Grade 9 - Science</option>
-          </Select>
-          <Button onClick={addStudent}>+ Add Student</Button>
-        </Form>
-      </Card>
+            Create
+          </Button>
+        </LeftSection>
 
-      <Card>
-        <h2 style={{ fontWeight: "bold", marginBottom: "8px" }}>My Students</h2>
-        <Table>
-          <thead>
-            <tr>
-              <Th>Student Name</Th>
-              <Th>Email</Th>
-              <Th>Class</Th>
-            </tr>
-          </thead>
-          <tbody>
+        <RightSection>
+          <Typography variant="h6">Student List</Typography>
+          <StudentList>
             {students.map((student, index) => (
-              <tr key={index}>
-                <Td>{student.name}</Td>
-                <Td>{student.email}</Td>
-                <Td>{student.class}</Td>
-              </tr>
+              <ClassCard key={index}>
+                <CardContent>
+                  <Typography>{student.name}</Typography>
+                </CardContent>
+                <CardContent>
+                  <Typography>{student.class}</Typography>
+                </CardContent>
+              </ClassCard>
             ))}
-          </tbody>
-        </Table>
-      </Card>
-
-      <Card>
-        <h2 style={{ fontWeight: "bold", marginBottom: "8px" }}>Assign Students to Class</h2>
-        <Form>
-          <Select value={assignClass} onChange={(e) => setAssignClass(e.target.value)}>
-            <option value="">Select Class</option>
-            <option value="Grade 10 - Math">Grade 10 - Math</option>
-            <option value="Grade 9 - Science">Grade 9 - Science</option>
-          </Select>
-          <Input
-            placeholder="Enter Student Email"
-            value={assignEmail}
-            onChange={(e) => setAssignEmail(e.target.value)}
-          />
-          <Button>+ Assign Student</Button>
-        </Form>
-      </Card>
-
-      <Section>
-        <h3>Student List</h3>
-        <Table>
-          <thead>
-            <tr>
-              <Th>Name</Th>
-              <Th>Email</Th>
-              <Th>Subject</Th>
-              <Th>Actions</Th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <Td>John Doe</Td>
-              <Td>john@example.com</Td>
-              <Td>Mathematics</Td>
-              <Td>
-                <Button>Edit</Button>
-                <Button>Remove</Button>
-              </Td>
-            </tr>
-            <tr>
-              <Td>Sarah Smith</Td>
-              <Td>sarah@example.com</Td>
-              <Td>Science</Td>
-              <Td>
-                <Button>Edit</Button>
-                <Button>Remove</Button>
-              </Td>
-            </tr>
-          </tbody>
-        </Table>
-      </Section>
-
-      <Section>
-        <h3>Add New Teacher</h3>
-        <Form>
-          <Input type="text" placeholder="Enter teacher's name" />
-          <Input type="email" placeholder="Enter teacher's email" />
-          <Select>
-            <option>Mathematics</option>
-            <option>Science</option>
-            <option>English</option>
-            <option>History</option>
-          </Select>
-          <Button>+ Add Teacher</Button>
-        </Form>
-      </Section>
-    </Container>
+          </StudentList>
+        </RightSection>
+        <Dialog open={open} onClose={() => setOpen(false)}>
+          <DialogTitle>Class List</DialogTitle>
+          <DialogContent>
+            {classes.map((className, index) => (
+              <ClassOption key={index} onClick={() => { setSelectedClass(className); setOpen(false); }}>
+                <Typography>{className}</Typography>
+                <Button variant="contained">Select</Button>
+              </ClassOption>
+            ))}
+          </DialogContent>
+        </Dialog>
+      </Container>
+    </div>
   );
-}
+};
+
+export default ManageStudent;
