@@ -4,8 +4,8 @@ import "./App.css";
 
 function App() {
   const [authState, setAuthState] = useState({
-    isAuthenticated: true,
-    role: "parent",
+    isAuthenticated: false,
+    role: "",
   });
 
   return (
