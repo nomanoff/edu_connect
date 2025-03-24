@@ -6,7 +6,7 @@ function App() {
   const [authState, setAuthState] = useState({
     isAuthenticated: true,
 
-    role: "teacher"
+    role: "admin"
 
   });
 
