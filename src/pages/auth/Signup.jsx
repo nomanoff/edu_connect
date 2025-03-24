@@ -6,8 +6,8 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
-  const [adminCode, setAdminCode] = useState(""); // Admin uchun qo‘shimcha maydon
-  const [adminKey, setAdminKey] = useState(""); // Admin uchun qo‘shimcha maydon
+  const [adminCode, setAdminCode] = useState(""); 
+  const [adminKey, setAdminKey] = useState(""); 
 
   useEffect(() => {
     document.body.style.backgroundColor = "#f5f5f5";
@@ -82,7 +82,7 @@ const Signup = () => {
           <TextField
             fullWidth
             margin="normal"
-            label="JUV Markazi"
+            label="Oquv Markazi"
             variant="outlined"
             value={adminCode}
             onChange={(e) => setAdminCode(e.target.value)}

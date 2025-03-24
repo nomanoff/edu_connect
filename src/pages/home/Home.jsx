@@ -3,10 +3,11 @@ import Features from "./Features";
 import Footer from "./Footer";
 import styled from "styled-components";
 
+import { useNavigate } from "react-router";
 
 const Header = styled.header`
   background-color: rgb(0, 158, 245);
-   max-width: 1340px; /* yoki o'zingiz xohlagan miqdor */
+  max-width: 1340px; /* yoki o'zingiz xohlagan miqdor */
   margin: 0 auto; /* Markazga joylash */
   width: 100%;
   display: flex;
@@ -95,16 +96,21 @@ const HeroImage = styled.img`
 `;
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <>
-    <Header>
+      <Header>
         <Title id="home">📖EduConnect</Title>
-        <NavLink href="#home" ml="710px">Home</NavLink>
-<NavLink href="#features">Features</NavLink>
-<NavLink href="#about">About</NavLink>
-<NavLink href="#contact">Contact</NavLink>
+        <NavLink href="#home" ml="710px">
+          Home
+        </NavLink>
+        <NavLink href="#features">Features</NavLink>
+        <NavLink href="#about">About</NavLink>
+        <NavLink href="#contact">Contact</NavLink>
 
-        <NavLink href="#"><SignUpButton>Sign Up</SignUpButton></NavLink>
+        <NavLink href="#">
+          <Button onClick={() => navigate("/signup")}>Sign Up</Button>
+        </NavLink>
       </Header>
 
       <HeroSection>
@@ -116,12 +122,12 @@ const Home = () => {
             Parents
           </HeroTitle>
           <Description>
-            Keep track of attendance, student performance, and class updates effortlessly.
+            Keep track of attendance, student performance, and class updates
+            effortlessly.
           </Description>
           <ButtonGroup>
-            <Button primary>Sign Up</Button>
-            <Button>Log In  </Button>
-            
+            <Button primary onClick={() => navigate("/signup")}>Sign Up</Button>
+            <Button onClick={() => navigate("/login")}>Log In </Button>
           </ButtonGroup>
         </HeroText>
         <HeroImage src="https://www.datocms-assets.com/112519/1713260156-1b-classroom-interactive-main-image.jpeg" />

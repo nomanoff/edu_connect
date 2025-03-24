@@ -33,11 +33,13 @@ import {
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 
 
 
 export default function Footer() {
+  const navigate = useNavigate();
   return (
     <>
     
@@ -96,7 +98,7 @@ export default function Footer() {
           Join thousands of teachers and parents already using EduConnect to
           stay connected.
         </p>
-        <CTAButton>Get Started Today →</CTAButton>
+        <CTAButton onClick={() => navigate("/signup")}>Get Started Today →</CTAButton>
       </CTAContainer>
       </FlexContainer>
       <FooterContainer>
