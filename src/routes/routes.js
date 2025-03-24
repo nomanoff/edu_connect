@@ -9,6 +9,9 @@ const ROUTES = {
   MANAGE_STUDENTS: "/manageStudents",
   SETTINGS: "/settings",
   PARENT: "/parent",
+  PARENT: "/parent",
+  SETTINGS: "/settings",
+  MANAGE_CLASSES: "/manageClasses",
 };
 
 export default ROUTES;
