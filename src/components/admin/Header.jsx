@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FaBell, FaUserCircle } from "react-icons/fa";
 
@@ -30,6 +30,7 @@ const SearchInput = styled.input`
 const RightSection = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
 `;
 
 const IconWrapper = styled.div`
@@ -38,10 +39,15 @@ const IconWrapper = styled.div`
   margin-left: 15px;
   cursor: pointer;
   transition: transform 0.2s ease, color 0.3s ease;
+  position: relative;
 
   &:hover {
     transform: scale(1.2);
     color: #007bff;
+  }
+
+  &:hover > div {
+    display: block;
   }
 `;
 
@@ -52,10 +58,47 @@ const AdminText = styled.span`
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.2s ease, color 0.3s ease;
+  position: relative;
 
   &:hover {
     transform: scale(1.1);
     color: #007bff;
+  }
+
+  &:hover > div {
+    display: block;
+  }
+`;
+
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 20px;
+  left: -140px; 
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  font-size: 14px;
+  display: none;
+  min-width: 150px;
+  z-index: 10;
+  width: 200px;
+`;
+
+
+const MenuItem = styled.div`
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: #f8f8f8;
   }
 `;
 
@@ -63,15 +106,25 @@ const Header = () => {
   return (
     <HeaderContainer>
       <SearchInput type="text" placeholder="Search attendance..." />
-      
+
       <RightSection>
+        {/* Notifications */}
         <IconWrapper>
           <FaBell />
+          <DropdownMenu>
+            <MenuItem>You have a new message</MenuItem>
+            <MenuItem>Another notification...</MenuItem>
+          </DropdownMenu>
         </IconWrapper>
-        <IconWrapper>
-          <FaUserCircle />
-        </IconWrapper>
-        <AdminText>Admin</AdminText>
+
+        {/* Admin */}
+        <AdminText>
+          Admin
+          <DropdownMenu>
+            <MenuItem>Edit profile</MenuItem>
+            <MenuItem style={{ color: "red" }}>Logout</MenuItem>
+          </DropdownMenu>
+        </AdminText>
       </RightSection>
     </HeaderContainer>
   );
