@@ -4,6 +4,12 @@ import AddNewTeacher from "../../components/admin/AddNewTeacher";
 import TeachersList from "../../components/admin/TeachersList";
 import { EdH1 } from "../../components/EdStyled";
 
+
+
+const FixBox = styled.div`
+  font-family: Arial, sans-serif;
+`;
+
 const Wrapper = styled.div`
   width: 100%;
 `;
@@ -16,8 +22,10 @@ const ManageTeachers = () => {
       </EdH1>
 
       <AddNewTeacher />
+      <FixBox>
 
-      <TeachersList />
+      <TeachersList/>
+      </FixBox>
     </Wrapper>
   );
 };

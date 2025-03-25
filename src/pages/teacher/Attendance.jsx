@@ -7,6 +7,7 @@ const Container = styled.div`
   padding: 20px;
   border-radius: 8px;
   background: white;
+  font-family: Arial, sans-serif;
 `;
 
 const Title = styled.h2`

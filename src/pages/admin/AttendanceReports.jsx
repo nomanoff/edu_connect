@@ -5,6 +5,7 @@ const Container = styled.div`
   padding: 20px;
   max-width: 800px;
   margin: auto;
+  font-family: Arial, sans-serif;
 `;
 
 const ReportItem = styled.div`
