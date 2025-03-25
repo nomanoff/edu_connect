@@ -108,7 +108,6 @@ const Header = () => {
       <SearchInput type="text" placeholder="Search attendance..." />
 
       <RightSection>
-        {/* Notifications */}
         <IconWrapper>
           <FaBell />
           <DropdownMenu>
@@ -116,8 +115,6 @@ const Header = () => {
             <MenuItem>Another notification...</MenuItem>
           </DropdownMenu>
         </IconWrapper>
-
-        {/* Admin */}
         <AdminText>
           Admin
           <DropdownMenu>
