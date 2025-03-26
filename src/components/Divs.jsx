@@ -82,8 +82,9 @@ export const CTAContainer = styled.div`
 background: linear-gradient(to right, #007bff, #00aaff);
 color: white;
 text-align: center;
-padding: 60px 10px;
+padding: 130px 10px;
 width: 1120px;
+height:400px;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -94,15 +95,15 @@ margin-top: 50px;
 
 
 export const FooterContainer = styled.footer`
- max-width: 1100px; /* yoki o'zingiz xohlagan miqdor */
+ max-width: 1120px; /* yoki o'zingiz xohlagan miqdor */
   margin: 0 auto; /* Markazga joylash */
 background: #00274d;
 color: white;
 padding: 40px 10%;
 text-align: left;
-width: 80%;
-height: 270px;
-margin-top: 100px;
+width: 1120px;
+height: 360px;
+
 `;
 
 

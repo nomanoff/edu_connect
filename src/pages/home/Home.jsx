@@ -91,7 +91,7 @@ const Button = styled.button`
 
 const HeroImage = styled.img`
   width: 550px;
-  height: 360px;
+  height: 330px;
   border-radius: 10px;
 `;
 
@@ -130,7 +130,7 @@ const Home = () => {
             <Button onClick={() => navigate("/login")}>Log In </Button>
           </ButtonGroup>
         </HeroText>
-        <HeroImage src="https://www.datocms-assets.com/112519/1713260156-1b-classroom-interactive-main-image.jpeg" />
+        <HeroImage src="https://s3-cdn.cmlabs.co/page/2023/10/04/web-developer-definition-skills-and-responsibilities-908401.png" />
       </HeroSection>
       <Main />
       <Features />
