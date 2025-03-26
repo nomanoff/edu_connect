@@ -17,6 +17,7 @@ const Container = styled.div`
   align-items: flex-start;
   gap: 20px;
   padding: 20px;
+  font-family: Arial, sans-serif;
 `;
 
 const Header = styled.div`

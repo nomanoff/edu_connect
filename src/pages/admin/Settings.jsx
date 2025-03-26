@@ -5,6 +5,7 @@ const Container = styled.div`
   width: 100%;
   padding: 20px;
   background-color: white;
+  font-family: Arial, sans-serif;
 `;
 
 const Card = styled.div`

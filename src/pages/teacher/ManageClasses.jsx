@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  max-width: 900px;
+  max-width: 100%px;
   margin: auto;
   padding: 14px;
   font-family: Arial, sans-serif;

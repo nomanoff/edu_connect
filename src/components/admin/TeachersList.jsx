@@ -9,6 +9,7 @@ const Wrapper = styled.div`
   margin: 20px;
   box-shadow: 2px 2px 2px #808080;
   padding: 20px;
+  font-family: Arial, sans-serif;
 `;
 
 const MainWrapper = styled.main`
