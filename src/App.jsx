@@ -4,11 +4,10 @@ import "./App.css";
 
 function App() {
   const [authState, setAuthState] = useState({
-    isAuthenticated: false,
-    role: "",
+    
 
-    // isAuthenticated: true,
-    // role: "teacher",
+    isAuthenticated: true,
+    role: "teacher"
   });
 
   return (
