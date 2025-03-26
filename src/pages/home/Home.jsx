@@ -2,6 +2,7 @@ import Main from "./Main";
 import Features from "./Features";
 import Footer from "./Footer";
 import styled from "styled-components";
+import heroImage from "../../pages/home/images/image1.png"; 
 
 import { useNavigate } from "react-router";
 
@@ -130,7 +131,8 @@ const Home = () => {
             <Button onClick={() => navigate("/login")}>Log In </Button>
           </ButtonGroup>
         </HeroText>
-        <HeroImage src="https://s3-cdn.cmlabs.co/page/2023/10/04/web-developer-definition-skills-and-responsibilities-908401.png" />
+        <HeroImage src={heroImage} alt="Hero Image" />
+
       </HeroSection>
       <Main />
       <Features />
