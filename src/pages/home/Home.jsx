@@ -19,7 +19,7 @@ const Header = styled.header`
 export const Crontainer = styled.div`
 max-width:1440px;
 display:flex;
-gap:690px;
+gap:691px;
 `;
 
 const NavContainer = styled.nav`
