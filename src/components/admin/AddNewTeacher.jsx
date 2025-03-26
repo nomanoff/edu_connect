@@ -5,7 +5,7 @@ const Wrapper = styled.div`
   width: calc(100% - 40px);
   border-radius: 5px;
   margin: 20px;
-  box-shadow: 2px 2px 2px #808080;
+  border: 2px solid #808080;
   padding: 20px;
 `;
 

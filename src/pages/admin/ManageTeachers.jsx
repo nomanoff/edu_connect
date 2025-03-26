@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 const ManageTeachers = () => {
   return (
     <Wrapper>
-      <EdH1 fontWeight={"700"} textAlign={"left"} padding={"20px"}>
+      <EdH1 fontWeight={"700"} textAlign={"left"} padding={"20px"} fontSize={"1.3rem"}>
         Manage Teachers
       </EdH1>
 
