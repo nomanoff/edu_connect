@@ -2,15 +2,22 @@ import Main from "./Main";
 import Features from "./Features";
 import Footer from "./Footer";
 import styled from "styled-components";
-import heroImage from "../../pages/home/images/image1.png"; 
+import heroImage from "../../pages/home/images/image1.png";
 
 import { useNavigate } from "react-router";
 
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Header = styled.header`
   background-color: rgb(0, 158, 245);
-  max-width: 1340px; /* yoki o'zingiz xohlagan miqdor */
   margin: 0 auto; /* Markazga joylash */
-  width: 100%;
+  width: 1440px;
   display: flex;
   gap: 25px;
   align-items: center;
@@ -100,19 +107,21 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Header>
-        <Title id="home">📖EduConnect</Title>
-        <NavLink href="#home" ml="710px">
-          Home
-        </NavLink>
-        <NavLink href="#features">Features</NavLink>
-        <NavLink href="#about">About</NavLink>
-        <NavLink href="#contact">Contact</NavLink>
+      <Wrapper>
+        <Header>
+          <Title id="home">📖EduConnect</Title>
+          <NavLink href="#home" ml="710px">
+            Home
+          </NavLink>
+          <NavLink href="#features">Features</NavLink>
+          <NavLink href="#about">About</NavLink>
+          <NavLink href="#contact">Contact</NavLink>
 
-        <NavLink href="#">
-          <Button onClick={() => navigate("/signup")}>Sign Up</Button>
-        </NavLink>
-      </Header>
+          <NavLink href="#">
+            <Button onClick={() => navigate("/signup")}>Sign Up</Button>
+          </NavLink>
+        </Header>
+      </Wrapper>
 
       <HeroSection>
         <HeroText>
@@ -127,12 +136,13 @@ const Home = () => {
             effortlessly.
           </Description>
           <ButtonGroup>
-            <Button primary onClick={() => navigate("/signup")}>Sign Up</Button>
+            <Button primary onClick={() => navigate("/signup")}>
+              Sign Up
+            </Button>
             <Button onClick={() => navigate("/login")}>Log In </Button>
           </ButtonGroup>
         </HeroText>
         <HeroImage src={heroImage} alt="Hero Image" />
-
       </HeroSection>
       <Main />
       <Features />

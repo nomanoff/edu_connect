@@ -6,7 +6,7 @@ const TeacherParticipants = ({ teacher }) => {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(teacher.subject);
     setCopied(true);
-    setTimeout(() => setCopied(false), 5000);
+    setTimeout(() => setCopied(false), 1500);
   };
 
   return (
