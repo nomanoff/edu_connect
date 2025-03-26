@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Typography, Container, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  Container,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
-  const [adminCode, setAdminCode] = useState(""); 
-  const [adminKey, setAdminKey] = useState(""); 
+  const [adminCode, setAdminCode] = useState("");
+  const [adminKey, setAdminKey] = useState("");
+  const [teacherSubject, setTeacherSubject] = useState("");
 
   useEffect(() => {
     document.body.style.backgroundColor = "#f5f5f5";
@@ -22,7 +32,7 @@ const Signup = () => {
       alert("Passwords do not match!");
       return;
     }
-    console.log("Sign up with", { email, password, role, adminCode, adminKey });
+    console.log("Sign up with", { email, password, role, adminCode, adminKey, teacherSubject });
   };
 
   return (
@@ -31,19 +41,25 @@ const Signup = () => {
       style={{
         textAlign: "center",
         background: "#fff",
-        padding: "30px",
+        padding: "20px", 
         borderRadius: "10px",
         boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
       }}
     >
-      <Typography variant="h4" gutterBottom style={{ fontWeight: "bold", color: "#1976d2" }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        style={{ fontWeight: "bold", color: "#1976d2" }}
+      >
         EduConnect
       </Typography>
-      <Typography variant="h6" gutterBottom>Sign Up</Typography>
+      <Typography variant="h6" gutterBottom>
+        Sign Up
+      </Typography>
 
       <TextField
         fullWidth
-        margin="normal"
+        sx={{ mb: "5px", p: "3px" }} 
         label="Email"
         variant="outlined"
         value={email}
@@ -51,7 +67,7 @@ const Signup = () => {
       />
       <TextField
         fullWidth
-        margin="normal"
+        sx={{ mb: "5px", p: "3px" }}
         type="password"
         label="Password"
         variant="outlined"
@@ -60,7 +76,7 @@ const Signup = () => {
       />
       <TextField
         fullWidth
-        margin="normal"
+        sx={{ mb: "5px", p: "3px" }}
         type="password"
         label="Confirm Password"
         variant="outlined"
@@ -68,9 +84,13 @@ const Signup = () => {
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
 
-      <FormControl fullWidth margin="normal">
+      <FormControl fullWidth sx={{ mb: "5px", p: "3px" }}>
         <InputLabel>Select Role</InputLabel>
-        <Select value={role} onChange={(e) => setRole(e.target.value)} label="Select Role">
+        <Select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          label="Select Role"
+        >
           <MenuItem value="Admin">Admin</MenuItem>
           <MenuItem value="Teacher">Teacher</MenuItem>
           <MenuItem value="Parent">Parent</MenuItem>
@@ -81,7 +101,7 @@ const Signup = () => {
         <>
           <TextField
             fullWidth
-            margin="normal"
+            sx={{ mb: "5px", p: "3px" }}
             label="Oquv Markazi"
             variant="outlined"
             value={adminCode}
@@ -89,7 +109,16 @@ const Signup = () => {
           />
           <TextField
             fullWidth
-            margin="normal"
+            sx={{ mb: "5px", p: "3px" }}
+            type="password"
+            label="oquv markaz adres"
+            variant="outlined"
+            value={adminKey}
+            onChange={(e) => setAdminKey(e.target.value)}
+          />
+          <TextField
+            fullWidth
+            sx={{ mb: "5px", p: "3px" }}
             type="password"
             label="Maxfiy Admin Kod"
             variant="outlined"
@@ -99,17 +128,28 @@ const Signup = () => {
         </>
       )}
 
+      {role === "Teacher" && (
+        <TextField
+          fullWidth
+          sx={{ mb: "5px", p: "3px" }}
+          label="Subject"
+          variant="outlined"
+          value={teacherSubject}
+          onChange={(e) => setTeacherSubject(e.target.value)}
+        />
+      )}
+
       <Button
         fullWidth
         variant="contained"
         color="primary"
-        style={{ marginTop: "15px" }}
+        sx={{ mt: "10px" }} 
         onClick={handleSignup}
       >
         SIGN UP
       </Button>
 
-      <Typography variant="body2" style={{ marginTop: "10px", color: "black" }}>
+      <Typography variant="body2" sx={{ mt: "10px", color: "black" }}>
         Already have an account? <a href="/login">Login</a>
       </Typography>
     </Container>
