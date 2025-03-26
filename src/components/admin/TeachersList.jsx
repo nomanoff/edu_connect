@@ -7,8 +7,9 @@ const Wrapper = styled.div`
   width: calc(100% - 40px);
   border-radius: 5px;
   margin: 20px;
-  box-shadow: 2px 2px 2px #808080;
+  border: 2px solid #808080;
   padding: 20px;
+  font-family: Arial, sans-serif;
 `;
 
 const MainWrapper = styled.main`
@@ -17,8 +18,8 @@ const MainWrapper = styled.main`
 
 const TeachersList = () => {
   const teachers = [
-    { name: "John Doe", email: "john@example.com", subject: "Mathematics" },
-    { name: "Sarah Smith", email: "sarah@example.com", subject: "Science" },
+    { name: "John Doe", email: "john@example.com", subject: "ew[qf[jq" },
+    { name: "Sarah Smith", email: "sarah@example.com", subject: "eapfjaw" },
   ];
   return (
     <Wrapper>

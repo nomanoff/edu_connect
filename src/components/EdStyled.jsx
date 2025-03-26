@@ -10,6 +10,7 @@ const StyledH1 = styled.h1`
   background-color: ${({ backgroundColor }) =>
     backgroundColor || backgroundColor};
   border: ${({ border }) => border || border};
+  width: ${({ width }) => width || width};
   font-family: Arial, Helvetica, sans-serif;
   font-style: normal;
 `;
@@ -18,6 +19,7 @@ const EdH1 = ({
   variant = "text",
   border,
   backgroundColor,
+  width,
   padding,
   children,
   fontSize,
@@ -36,6 +38,7 @@ const EdH1 = ({
         backgroundColor={backgroundColor}
         margin={margin}
         padding={padding}
+        width={width}
         color={color}
         textAlign={textAlign}
         {...props}
