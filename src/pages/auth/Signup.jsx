@@ -132,7 +132,7 @@ const Signup = () => {
         <TextField
           fullWidth
           sx={{ mb: "5px", p: "3px" }}
-          label="Subject"
+          label="teacher maxfiy kod"
           variant="outlined"
           value={teacherSubject}
           onChange={(e) => setTeacherSubject(e.target.value)}
