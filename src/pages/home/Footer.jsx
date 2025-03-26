@@ -92,6 +92,7 @@ export default function Footer() {
         </CardsContainer>
       </Section>
       <FlexContainer>
+        
       <CTAContainer>
         <h2>Ready to Transform Communication?</h2>
         <p>
@@ -102,6 +103,7 @@ export default function Footer() {
       </CTAContainer>
       </FlexContainer>
       <FooterContainer>
+       
         <FooterContent>
           <FooterSection>
             <Title>📖 EduConnect</Title>
@@ -146,6 +148,7 @@ export default function Footer() {
 
         <Divider />
         <Copyright>© 2025 EduConnect. All rights reserved.</Copyright>
+      
       </FooterContainer>
      
     </>

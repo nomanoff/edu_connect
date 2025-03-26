@@ -3,3 +3,15 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+
+body {
+  /* max-width: 1340px; Maksimal kenglik */
+  margin: 0 auto; /* Markazga joylash */
+  padding: 0;
+  
+  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

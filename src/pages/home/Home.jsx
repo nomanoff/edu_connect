@@ -8,26 +8,37 @@ import { useNavigate } from "react-router";
 
 const Header = styled.header`
   background-color: rgb(0, 158, 245);
-  max-width: 1340px; /* yoki o'zingiz xohlagan miqdor */
-  margin: 0 auto; /* Markazga joylash */
+  
   width: 100%;
   display: flex;
-  gap: 25px;
   align-items: center;
+  justify-content: center; /* Har doim markazda turadi */
   padding: 10px;
+`;
+
+export const Crontainer = styled.div`
+max-width:1440px;
+display:flex;
+gap:690px;
+`;
+
+const NavContainer = styled.nav`
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Elementlar orasidagi masofa */
 `;
 
 const Title = styled.h1`
   color: white;
-  margin-left: 30px;
   font-size: 25px;
+  margin-right: auto; /* Chapga yopishib qolmasligi uchun */
 `;
 
 const NavLink = styled.a`
   text-decoration: none;
   color: white;
   cursor: pointer;
-  margin-left: ${(props) => props.ml || "0px"};
+  font-size: 18px;
   &:hover {
     text-decoration: underline;
   }
@@ -82,7 +93,7 @@ const Button = styled.button`
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: ${(props) => (props.primary ? "#007bff" : "white")};
   color: ${(props) => (props.primary ? "white" : "#007bff")};
-  border: ${(props) => (props.primary ? "none" : "2px solid #007bff")};
+  // border: ${(props) => (props.primary ? "none" : "2px solid #007bff")};
 
   &:hover {
     transform: scale(1.05);
@@ -100,19 +111,19 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <>
+    
       <Header>
-        <Title id="home">📖EduConnect</Title>
-        <NavLink href="#home" ml="710px">
-          Home
-        </NavLink>
-        <NavLink href="#features">Features</NavLink>
-        <NavLink href="#about">About</NavLink>
-        <NavLink href="#contact">Contact</NavLink>
-
-        <NavLink href="#">
-          <Button onClick={() => navigate("/signup")}>Sign Up</Button>
-        </NavLink>
-      </Header>
+        <Crontainer>
+  <Title id="home">📖EduConnect</Title>
+  <NavContainer>
+    <NavLink href="#home">Home</NavLink>
+    <NavLink href="#features">Features</NavLink>
+    <NavLink href="#about">About</NavLink>
+    <NavLink href="#contact">Contact</NavLink>
+    <Button onClick={() => navigate("/signup")}>Sign Up</Button>
+  </NavContainer>
+  </Crontainer>
+</Header>
 
       <HeroSection>
         <HeroText>
