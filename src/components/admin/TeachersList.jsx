@@ -14,13 +14,9 @@ const Wrapper = styled.div`
 
 const MainWrapper = styled.main`
   padding: 0;
-`
+`;
 
-const TeachersList = () => {
-  const teachers = [
-    { name: "John Doe", email: "john@example.com", subject: "ew[qf[jq" },
-    { name: "Sarah Smith", email: "sarah@example.com", subject: "eapfjaw" },
-  ];
+const TeachersList = ({ teachers }) => {
   return (
     <Wrapper>
       <EdH1

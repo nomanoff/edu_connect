@@ -2,13 +2,20 @@ import Main from "./Main";
 import Features from "./Features";
 import Footer from "./Footer";
 import styled from "styled-components";
-import heroImage from "../../pages/home/images/image1.png"; 
+import heroImage from "../../pages/home/images/image1.png";
 
 import { useNavigate } from "react-router";
 
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Header = styled.header`
   background-color: rgb(0, 158, 245);
-  
   width: 100%;
   display: flex;
   align-items: center;
@@ -111,6 +118,7 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <>
+
     
       <Header>
         <Crontainer>
@@ -125,6 +133,7 @@ const Home = () => {
   </Crontainer>
 </Header>
 
+
       <HeroSection>
         <HeroText>
           <HeroTitle>
@@ -138,12 +147,13 @@ const Home = () => {
             effortlessly.
           </Description>
           <ButtonGroup>
-            <Button primary onClick={() => navigate("/signup")}>Sign Up</Button>
+            <Button primary onClick={() => navigate("/signup")}>
+              Sign Up
+            </Button>
             <Button onClick={() => navigate("/login")}>Log In </Button>
           </ButtonGroup>
         </HeroText>
         <HeroImage src={heroImage} alt="Hero Image" />
-
       </HeroSection>
       <Main />
       <Features />
