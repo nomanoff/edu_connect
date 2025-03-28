@@ -21,9 +21,6 @@ import Settings from "../pages/admin/Settings";
 // parent imports
 import ParentDashboard from "../pages/parent/ParentDashboard";
 
-
-
-
 // teacher imports
 import TeacherDashboard from "../pages/teacher/TeacherDashboard";
 import TeacherClassList from "../pages/teacher/ManageClasses";
@@ -95,8 +92,6 @@ const MainRoutes = ({ isAuthenticated, userRole }) => {
             <Route path="" element={<ParentDashboard />} />
             <Route path="manage-classes" element={<ManageClasses />} />
             <Route path="manageClasses" element={<ManageClasses />} />
-
-            <Route path="parent" element={<Parent />} />
           </Route>
         )}
       </Routes>
