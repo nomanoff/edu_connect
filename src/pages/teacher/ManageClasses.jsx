@@ -87,19 +87,6 @@ const ManageClasses = () => {
   return (
     <Container>
       <Section>
-        <Title>Create New Class</Title>
-        <Form>
-          <Input type="text" placeholder="Class Name" />
-          <Select>
-            <option>Mathematics</option>
-            <option>Physics</option>
-            <option>Biology</option>
-          </Select>
-          <Button>+ Add Class</Button>
-        </Form>
-      </Section>
-
-      <Section>
         <Title>My Classes</Title>
         <Table>
           <thead>
@@ -107,7 +94,6 @@ const ManageClasses = () => {
               <Th>Class Name</Th>
               <Th>Subject</Th>
               <Th>Students</Th>
-              <Th>Actions</Th>
             </tr>
           </thead>
           <tbody>
@@ -115,53 +101,19 @@ const ManageClasses = () => {
               <Td>Grade 10 - Math</Td>
               <Td>Mathematics</Td>
               <Td>25 Students</Td>
-              <Td>
-                <Button>Edit</Button>
-                <Button danger>
-                  <RemoveIcon>❌</RemoveIcon> Remove
-                </Button>
-              </Td>
+
             </tr>
             <tr>
               <Td>Grade 9 - Science</Td>
               <Td>Physics</Td>
               <Td>30 Students</Td>
-              <Td>
-                <Button>Edit</Button>
-                <Button danger>
-                  <RemoveIcon>❌</RemoveIcon> Remove
-                </Button>
-              </Td>
+
             </tr>
           </tbody>
         </Table>
       </Section>
 
-      <Section>
-        <Title>Assign Students</Title>
-        <Form>
-          <Select>
-            <option>Select Class</option>
-          </Select>
-          <Input type="email" placeholder="Enter Student Email" />
-          <Button>+ Assign Student</Button>
-        </Form>
-        <Title>Students in Grade 10 - Math</Title>
-        <ul style={{marginLeft: '20px'}}>
-          <li>
-            John Doe{" "}
-            <Button danger>
-              <RemoveIcon>❌</RemoveIcon> Remove
-            </Button>
-          </li>
-          <li>
-            Jane Smith{" "}
-            <Button danger>
-              <RemoveIcon>❌</RemoveIcon> Remove
-            </Button>
-          </li>
-        </ul>
-      </Section>
+
     </Container>
   );
 };
