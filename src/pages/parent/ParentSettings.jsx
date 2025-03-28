@@ -74,7 +74,7 @@ const Button = styled.button`
   }
 `;
 
-const ParentDashboard = () => {
+const ParentSettings = () => {
   const [myChildren, setMyChildren] = useState([]);
 
   useEffect(() => {
@@ -105,4 +105,4 @@ const ParentDashboard = () => {
   );
 };
 
-export default ParentDashboard;
+export default ParentSettings;

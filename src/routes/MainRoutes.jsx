@@ -26,6 +26,7 @@ import TeacherDashboard from "../pages/teacher/TeacherDashboard";
 import TeacherClassList from "../pages/teacher/ManageClasses";
 import Attendance from "../pages/teacher/Attendance";
 import Assignments from "../pages/teacher/Assignments";
+import ParentSettings from "../pages/parent/ParentSettings";
 
 const MainRoutes = ({ isAuthenticated, userRole }) => {
   return (
@@ -90,8 +91,7 @@ const MainRoutes = ({ isAuthenticated, userRole }) => {
             }
           >
             <Route path="" element={<ParentDashboard />} />
-            <Route path="manage-classes" element={<ManageClasses />} />
-            <Route path="manageClasses" element={<ManageClasses />} />
+            <Route path="settings" element={<ParentSettings />} />
           </Route>
         )}
       </Routes>
