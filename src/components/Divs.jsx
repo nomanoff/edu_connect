@@ -68,27 +68,26 @@ export const FlexContainer = styled.div`
 `;
 
 export const CTAContainer = styled.div`
-  background: linear-gradient(to right, #007bff, #00aaff);
-  color: white;
-  text-align: center;
-  padding: 130px 10px;
-  width: 1120px;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
+background: linear-gradient(to right, #007bff, #00aaff);
+color: white;
+text-align: center;
+padding: 130px 10px;
+width: 1220px;
+height:400px;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 50px;
 `;
 
 export const FooterContainer = styled.footer`
-  max-width: 1120px; /* yoki o'zingiz xohlagan miqdor */
   margin: 0 auto; /* Markazga joylash */
-  background: #00274d;
-  color: white;
-  padding: 40px 10%;
-  text-align: left;
-  width: 1120px;
-  height: 360px;
+background: #00274d;
+color: white;
+padding: 40px 10%;
+text-align: left;
+width: 100%;
+height: 360px;
 `;
 
 export const FooterContent = styled.div`
