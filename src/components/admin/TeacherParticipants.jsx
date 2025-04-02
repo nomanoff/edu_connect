@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const TeacherParticipants = ({ teacher }) => {
   const [copied, setCopied] = useState(false);
@@ -51,14 +52,16 @@ const TeacherParticipants = ({ teacher }) => {
             padding: "5px 13px",
             borderRadius: "10px",
             border: "none",
+            fontSize: "1.1rem",
             color: "#444",
             fontWeight: "700",
             cursor: "pointer",
             float: "right",
           }}
         >
-          {copied ? "✅" : "copy📋"}
+          {copied ? "✅" : <ContentCopyIcon/> } 
         </button>
+
       </td>
       <td
         style={{
