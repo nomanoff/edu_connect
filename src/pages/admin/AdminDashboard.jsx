@@ -15,7 +15,7 @@ const MainWrapper = styled.main`
   margin: 20px;
   border: 2px solid #808080;
   max-width: 100%;
-  overflow: auto; 
+  overflow: auto;
 `;
 
 const TableHeader = styled.main`
@@ -23,7 +23,7 @@ const TableHeader = styled.main`
   display: flex;
   justify-content: space-between;
   margin-bottom: 25px;
-  max-width: 100%; 
+  max-width: 100%;
 `;
 
 const AdminDashboard = () => {

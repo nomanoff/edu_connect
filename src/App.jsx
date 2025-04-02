@@ -6,7 +6,7 @@ import "./App.css";
 function App() {
   const [authState, setAuthState] = useState({
     isAuthenticated: true,
-    role: "parent",
+    role: "admin",
   });
 
   return (

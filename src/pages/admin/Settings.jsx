@@ -52,6 +52,7 @@ const Button = styled.button`
 `;
 
 const Settings = () => {
+  // console.log("adminId", adminId);
   return (
     <Container>
       <Title>Settings</Title>
