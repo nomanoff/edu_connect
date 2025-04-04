@@ -18,7 +18,7 @@ const ManageClasses = () => {
   const [className, setClassName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [dayType, setDayType] = useState("Odd");
+  const [dayType, setDayType] = useState(0); 
   const [selectedTeacher, setSelectedTeacher] = useState("");
   const [openTeacherDialog, setOpenTeacherDialog] = useState(false);
   const [students, setStudents] = useState([]);
@@ -34,12 +34,8 @@ const ManageClasses = () => {
         dayType,
         selectedTeacher,
       };
-
       setStudents([...students, newStudent]);
-      const studentWithPrototype = Object.getPrototypeOf(newStudent);
-      console.log("Yangi sinf ma'lumotlari:\n", JSON.stringify(newStudent, null, 2));
-      console.log("Prototip:", studentWithPrototype);
-
+      console.log("Yangi sinf ma'lumotlari:", newStudent);
       setClassName("");
       setStartTime("");
       setEndTime("");
@@ -55,57 +51,20 @@ const ManageClasses = () => {
       <ContentWrapper>
         <FormSection>
           <Typography variant="h6">Add Class</Typography>
-          <TextField
-            label="Class Name"
-            fullWidth
-            value={className}
-            onChange={(e) => setClassName(e.target.value)}
-            margin="normal"
-          />
-          <TextField
-            label="Start Time"
-            fullWidth
-            type="time"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            margin="normal"
-          />
-          <TextField
-            label="End Time"
-            fullWidth
-            type="time"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            margin="normal"
-          />
+          <TextField label="Class Name" fullWidth value={className} onChange={(e) => setClassName(e.target.value)} margin="normal" />
+          <TextField label="Start Time" fullWidth type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} margin="normal" />
+          <TextField label="End Time" fullWidth type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} margin="normal" />
           <Typography variant="subtitle1">Class Days:</Typography>
-          <RadioGroup row value={dayType} onChange={(e) => setDayType(e.target.value)}>
-            <FormControlLabel value="Odd" control={<Radio />} label="Odd" />
-            <FormControlLabel value="Even" control={<Radio />} label="Even" />
+          <RadioGroup row value={dayType} onChange={(e) => setDayType(e.target.value === "0" ? 0 : 1)}>
+            <FormControlLabel value={0} control={<Radio />} label="Odd" />
+            <FormControlLabel value={1} control={<Radio />} label="Even" />
           </RadioGroup>
-          <TextField
-            label="Teacher"
-            fullWidth
-            value={selectedTeacher}
-            InputProps={{ readOnly: true }}
-            margin="normal"
-          />
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => setOpenTeacherDialog(true)}
-            style={{ margin: "15px 0", padding: "8px", fontSize: "14px" }}
-          >
+          <Typography variant="subtitle1">Selected Day Type: {dayType === 0 ? "Odd" : "Even"}</Typography>
+          <TextField label="Teacher" fullWidth value={selectedTeacher} InputProps={{ readOnly: true }} margin="normal" />
+          <Button variant="contained" color="secondary" onClick={() => setOpenTeacherDialog(true)} style={{ margin: "15px 0", padding: "8px", fontSize: "14px" }}>
             Choose
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleAddStudent}
-            fullWidth
-            disabled={!className || !startTime || !endTime || !selectedTeacher}
-            style={{ marginTop: "10px", padding: "15px", fontSize: "16px" }}
-          >
+          <Button variant="contained" color="primary" onClick={handleAddStudent} fullWidth disabled={!className || !startTime || !endTime || !selectedTeacher} style={{ marginTop: "10px", padding: "15px", fontSize: "16px" }}>
             Create
           </Button>
         </FormSection>
@@ -114,16 +73,9 @@ const ManageClasses = () => {
           <Typography variant="h6">Class List</Typography>
           <ClassList>
             {students.map((student, index) => (
-              <Card
-                key={index}
-                style={{
-                  marginBottom: "15px",
-                  padding: "20px",
-                  background: "#e0e0e0",
-                  borderRadius: "10px",
-                }}
-              >
+              <Card key={index} style={{ marginBottom: "10px", padding: "15px", background: "#e0e0e0", borderRadius: "10px" }}>
                 <CardContent>
+                  {console.log("Class Object:", student)} {/* To'liq student obyektini konsolga chiqarish */}
                   {Object.entries(student).map(([key, value]) => (
                     <Typography key={key}>
                       <b>{key.charAt(0).toUpperCase() + key.slice(1)}:</b> {value}
@@ -140,29 +92,10 @@ const ManageClasses = () => {
         <DialogTitle>Teacher List</DialogTitle>
         <DialogContent style={{ padding: "30px", width: "500px" }}>
           {teachers.map((teacher, index) => (
-            <div
-              key={index}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "20px",
-                cursor: "pointer",
-                background: "#e0e0e0",
-                marginBottom: "10px",
-                borderRadius: "10px",
-                fontSize: "18px",
-              }}
-              onClick={() => {
-                setSelectedTeacher(teacher);
-                setOpenTeacherDialog(false);
-              }}
-            >
+            <TeacherItem key={index} onClick={() => { setSelectedTeacher(teacher); setOpenTeacherDialog(false); }}>
               <Typography>{teacher}</Typography>
-              <Button variant="contained" style={{ fontSize: "14px", padding: "8px 16px" }}>
-                Select
-              </Button>
-            </div>
+              <Button variant="contained" style={{ fontSize: "14px", padding: "8px 16px" }}>Select</Button>
+            </TeacherItem>
           ))}
         </DialogContent>
       </Dialog>
@@ -170,19 +103,14 @@ const ManageClasses = () => {
   );
 };
 
-
 const Container = styled.div`
   padding: 40px;
-  position: relative;
-  top: -20px;
-  height: 100vh; 
 `;
 
 const ContentWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 30px;
-  align-items: flex-start;
 `;
 
 const FormSection = styled.div`
@@ -190,10 +118,6 @@ const FormSection = styled.div`
   padding: 30px;
   background: #f5f5f5;
   border-radius: 20px;
-  position: relative;
-  top: 0;
-  box-sizing: border-box;
-  height: auto; 
 `;
 
 const ClassListSection = styled.div`
@@ -201,9 +125,25 @@ const ClassListSection = styled.div`
   padding: 30px;
   background: #f5f5f5;
   border-radius: 20px;
-  position: relative;
-  top: 0;
-  height: auto;
-  box-sizing: border-box;
+  height: 400px;
 `;
+
+const ClassList = styled.div`
+  max-height: 350px;
+  padding-right: 10px;
+  overflow-y: auto;
+`;
+
+const TeacherItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  cursor: pointer;
+  background: #e0e0e0;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-size: 18px;
+`;
+
 export default ManageClasses;
