@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectAuth } from "../../utils/redux/authSlice";
@@ -55,6 +55,25 @@ const Button = styled.button`
 
 const Settings = () => {
   const authSliceObj = useSelector(selectAuth);
+
+  //advanced-walleye-awaited.ngrok-free.app/api/Academies
+
+  useEffect(() => {
+    // Fetch academy list or any other data you need
+    fetch("https://advanced-walleye-awaited.ngrok-free.app/api/Academies", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Academy data:", data);
+      })
+      .catch((error) => {
+        console.error("Error fetching academy data:", error);
+      });
+  }, []);
 
   console.log("adminId", authSliceObj);
   return (
