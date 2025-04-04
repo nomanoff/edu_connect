@@ -19,14 +19,20 @@ const Wrapper = styled.div`
 `;
 
 const Signup = () => {
+  const [name, setName] = useState(""); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("");
-  const [adminCode, setAdminCode] = useState("");
+  const [role, setRole] = useState(""); 
   const [adminKey, setAdminKey] = useState("");
+  const [teacherSubject, setTeacherSubject] = useState("");
 
   const handleSignup = () => {
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters!");
+      return;
+    }
+
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
