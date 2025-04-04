@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   Button,
@@ -43,6 +43,8 @@ const ManageClasses = () => {
     }
   };
 
+  useEffect(() => {
+  }, [students]); 
   return (
     <Container>
       <Typography variant="h5" style={{ marginBottom: "20px" }}>
@@ -75,7 +77,6 @@ const ManageClasses = () => {
             {students.map((student, index) => (
               <Card key={index} style={{ marginBottom: "10px", padding: "15px", background: "#e0e0e0", borderRadius: "10px" }}>
                 <CardContent>
-                  {console.log("Class Object:", student)} {/* To'liq student obyektini konsolga chiqarish */}
                   {Object.entries(student).map(([key, value]) => (
                     <Typography key={key}>
                       <b>{key.charAt(0).toUpperCase() + key.slice(1)}:</b> {value}
