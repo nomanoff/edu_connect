@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import {
   Button,
   TextField,
@@ -26,7 +27,19 @@ const ManageClasses = () => {
 
   const handleAddStudent = () => {
     if (className && startTime && endTime && selectedTeacher) {
-      setStudents([...students, { className, startTime, endTime, dayType, selectedTeacher }]);
+      const newStudent = {
+        className,
+        startTime,
+        endTime,
+        dayType,
+        selectedTeacher,
+      };
+
+      setStudents([...students, newStudent]);
+      const studentWithPrototype = Object.getPrototypeOf(newStudent);
+      console.log("Yangi sinf ma'lumotlari:\n", JSON.stringify(newStudent, null, 2));
+      console.log("Prototip:", studentWithPrototype);
+
       setClassName("");
       setStartTime("");
       setEndTime("");
@@ -35,13 +48,12 @@ const ManageClasses = () => {
   };
 
   return (
-    <div style={{ padding: "40px", position: "relative", top: "-20px" }}>
+    <Container>
       <Typography variant="h5" style={{ marginBottom: "20px" }}>
-        Welcome,Admin
+        Welcome, Admin
       </Typography>
-      <div style={{ display: "flex", justifyContent: "space-between", gap: "30px", alignItems: "flex-start" }}>
-        {/* Left Section */}
-        <div style={{ width: "45%", padding: "30px", background: "#f5f5f5", borderRadius: "20px", position: "relative", top: "0px" }}>
+      <ContentWrapper>
+        <FormSection>
           <Typography variant="h6">Add Class</Typography>
           <TextField
             label="Class Name"
@@ -67,11 +79,7 @@ const ManageClasses = () => {
             margin="normal"
           />
           <Typography variant="subtitle1">Class Days:</Typography>
-          <RadioGroup
-            row
-            value={dayType}
-            onChange={(e) => setDayType(e.target.value)}
-          >
+          <RadioGroup row value={dayType} onChange={(e) => setDayType(e.target.value)}>
             <FormControlLabel value="Odd" control={<Radio />} label="Odd" />
             <FormControlLabel value="Even" control={<Radio />} label="Even" />
           </RadioGroup>
@@ -82,9 +90,9 @@ const ManageClasses = () => {
             InputProps={{ readOnly: true }}
             margin="normal"
           />
-          <Button 
-            variant="contained" 
-            color="secondary" 
+          <Button
+            variant="contained"
+            color="secondary"
             onClick={() => setOpenTeacherDialog(true)}
             style={{ margin: "15px 0", padding: "8px", fontSize: "14px" }}
           >
@@ -100,39 +108,102 @@ const ManageClasses = () => {
           >
             Create
           </Button>
-        </div>
+        </FormSection>
 
-
-        <div style={{ width: "45%", padding: "30px", background: "#f5f5f5", borderRadius: "20px" }}>
+        <ClassListSection>
           <Typography variant="h6">Class List</Typography>
-          {students.map((student, index) => (
-            <Card key={index} style={{ marginBottom: "15px", padding: "20px", background: "#e0e0e0", borderRadius: "10px" }}>
-              <CardContent>
-                <Typography><b>Class:</b> {student.className}</Typography>
-                <Typography><b>Time:</b> {student.startTime} ~ {student.endTime}</Typography>
-                <Typography><b>Days:</b> {student.dayType}</Typography>
-                <Typography><b>Teacher:</b> {student.selectedTeacher}</Typography>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
+          <ClassList>
+            {students.map((student, index) => (
+              <Card
+                key={index}
+                style={{
+                  marginBottom: "15px",
+                  padding: "20px",
+                  background: "#e0e0e0",
+                  borderRadius: "10px",
+                }}
+              >
+                <CardContent>
+                  {Object.entries(student).map(([key, value]) => (
+                    <Typography key={key}>
+                      <b>{key.charAt(0).toUpperCase() + key.slice(1)}:</b> {value}
+                    </Typography>
+                  ))}
+                </CardContent>
+              </Card>
+            ))}
+          </ClassList>
+        </ClassListSection>
+      </ContentWrapper>
 
-      {/* Teacher Selection Modal */}
       <Dialog open={openTeacherDialog} onClose={() => setOpenTeacherDialog(false)}>
         <DialogTitle>Teacher List</DialogTitle>
         <DialogContent style={{ padding: "30px", width: "500px" }}>
           {teachers.map((teacher, index) => (
-            <div key={index} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "20px", cursor: "pointer", background: "#e0e0e0", marginBottom: "10px", borderRadius: "10px", fontSize: "18px" }}
-              onClick={() => { setSelectedTeacher(teacher); setOpenTeacherDialog(false); }}>
+            <div
+              key={index}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "20px",
+                cursor: "pointer",
+                background: "#e0e0e0",
+                marginBottom: "10px",
+                borderRadius: "10px",
+                fontSize: "18px",
+              }}
+              onClick={() => {
+                setSelectedTeacher(teacher);
+                setOpenTeacherDialog(false);
+              }}
+            >
               <Typography>{teacher}</Typography>
-              <Button variant="contained" style={{ fontSize: "14px", padding: "8px 16px" }}>Select</Button>
+              <Button variant="contained" style={{ fontSize: "14px", padding: "8px 16px" }}>
+                Select
+              </Button>
             </div>
           ))}
         </DialogContent>
       </Dialog>
-    </div>
+    </Container>
   );
 };
 
+
+const Container = styled.div`
+  padding: 40px;
+  position: relative;
+  top: -20px;
+  height: 100vh; 
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: flex-start;
+`;
+
+const FormSection = styled.div`
+  width: 45%;
+  padding: 30px;
+  background: #f5f5f5;
+  border-radius: 20px;
+  position: relative;
+  top: 0;
+  box-sizing: border-box;
+  height: auto; 
+`;
+
+const ClassListSection = styled.div`
+  width: 45%;
+  padding: 30px;
+  background: #f5f5f5;
+  border-radius: 20px;
+  position: relative;
+  top: 0;
+  height: auto;
+  box-sizing: border-box;
+`;
 export default ManageClasses;
