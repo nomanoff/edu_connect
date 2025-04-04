@@ -1,5 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { selectAuth } from "../../utils/redux/authSlice";
 
 const Container = styled.div`
   width: 100%;
@@ -52,7 +54,9 @@ const Button = styled.button`
 `;
 
 const Settings = () => {
-  // console.log("adminId", adminId);
+  const authSliceObj = useSelector(selectAuth);
+
+  console.log("adminId", authSliceObj);
   return (
     <Container>
       <Title>Settings</Title>

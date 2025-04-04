@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 import { EdH1 } from "../../components/EdStyled";
 import AdminParticipants from "../../components/admin/AdminParticipants";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getAcademyListAsync } from "../../utils/redux/academySlice";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -27,6 +30,8 @@ const TableHeader = styled.main`
 `;
 
 const AdminDashboard = () => {
+  const dispatch = useDispatch();
+
   const tables = [
     {
       name: "Frontend 001",
@@ -64,6 +69,17 @@ const AdminDashboard = () => {
       rate: "90%",
     },
   ];
+
+  useEffect(() => {
+    dispatch(getAcademyListAsync())
+      .unwrap()
+      .then((response) => {
+        console.log("response", response);
+      })
+      .catch((error) => {
+        console.error("Error fetching academy list:", error);
+      });
+  }, [dispatch]);
 
   return (
     <Wrapper>
