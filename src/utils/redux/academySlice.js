@@ -16,12 +16,19 @@ export const getAcademyListAsync = createAsyncThunk(
   }
 );
 
-const initialState = {};
+const initialState = {
+  academies: [],
+};
 
 const academySlice = createSlice({
   name: "academy",
   initialState,
-  reducers: {},
+  reducers: {
+    setAcademies: (state, action) => {
+      console.log("payload: ", action.payload);
+      state.academies = action.payload;
+    },
+  },
 });
 export const selectAcademy = (state) => state.academy;
 

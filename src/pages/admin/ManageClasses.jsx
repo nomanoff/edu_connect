@@ -13,12 +13,15 @@ import {
   RadioGroup,
   FormControlLabel,
 } from "@mui/material";
+import { selectAdmin } from "../../utils/redux/adminSlice";
+import { useSelector } from "react-redux";
 
 const ManageClasses = () => {
+  const { classList } = useSelector(selectAdmin);
   const [className, setClassName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [dayType, setDayType] = useState(0); 
+  const [dayType, setDayType] = useState(0);
   const [selectedTeacher, setSelectedTeacher] = useState("");
   const [openTeacherDialog, setOpenTeacherDialog] = useState(false);
   const [students, setStudents] = useState([]);
@@ -43,8 +46,7 @@ const ManageClasses = () => {
     }
   };
 
-  useEffect(() => {
-  }, [students]); 
+  useEffect(() => {}, [students]);
   return (
     <Container>
       <Typography variant="h5" style={{ marginBottom: "20px" }}>
@@ -53,20 +55,64 @@ const ManageClasses = () => {
       <ContentWrapper>
         <FormSection>
           <Typography variant="h6">Add Class</Typography>
-          <TextField label="Class Name" fullWidth value={className} onChange={(e) => setClassName(e.target.value)} margin="normal" />
-          <TextField label="Start Time" fullWidth type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} margin="normal" />
-          <TextField label="End Time" fullWidth type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} margin="normal" />
+          <TextField
+            label="Class Name"
+            fullWidth
+            value={className}
+            onChange={(e) => setClassName(e.target.value)}
+            margin="normal"
+          />
+          <TextField
+            label="Start Time"
+            fullWidth
+            type="time"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+            margin="normal"
+          />
+          <TextField
+            label="End Time"
+            fullWidth
+            type="time"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
+            margin="normal"
+          />
           <Typography variant="subtitle1">Class Days:</Typography>
-          <RadioGroup row value={dayType} onChange={(e) => setDayType(e.target.value === "0" ? 0 : 1)}>
+          <RadioGroup
+            row
+            value={dayType}
+            onChange={(e) => setDayType(e.target.value === "0" ? 0 : 1)}
+          >
             <FormControlLabel value={0} control={<Radio />} label="Odd" />
             <FormControlLabel value={1} control={<Radio />} label="Even" />
           </RadioGroup>
-          <Typography variant="subtitle1">Selected Day Type: {dayType === 0 ? "Odd" : "Even"}</Typography>
-          <TextField label="Teacher" fullWidth value={selectedTeacher} InputProps={{ readOnly: true }} margin="normal" />
-          <Button variant="contained" color="secondary" onClick={() => setOpenTeacherDialog(true)} style={{ margin: "15px 0", padding: "8px", fontSize: "14px" }}>
+          <Typography variant="subtitle1">
+            Selected Day Type: {dayType === 0 ? "Odd" : "Even"}
+          </Typography>
+          <TextField
+            label="Teacher"
+            fullWidth
+            value={selectedTeacher}
+            InputProps={{ readOnly: true }}
+            margin="normal"
+          />
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setOpenTeacherDialog(true)}
+            style={{ margin: "15px 0", padding: "8px", fontSize: "14px" }}
+          >
             Choose
           </Button>
-          <Button variant="contained" color="primary" onClick={handleAddStudent} fullWidth disabled={!className || !startTime || !endTime || !selectedTeacher} style={{ marginTop: "10px", padding: "15px", fontSize: "16px" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAddStudent}
+            fullWidth
+            disabled={!className || !startTime || !endTime || !selectedTeacher}
+            style={{ marginTop: "10px", padding: "15px", fontSize: "16px" }}
+          >
             Create
           </Button>
         </FormSection>
@@ -74,14 +120,20 @@ const ManageClasses = () => {
         <ClassListSection>
           <Typography variant="h6">Class List</Typography>
           <ClassList>
-            {students.map((student, index) => (
-              <Card key={index} style={{ marginBottom: "10px", padding: "15px", background: "#e0e0e0", borderRadius: "10px" }}>
+            {classList?.map((_class, index) => (
+              <Card
+                key={index}
+                style={{
+                  marginBottom: "10px",
+                  padding: "15px",
+                  background: "#e0e0e0",
+                  borderRadius: "10px",
+                }}
+              >
                 <CardContent>
-                  {Object.entries(student).map(([key, value]) => (
-                    <Typography key={key}>
-                      <b>{key.charAt(0).toUpperCase() + key.slice(1)}:</b> {value}
-                    </Typography>
-                  ))}
+                  <p>{_class.name}</p>
+                  <p>{_class.time}</p>
+                  <p>{_class.teacher}</p>
                 </CardContent>
               </Card>
             ))}
@@ -89,13 +141,27 @@ const ManageClasses = () => {
         </ClassListSection>
       </ContentWrapper>
 
-      <Dialog open={openTeacherDialog} onClose={() => setOpenTeacherDialog(false)}>
+      <Dialog
+        open={openTeacherDialog}
+        onClose={() => setOpenTeacherDialog(false)}
+      >
         <DialogTitle>Teacher List</DialogTitle>
         <DialogContent style={{ padding: "30px", width: "500px" }}>
           {teachers.map((teacher, index) => (
-            <TeacherItem key={index} onClick={() => { setSelectedTeacher(teacher); setOpenTeacherDialog(false); }}>
+            <TeacherItem
+              key={index}
+              onClick={() => {
+                setSelectedTeacher(teacher);
+                setOpenTeacherDialog(false);
+              }}
+            >
               <Typography>{teacher}</Typography>
-              <Button variant="contained" style={{ fontSize: "14px", padding: "8px 16px" }}>Select</Button>
+              <Button
+                variant="contained"
+                style={{ fontSize: "14px", padding: "8px 16px" }}
+              >
+                Select
+              </Button>
             </TeacherItem>
           ))}
         </DialogContent>

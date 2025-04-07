@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { TextField, Button, Typography, Container } from "@mui/material";
+import { postLoginAsync } from "../../utils/redux/authSlice";
+import { useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,12 +12,24 @@ const Wrapper = styled.div`
 `;
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
     console.log("Email:", email);
     console.log("Password:", password);
+
+    dispatch(postLoginAsync({ email, password }))
+      .unwrap()
+      .then((response) => {
+        console.log("Login response: ", response);
+        // Handle successful login, e.g., redirect to dashboard
+      })
+      .catch((error) => {
+        console.error("Login error: ", error);
+        // Handle login error, e.g., show error message
+      });
   };
 
   return (
