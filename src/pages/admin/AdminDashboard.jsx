@@ -1,10 +1,10 @@
 import styled from "styled-components";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { EdH1 } from "../../components/EdStyled";
 import AdminParticipants from "../../components/admin/AdminParticipants";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getAcademyListAsync } from "../../utils/redux/academySlice";
+import { selectAdmin } from "../../utils/redux/adminSlice";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -31,55 +31,9 @@ const TableHeader = styled.main`
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
+  const { classList } = useSelector(selectAdmin);
 
-  const tables = [
-    {
-      name: "Frontend 001",
-      time: "17:00 ~ 19:00",
-      teacher: "Adam",
-      grade: "5",
-      rate: "90%",
-    },
-    {
-      name: "Frontend 001",
-      time: "17:00 ~ 19:00",
-      teacher: "Adam",
-      grade: "5",
-      rate: "90%",
-    },
-    {
-      name: "Frontend 001",
-      time: "17:00 ~ 19:00",
-      teacher: "Adam",
-      grade: "5",
-      rate: "90%",
-    },
-    {
-      name: "Frontend 001",
-      time: "17:00 ~ 19:00",
-      teacher: "Adam",
-      grade: "5",
-      rate: "90%",
-    },
-    {
-      name: "Frontend 001",
-      time: "17:00 ~ 19:00",
-      teacher: "Adam",
-      grade: "5",
-      rate: "90%",
-    },
-  ];
-
-  useEffect(() => {
-    dispatch(getAcademyListAsync())
-      .unwrap()
-      .then((response) => {
-        console.log("response", response);
-      })
-      .catch((error) => {
-        console.error("Error fetching academy list:", error);
-      });
-  }, [dispatch]);
+  useEffect(() => {}, [dispatch]);
 
   return (
     <Wrapper>
@@ -105,7 +59,7 @@ const AdminDashboard = () => {
           </EdH1>
         </TableHeader>
 
-        {tables.map((table, index) => (
+        {classList?.map((table, index) => (
           <AdminParticipants key={index.toString()} table={table} />
         ))}
       </MainWrapper>
