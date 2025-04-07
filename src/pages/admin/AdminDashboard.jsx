@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { EdH1 } from "../../components/EdStyled";
 import AdminParticipants from "../../components/admin/AdminParticipants";
-import { selectAdmin } from "../../utils/redux/adminSlice";
+import { getClassListAsync, selectAdmin } from "../../utils/redux/adminSlice";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -33,7 +33,16 @@ const AdminDashboard = () => {
   const dispatch = useDispatch();
   const { classList } = useSelector(selectAdmin);
 
-  useEffect(() => {}, [dispatch]);
+  useEffect(() => {
+    dispatch(getClassListAsync({ academy_id: "a;sdkfja;slkdjfasdf" }))
+      .unwrap()
+      .then((response) => {
+        console.log("class list response: ", response);
+      })
+      .catch((error) => {
+        console.error("error get ClassListAsync: ", error);
+      });
+  }, [dispatch]);
 
   return (
     <Wrapper>

@@ -19,11 +19,11 @@ const Wrapper = styled.div`
 `;
 
 const Signup = () => {
-  const [name, setName] = useState(""); 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState(""); 
+  const [role, setRole] = useState("");
   const [adminKey, setAdminKey] = useState("");
   const [teacherSubject, setTeacherSubject] = useState("");
 
@@ -37,7 +37,7 @@ const Signup = () => {
       alert("Passwords do not match!");
       return;
     }
-    console.log("Sign up with", { email, password, role, adminCode, adminKey });
+    console.log("Sign up with", { email, password, role, adminKey });
   };
 
   return (

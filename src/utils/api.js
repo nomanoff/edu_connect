@@ -5,6 +5,7 @@ axios.defaults.baseURL = "https://advanced-walleye-awaited.ngrok-free.app"; // d
 axios.defaults.withCredentials = true;
 
 const ACADEMIES_API_PREFIX = "/api/Academies";
+const CLASS_LIST = "/api/class-list";
 const AUTH_API_PREFIX = "/api/auth";
 
 // Auth
@@ -28,5 +29,11 @@ export const academyApi = {
   getAcademyById: (id) => axios.get(`${ACADEMIES_API_PREFIX}/${id}`),
 };
 
+export const studentApi = {};
+
 // Class
-export const classApi = {};
+export const classApi = {
+  // get class list
+
+  getAcademyList: () => axios.get(`${CLASS_LIST}`),
+};
