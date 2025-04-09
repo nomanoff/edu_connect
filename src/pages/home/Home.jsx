@@ -97,6 +97,11 @@ const Button = styled.button`
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
+  border: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 
+            0 2px 4px rgba(0, 0, 0, 0.08);
+
+
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: ${(props) => (props.primary ? "#007bff" : "white")};
   color: ${(props) => (props.primary ? "white" : "#007bff")};
