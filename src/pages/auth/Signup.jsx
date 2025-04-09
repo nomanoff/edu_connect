@@ -10,6 +10,8 @@ import {
   FormControl,
 } from "@mui/material";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { registerAdminAsync } from "../../utils/redux/authSlice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,13 +21,14 @@ const Wrapper = styled.div`
 `;
 
 const Signup = () => {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
   const [adminKey, setAdminKey] = useState("");
-  const [teacherSubject, setTeacherSubject] = useState("");
 
   const handleSignup = () => {
     if (password.length < 6) {
@@ -37,7 +40,32 @@ const Signup = () => {
       alert("Passwords do not match!");
       return;
     }
-    console.log("Sign up with", { email, password, role, adminKey });
+
+    if (role === "0" && !adminKey) {
+      alert("Admin Key is required for Admin role!");
+      return;
+    }
+
+    if (role === "0") {
+      const adminData = {
+        name: name,
+        email: email,
+        password: password,
+        role: Number(role),
+        tokenOfAcademy: adminKey,
+      };
+
+      console.log("Admin data to be dispatched:", adminData);
+
+      dispatch(registerAdminAsync(adminData))
+        .unwrap()
+        .then(() => {
+          alert("Admin registered successfully!");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
   };
 
   return (
@@ -64,6 +92,15 @@ const Signup = () => {
         </Typography>
 
         <TextField
+          fullWidth
+          sx={{ mb: "5px", p: "3px" }} // ✅ Margin (bo‘shliq) 5px, padding 3px qilib kichraytirildi
+          label="Name"
+          variant="outlined"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <TextField
+          required
           fullWidth
           sx={{ mb: "5px", p: "3px" }} // ✅ Margin (bo‘shliq) 5px, padding 3px qilib kichraytirildi
           label="Email"
@@ -97,36 +134,20 @@ const Signup = () => {
             onChange={(e) => setRole(e.target.value)}
             label="Select Role"
           >
-            <MenuItem value="Admin">Admin</MenuItem>
-            <MenuItem value="Teacher">Teacher</MenuItem>
-            <MenuItem value="Parent">Parent</MenuItem>
+            <MenuItem value="0">Admin</MenuItem>
+            <MenuItem value="1">Teacher</MenuItem>
+            <MenuItem value="2">Parent</MenuItem>
           </Select>
         </FormControl>
 
-        {role === "Admin" && (
+        {role === "0" && (
           <>
             <TextField
               fullWidth
-              sx={{ mb: "5px", p: "3px" }}
-              label="Oquv Markazi"
-              variant="outlined"
-              value={adminCode}
-              onChange={(e) => setAdminCode(e.target.value)}
-            />
-            <TextField
-              fullWidth
+              required
               sx={{ mb: "5px", p: "3px" }}
               type="password"
-              label="oquv markaz adres"
-              variant="outlined"
-              value={adminKey}
-              onChange={(e) => setAdminKey(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              sx={{ mb: "5px", p: "3px" }}
-              type="password"
-              label="Maxfiy Admin Kod"
+              label="Admin Key"
               variant="outlined"
               value={adminKey}
               onChange={(e) => setAdminKey(e.target.value)}
