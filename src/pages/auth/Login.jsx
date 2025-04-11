@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import { TextField, Button, Typography, Container } from "@mui/material";
-import { postLoginAsync } from "../../utils/redux/authSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { setCookie } from "nookies";
+import { TextField, Button, Typography, Container } from "@mui/material";
+import { postLoginAsync, setIsAuthenticated, setUserRole } from "../../utils/redux/authSlice";
+
+import styled from "styled-components";
+
+import ROUTES from "../../routes/routes";
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,6 +20,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     // Backend API ga dispatch orqali yuborish
@@ -26,7 +32,6 @@ const Login = () => {
           path: "/",
         });
 
-        alert("Admin login successfully!");
         dispatch(setIsAuthenticated(true));
         dispatch(setUserRole("admin"));
         navigate(ROUTES.ADMIN_DASHBOARD);
