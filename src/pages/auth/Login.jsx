@@ -20,14 +20,21 @@ const Login = () => {
     // Backend API ga dispatch orqali yuborish
     dispatch(postLoginAsync({ email, password }))
       .unwrap()
-      .then((response) => {
-        // Muvoffaqiyatli login bo‘lsa:
-        console.log("Login muvaffaqiyatli:", response);
-        // Masalan: navigate('/dashboard') yoki token saqlash kiritiladi shu yerda
+      .then(({ token }) => {
+        setCookie(null, "token", token, {
+          maxAge: 30 * 24 * 60 * 60,
+          path: "/",
+        });
+
+        alert("Admin login successfully!");
+        dispatch(setIsAuthenticated(true));
+        dispatch(setUserRole("admin"));
+        navigate(ROUTES.ADMIN_DASHBOARD);
       })
       .catch((error) => {
-        console.error("Login error:", error.message || error);
-        alert("Login failed! Iltimos, qaytadan urinib ko‘ring.");
+        alert(error);
+        console.error("Login error: ", error);
+        // Handle login error, e.g., show error message
       });
   };
 
