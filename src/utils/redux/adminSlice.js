@@ -66,10 +66,12 @@ const adminSlice = createSlice({
       console.log("action: ", action);
       state.classList = action.payload;
     },
+
+    resetAdminSlice: () => initialState,
   },
 });
 export const selectAdmin = (state) => state.admin;
 
-export const { setClassList } = adminSlice.actions;
+export const { setClassList, resetAdminSlice } = adminSlice.actions;
 
 export default adminSlice.reducer;

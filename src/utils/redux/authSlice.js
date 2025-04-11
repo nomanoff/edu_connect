@@ -4,6 +4,7 @@ import { authApi } from "../api";
 const initialState = {
   userId: null,
   isAuthenticated: false,
+  userRole: "",
 };
 
 //  register admin thunk
@@ -70,10 +71,19 @@ const authSlice = createSlice({
     setUserId: (state, action) => {
       state.userId = action.payload;
     },
+    setIsAuthenticated: (state, action) => {
+      state.isAuthenticated = action.payload;
+    },
+    setUserRole: (state, action) => {
+      state.userRole = action.payload;
+    },
+
+    resetAuthSlice: () => initialState,
   },
 });
 export const selectAuth = (state) => state.auth;
 
-export const { setUserId } = authSlice.actions;
+export const { setUserId, setUserRole, setIsAuthenticated, resetAuthSlice } =
+  authSlice.actions;
 
 export default authSlice.reducer;

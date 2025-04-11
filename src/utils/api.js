@@ -1,8 +1,20 @@
 import axios from "axios";
+import { parseCookies } from "nookies";
 
-axios.defaults.baseURL = "https://advanced-walleye-awaited.ngrok-free.app"; // debug
+axios.defaults.baseURL = "http://109.73.205.134:5000"; // debug
 
 axios.defaults.withCredentials = true;
+
+axios.interceptors.request.use(
+  (config) => {
+    const { token } = parseCookies();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject("axios interceptor failed: ", error)
+);
 
 const ACADEMIES_API_PREFIX = "/api/Academies";
 const CLASS_LIST = "/api/class-list";

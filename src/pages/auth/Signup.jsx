@@ -10,10 +10,19 @@ import {
   FormControl,
 } from "@mui/material";
 import styled from "styled-components";
+import { setCookie } from "nookies";
 
 import { useDispatch } from "react-redux";
 
-import { registerAdminAsync, registerParentAsync, registerTeacherAsync } from "../../utils/redux/authSlice";
+import {
+  registerAdminAsync,
+  registerParentAsync,
+  registerTeacherAsync,
+  setIsAuthenticated,
+  setUserRole,
+} from "../../utils/redux/authSlice";
+import { useNavigate } from "react-router";
+import ROUTES from "../../routes/routes";
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,7 +33,7 @@ const Wrapper = styled.div`
 
 const Signup = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,7 +58,6 @@ const Signup = () => {
       return;
     }
 
-
     // Admin role
     if (role === "0") {
       const adminData = {
@@ -64,14 +72,22 @@ const Signup = () => {
 
       dispatch(registerAdminAsync(adminData))
         .unwrap()
-        .then(() => {
+        .then(({ token }) => {
+          setCookie(null, "token", token, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: "/",
+          });
+
           alert("Admin registered successfully!");
+          dispatch(setIsAuthenticated(true));
+          dispatch(setUserRole("admin"));
+          navigate(ROUTES.ADMIN_DASHBOARD);
         })
         .catch((error) => {
           alert(error);
         });
     }
-    
+
     // Teacher role
     if (role === "1") {
       const teacherData = {

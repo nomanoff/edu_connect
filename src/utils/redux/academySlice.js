@@ -28,10 +28,12 @@ const academySlice = createSlice({
       console.log("payload: ", action.payload);
       state.academies = action.payload;
     },
+
+    resetAcademySlice: () => initialState,
   },
 });
 export const selectAcademy = (state) => state.academy;
 
-// export const {} = academySlice.actions;
+export const { resetAcademySlice } = academySlice.actions;
 
 export default academySlice.reducer;
