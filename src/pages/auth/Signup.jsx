@@ -78,7 +78,6 @@ const Signup = () => {
             path: "/",
           });
 
-          alert("Admin registered successfully!");
           dispatch(setIsAuthenticated(true));
           dispatch(setUserRole("admin"));
           navigate(ROUTES.ADMIN_DASHBOARD);
