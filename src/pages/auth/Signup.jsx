@@ -10,8 +10,10 @@ import {
   FormControl,
 } from "@mui/material";
 import styled from "styled-components";
+
 import { useDispatch } from "react-redux";
-import { registerAdminAsync } from "../../utils/redux/authSlice";
+
+import { registerAdminAsync, registerParentAsync, registerTeacherAsync } from "../../utils/redux/authSlice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,6 +31,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
   const [adminKey, setAdminKey] = useState("");
+  const [teacherKey, setTeacherKey] = useState("");
 
   const handleSignup = () => {
     if (password.length < 6) {
@@ -46,6 +49,8 @@ const Signup = () => {
       return;
     }
 
+
+    // Admin role
     if (role === "0") {
       const adminData = {
         name: name,
@@ -61,6 +66,49 @@ const Signup = () => {
         .unwrap()
         .then(() => {
           alert("Admin registered successfully!");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+    
+    // Teacher role
+    if (role === "1") {
+      const teacherData = {
+        name: name,
+        email: email,
+        password: password,
+        role: Number(role),
+        tokenForTeacher: adminKey,
+      };
+
+      console.log("Teacher data to be dispatched:", teacherData);
+
+      dispatch(registerTeacherAsync(teacherData))
+        .unwrap()
+        .then(() => {
+          alert("Teacher registered successfully!");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+
+    // Parent role
+    if (role === "2") {
+      const parentData = {
+        name: name,
+        email: email,
+        password: password,
+        role: Number(role),
+      };
+
+      console.log("Parent data to be dispatched:", parentData);
+
+      dispatch(registerParentAsync(parentData))
+        .unwrap()
+        .then(() => {
+          alert("Parent registered successfully!");
         })
         .catch((error) => {
           alert(error);
@@ -140,6 +188,7 @@ const Signup = () => {
           </Select>
         </FormControl>
 
+        {/* Admin */}
         {role === "0" && (
           <>
             <TextField
@@ -151,6 +200,22 @@ const Signup = () => {
               variant="outlined"
               value={adminKey}
               onChange={(e) => setAdminKey(e.target.value)}
+            />
+          </>
+        )}
+
+        {/* Teacher */}
+        {role === "1" && (
+          <>
+            <TextField
+              fullWidth
+              required
+              sx={{ mb: "5px", p: "3px" }}
+              type="password"
+              label="Teacher Key"
+              variant="outlined"
+              value={teacherKey}
+              onChange={(e) => setTeacherKey(e.target.value)}
             />
           </>
         )}
