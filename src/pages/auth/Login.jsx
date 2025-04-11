@@ -17,18 +17,17 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
-
+    // Backend API ga dispatch orqali yuborish
     dispatch(postLoginAsync({ email, password }))
       .unwrap()
       .then((response) => {
-        console.log("Login response: ", response);
-        // Handle successful login, e.g., redirect to dashboard
+        // Muvoffaqiyatli login bo‘lsa:
+        console.log("Login muvaffaqiyatli:", response);
+        // Masalan: navigate('/dashboard') yoki token saqlash kiritiladi shu yerda
       })
       .catch((error) => {
-        console.error("Login error: ", error);
-        // Handle login error, e.g., show error message
+        console.error("Login error:", error.message || error);
+        alert("Login failed! Iltimos, qaytadan urinib ko‘ring.");
       });
   };
 
