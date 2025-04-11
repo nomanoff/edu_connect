@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { FaBell, FaUserCircle } from "react-icons/fa";
+import useLogout from "../../utils/hooks/useLogout";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -73,7 +74,7 @@ const AdminText = styled.span`
 const DropdownMenu = styled.div`
   position: absolute;
   top: 20px;
-  left: -140px; 
+  left: -140px;
   background: white;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -85,7 +86,6 @@ const DropdownMenu = styled.div`
   z-index: 10;
   width: 200px;
 `;
-
 
 const MenuItem = styled.div`
   padding: 8px;
@@ -103,6 +103,12 @@ const MenuItem = styled.div`
 `;
 
 const Header = () => {
+  const { logUserOut } = useLogout();
+
+  const handleLogout = async () => {
+    logUserOut();
+  };
+
   return (
     <HeaderContainer>
       <SearchInput type="text" placeholder="Search attendance..." />
@@ -119,7 +125,9 @@ const Header = () => {
           Admin
           <DropdownMenu>
             <MenuItem>Edit profile</MenuItem>
-            <MenuItem style={{ color: "red" }}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout} style={{ color: "red" }}>
+              Logout
+            </MenuItem>
           </DropdownMenu>
         </AdminText>
       </RightSection>

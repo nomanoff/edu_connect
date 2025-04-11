@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { TextField, Button, Typography, Container } from "@mui/material";
+import { postLoginAsync } from "../../utils/redux/authSlice";
+import { useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,12 +12,23 @@ const Wrapper = styled.div`
 `;
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
+    // Backend API ga dispatch orqali yuborish
+    dispatch(postLoginAsync({ email, password }))
+      .unwrap()
+      .then((response) => {
+        // Muvoffaqiyatli login bo‘lsa:
+        console.log("Login muvaffaqiyatli:", response);
+        // Masalan: navigate('/dashboard') yoki token saqlash kiritiladi shu yerda
+      })
+      .catch((error) => {
+        console.error("Login error:", error.message || error);
+        alert("Login failed! Iltimos, qaytadan urinib ko‘ring.");
+      });
   };
 
   return (

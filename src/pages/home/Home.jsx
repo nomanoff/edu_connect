@@ -1,18 +1,10 @@
-import Main from "./Main";
-import Features from "./Features";
-import Footer from "./Footer";
 import styled from "styled-components";
-import heroImage from "../../pages/home/images/image1.png";
-
 import { useNavigate } from "react-router";
 
-const Wrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
+import Features from "./Features";
+import Footer from "./Footer";
+
+import heroImage from "../../pages/home/images/image1.png";
 
 const Header = styled.header`
   background-color: rgb(0, 158, 245);
@@ -24,9 +16,9 @@ const Header = styled.header`
 `;
 
 export const Crontainer = styled.div`
-max-width:1440px;
-display:flex;
-gap:691px;
+  max-width: 1440px;
+  display: flex;
+  gap: 691px;
 `;
 
 const NavContainer = styled.nav`
@@ -49,16 +41,6 @@ const NavLink = styled.a`
   &:hover {
     text-decoration: underline;
   }
-`;
-
-const SignUpButton = styled.button`
-  font-size: 25px;
-  border-radius: 8px;
-  color: rgb(7, 76, 236);
-  background-color: white;
-  border: none;
-  cursor: pointer;
-  height: 45px;
 `;
 
 const HeroSection = styled.div`
@@ -118,21 +100,18 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <>
-
-    
       <Header>
         <Crontainer>
-  <Title id="home">📖EduConnect</Title>
-  <NavContainer>
-    <NavLink href="#home">Home</NavLink>
-    <NavLink href="#features">Features</NavLink>
-    <NavLink href="#about">About</NavLink>
-    <NavLink href="#contact">Contact</NavLink>
-    <Button onClick={() => navigate("/signup")}>Sign Up</Button>
-  </NavContainer>
-  </Crontainer>
-</Header>
-
+          <Title id="home">📖EduConnect</Title>
+          <NavContainer>
+            <NavLink href="#home">Home</NavLink>
+            <NavLink href="#features">Features</NavLink>
+            <NavLink href="#about">About</NavLink>
+            <NavLink href="#contact">Contact</NavLink>
+            <Button onClick={() => navigate("/signup")}>Sign Up</Button>
+          </NavContainer>
+        </Crontainer>
+      </Header>
 
       <HeroSection>
         <HeroText>
@@ -155,7 +134,6 @@ const Home = () => {
         </HeroText>
         <HeroImage src={heroImage} alt="Hero Image" />
       </HeroSection>
-      <Main />
       <Features />
       <Footer />
     </>
