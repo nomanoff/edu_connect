@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import { TextField, Button, Typography, Container } from "@mui/material";
-import { postLoginAsync } from "../../utils/redux/authSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { setCookie } from "nookies";
+import { TextField, Button, Typography, Container } from "@mui/material";
+import { postLoginAsync, setIsAuthenticated, setUserRole } from "../../utils/redux/authSlice";
+
+import styled from "styled-components";
+
+import ROUTES from "../../routes/routes";
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,19 +20,26 @@ const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     // Backend API ga dispatch orqali yuborish
     dispatch(postLoginAsync({ email, password }))
       .unwrap()
-      .then((response) => {
-        // Muvoffaqiyatli login bo‘lsa:
-        console.log("Login muvaffaqiyatli:", response);
-        // Masalan: navigate('/dashboard') yoki token saqlash kiritiladi shu yerda
+      .then(({ token }) => {
+        setCookie(null, "token", token, {
+          maxAge: 30 * 24 * 60 * 60,
+          path: "/",
+        });
+
+        dispatch(setIsAuthenticated(true));
+        dispatch(setUserRole("admin"));
+        navigate(ROUTES.ADMIN_DASHBOARD);
       })
       .catch((error) => {
-        console.error("Login error:", error.message || error);
-        alert("Login failed! Iltimos, qaytadan urinib ko‘ring.");
+        alert(error);
+        console.error("Login error: ", error);
+        // Handle login error, e.g., show error message
       });
   };
 
