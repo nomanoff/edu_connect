@@ -157,7 +157,7 @@ const Signup = () => {
 
         <TextField
           fullWidth
-          sx={{ mb: "5px", p: "3px" }} // ✅ Margin (bo‘shliq) 5px, padding 3px qilib kichraytirildi
+          sx={{ mb: "5px", p: "3px" }} 
           label="Name"
           variant="outlined"
           value={name}
@@ -166,7 +166,7 @@ const Signup = () => {
         <TextField
           required
           fullWidth
-          sx={{ mb: "5px", p: "3px" }} // ✅ Margin (bo‘shliq) 5px, padding 3px qilib kichraytirildi
+          sx={{ mb: "5px", p: "3px" }} 
           label="Email"
           variant="outlined"
           value={email}
