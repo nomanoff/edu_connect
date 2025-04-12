@@ -16,6 +16,7 @@ import {
 import { selectAdmin } from "../../utils/redux/adminSlice";
 import { useSelector } from "react-redux";
 
+
 const ManageClasses = () => {
   const { classList } = useSelector(selectAdmin);
   const [className, setClassName] = useState("");
@@ -47,6 +48,7 @@ const ManageClasses = () => {
   };
 
   useEffect(() => {}, [students]);
+
   return (
     <Container>
       <Typography variant="h5" style={{ marginBottom: "20px" }}>
@@ -137,6 +139,28 @@ const ManageClasses = () => {
                 </CardContent>
               </Card>
             ))}
+
+            {/* Students massivini chiqaramiz */}
+            {students.map((student, index) => (
+              <Card
+                key={`student-${index}`}
+                style={{
+                  marginBottom: "10px",
+                  padding: "15px",
+                  background: "#d1ffd6",
+                  borderRadius: "10px",
+                }}
+              >
+                <CardContent>
+                  <p><strong>{student.className}</strong></p>
+                  <p>
+                    {student.startTime} - {student.endTime}
+                  </p>
+                  <p>{student.selectedTeacher}</p>
+                  <p>Days: {student.dayType === 0 ? "Odd" : "Even"}</p>
+                </CardContent>
+              </Card>
+            ))}
           </ClassList>
         </ClassListSection>
       </ContentWrapper>
@@ -170,6 +194,7 @@ const ManageClasses = () => {
   );
 };
 
+// Styled components o'zgarishsiz
 const Container = styled.div`
   padding: 40px;
 `;
@@ -205,12 +230,14 @@ const TeacherItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  cursor: pointer;
-  background: #e0e0e0;
+  padding: 10px;
   margin-bottom: 10px;
-  border-radius: 10px;
-  font-size: 18px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  cursor: pointer;
+  &:hover {
+    background: #e0e0e0;
+  }
 `;
 
 export default ManageClasses;
