@@ -15,6 +15,7 @@ const rootReducer = combineReducers({
   admin: adminSlice,
   student: studentSlice,
   class: classSlice,
+  classSlice: classSlice,
 });
 
 const SetMarkerTransform = createTransform(
