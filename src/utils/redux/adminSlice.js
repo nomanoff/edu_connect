@@ -43,7 +43,7 @@ const initialState = {
 };
 
 // get academy list thunk
-export const getClassListAsync = createAsyncThunk(
+export const getAcademyListAsync = createAsyncThunk(
   "auth/getAcademyList",
   async (data, { rejectWithValue }) => {
     try {

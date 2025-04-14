@@ -17,7 +17,7 @@ axios.interceptors.request.use(
 );
 
 const ACADEMIES_API_PREFIX = "/api/Academies";
-const CLASS_LIST = "/api/class-list";
+const CLASS_LIST = "/api/Classes";
 const AUTH_API_PREFIX = "/api/auth";
 const STUDENT_API_PREFIX = "/api/Students";
 
@@ -51,6 +51,5 @@ export const studentApi = {
 // Class
 export const classApi = {
   // get class list
-
-  getAcademyList: () => axios.get(`${CLASS_LIST}`),
+  getClassList: () => axios.get(`${CLASS_LIST}`),
 };

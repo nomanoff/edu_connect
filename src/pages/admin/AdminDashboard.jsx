@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { EdH1 } from "../../components/EdStyled";
 import AdminParticipants from "../../components/admin/AdminParticipants";
-import { getClassListAsync, selectAdmin } from "../../utils/redux/adminSlice";
+import { getClassListAsync } from "../../utils/redux/classSlice";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -31,16 +31,17 @@ const TableHeader = styled.main`
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
-  const { classList } = useSelector(selectAdmin);
+  const [classList, setClassList] = useState([]);
 
   useEffect(() => {
-    dispatch(getClassListAsync({ academy_id: "a;sdkfja;slkdjfasdf" }))
+    dispatch(getClassListAsync())
       .unwrap()
       .then((response) => {
-        console.log("class list response: ", response);
+        setClassList(response);
       })
       .catch((error) => {
-        console.error("error get ClassListAsync: ", error);
+        setClassList([]);
+        console.error("error fetching class list: ", error);
       });
   }, [dispatch]);
 
