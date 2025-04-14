@@ -64,7 +64,6 @@ const StyledButton = styled.button`
   transition: color 0.3s ease, font-size 0.2s ease;
   &:hover {
     color: #ddd;
-    font-size: 1.1em;
   }
   &:active,
   &:focus {
