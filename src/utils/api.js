@@ -22,6 +22,7 @@ const AUTH_API_PREFIX = "/api/auth";
 const STUDENT_API_PREFIX = "/api/Students";
 const TEACHER_API_PREFIX = "/api/Teachers";
 
+
 // Auth
 export const authApi = {
   registerAdmin: (data) =>
@@ -42,7 +43,6 @@ export const academyApi = {
   // /api/Academies/{id}
   getAcademyById: (id) => axios.get(`${ACADEMIES_API_PREFIX}/${id}`),
 };
-
 // Student
 export const studentApi = {
   // get student list
