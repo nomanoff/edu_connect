@@ -1,72 +1,74 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+// classSlice.js
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { classApi } from "../api";
 
-// 📦 GET: All classes
-export const fetchClasses = createAsyncThunk(
-  "class/fetchClasses",
-  async (_, thunkAPI) => {
+const initialState = {
+  classes: [],
+  status: "idle",
+  error: null,
+};
+
+// Get class list
+export const getClassListAsync = createAsyncThunk(
+  "class/getClassList",
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/classes"); // API endpoint
+      const response = await classApi.getClassesList();
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.message);
+      console.error("Error fetching class list:", error);
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch class list");
     }
   }
 );
 
-// ➕ POST: Create a new class
-export const createClass = createAsyncThunk(
+// Create new class
+export const createClassAsync = createAsyncThunk(
   "class/createClass",
-  async (newClassData, thunkAPI) => {
+  async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/classes", newClassData); // API endpoint
+      const response = await classApi.createClass(formData);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.message);
+      console.error("Error creating class:", error);
+      return rejectWithValue(error.response?.data?.message || "Failed to create class");
     }
   }
 );
 
-// Slice
 const classSlice = createSlice({
   name: "class",
-  initialState: {
-    classes: [],
-    status: "idle",
-    error: null,
+  initialState,
+  reducers: {
+    resetClassSlice: () => initialState,
   },
-  reducers: {},
   extraReducers: (builder) => {
     builder
-
-      // Fetch classes
-      .addCase(fetchClasses.pending, (state) => {
+      .addCase(getClassListAsync.pending, (state) => {
         state.status = "loading";
-        state.error = null;
       })
-      .addCase(fetchClasses.fulfilled, (state, action) => {
+      .addCase(getClassListAsync.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.classes = action.payload;
       })
-      .addCase(fetchClasses.rejected, (state, action) => {
+      .addCase(getClassListAsync.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
-
-      // Create class
-      .addCase(createClass.pending, (state) => {
+      .addCase(createClassAsync.pending, (state) => {
         state.status = "loading";
-        state.error = null;
       })
-      .addCase(createClass.fulfilled, (state, action) => {
+      .addCase(createClassAsync.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.classes.push(action.payload);
       })
-      .addCase(createClass.rejected, (state, action) => {
+      .addCase(createClassAsync.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });
   },
 });
 
+export const selectClass = (state) => state.class;
+export const { resetClassSlice } = classSlice.actions;
 export default classSlice.reducer;
