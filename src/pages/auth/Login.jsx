@@ -3,7 +3,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { setCookie } from "nookies";
 import { TextField, Button, Typography, Container } from "@mui/material";
-import { postLoginAsync, setIsAuthenticated, setUserRole } from "../../utils/redux/authSlice";
+import {
+  postLoginAsync,
+  setIsAuthenticated,
+  setUserRole,
+} from "../../utils/redux/authSlice";
 
 import styled from "styled-components";
 
@@ -26,11 +30,13 @@ const Login = () => {
     // Backend API ga dispatch orqali yuborish
     dispatch(postLoginAsync({ email, password }))
       .unwrap()
-      .then(({ token }) => {
+      .then(({ token, role }) => {
         setCookie(null, "token", token, {
           maxAge: 30 * 24 * 60 * 60,
           path: "/",
         });
+
+        // role : 0 - admin, 1 - teacher, 2 - parent
 
         dispatch(setIsAuthenticated(true));
         dispatch(setUserRole("admin"));
