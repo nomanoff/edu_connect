@@ -1,22 +1,45 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
+import storageSession from "redux-persist/lib/storage/session";
+import { persistReducer, createTransform } from "redux-persist";
 
 import authSlice from "./authSlice";
 import academySlice from "./academySlice";
 import adminSlice from "./adminSlice";
+import studentSlice from "./studentSlice";
 
 const rootReducer = combineReducers({
   auth: authSlice,
   academy: academySlice,
   admin: adminSlice,
+  student: studentSlice,
 });
 
+const SetMarkerTransform = createTransform(
+  (inboundState, key) => {
+    if (key === "map") {
+      return { ...inboundState, alls: null };
+    }
+    return inboundState;
+  },
+  (outboundState) => {
+    return outboundState;
+  }
+);
+
+const persistConfig = {
+  key: "root",
+  storage: storageSession,
+  transforms: [SetMarkerTransform],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),
-
   devTools: true,
 });
