@@ -17,7 +17,7 @@ const AddNewTeacher = () => {
         fontSize={"1.2rem"}
         fontWeight={"700"}
       >
-        Add New Teacher
+        Generator New Teacher Key
       </EdH1>
       <EdH1
         textAlign={"left"}
@@ -25,7 +25,6 @@ const AddNewTeacher = () => {
         fontSize={"1rem"}
         fontWeight={"700"}
       >
-        Name:
       </EdH1>
       <input
         type="text"
@@ -44,7 +43,6 @@ const AddNewTeacher = () => {
         fontSize={"1rem"}
         fontWeight={"700"}
       >
-        Email:
       </EdH1>
       <input
         type="text"
@@ -58,7 +56,7 @@ const AddNewTeacher = () => {
         }}
       />
       <EdButton_admin textAlign={"center"} padding={"8px"} margin={"20px 0 0 0"} borderRadius={"5px"}>
-        Add Teacher
+        Generator Key
       </EdButton_admin>
     </Wrapper>
   );
