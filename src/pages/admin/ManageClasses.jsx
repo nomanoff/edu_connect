@@ -1,103 +1,216 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getClassListAsync, selectClass } from "../../utils/redux/classSlice";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import {
+  Button,
+  TextField,
+  Card,
+  CardContent,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+} from "@mui/material";
+import { selectAdmin } from "../../utils/redux/adminSlice";
+import { useSelector } from "react-redux";
 
 const ManageClasses = () => {
-  const dispatch = useDispatch();
-  const { classes, status, error } = useSelector(selectClass); // TO‘G‘RI STATE NOMLARI
+  const { classList } = useSelector(selectAdmin);
+  const [className, setClassName] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [dayType, setDayType] = useState(0);
+  const [selectedTeacher, setSelectedTeacher] = useState("");
+  const [openTeacherDialog, setOpenTeacherDialog] = useState(false);
+  const [students, setStudents] = useState([]);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    startTime: "",
-    endTime: "",
-    schedule: 0,
-    teacherId: "3fa85f64-5717-4562-b3fc-2c963f66afa6", // dummy ID
-  });
+  const teachers = ["Azizbek", "Farxod", "Ali", "Bekzod"];
 
-  useEffect(() => {
-    dispatch(getClassListAsync());
-  }, [dispatch]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: name === "schedule" ? parseInt(value) : value,
-    }));
+  const handleAddStudent = () => {
+    if (className && startTime && endTime && selectedTeacher) {
+      const newStudent = {
+        className,
+        startTime,
+        endTime,
+        dayType,
+        selectedTeacher,
+      };
+      setStudents([...students, newStudent]);
+      console.log("Yangi sinf ma'lumotlari:", newStudent);
+      setClassName("");
+      setStartTime("");
+      setEndTime("");
+      setSelectedTeacher("");
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(createClassAsync(formData));
-  };
-
+  useEffect(() => {}, [students]);
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Manage Classes</h2>
+    <Container>
+      <Typography variant="h5" style={{ marginBottom: "20px" }}>
+        Welcome, Admin
+      </Typography>
+      <ContentWrapper>
+        <FormSection>
+          <Typography variant="h6">Add Class</Typography>
+          <TextField
+            label="Class Name"
+            fullWidth
+            value={className}
+            onChange={(e) => setClassName(e.target.value)}
+            margin="normal"
+          />
+          <TextField
+            label="Start Time"
+            fullWidth
+            type="time"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+            margin="normal"
+          />
+          <TextField
+            label="End Time"
+            fullWidth
+            type="time"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
+            margin="normal"
+          />
+          <Typography variant="subtitle1">Class Days:</Typography>
+          <RadioGroup
+            row
+            value={dayType}
+            onChange={(e) => setDayType(e.target.value === "0" ? 0 : 1)}
+          >
+            <FormControlLabel value={0} control={<Radio />} label="Odd" />
+            <FormControlLabel value={1} control={<Radio />} label="Even" />
+          </RadioGroup>
+          <Typography variant="subtitle1">
+            Selected Day Type: {dayType === 0 ? "Odd" : "Even"}
+          </Typography>
+          <TextField
+            label="Teacher"
+            fullWidth
+            value={selectedTeacher}
+            InputProps={{ readOnly: true }}
+            margin="normal"
+          />
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setOpenTeacherDialog(true)}
+            style={{ margin: "15px 0", padding: "8px", fontSize: "14px" }}
+          >
+            Choose
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAddStudent}
+            fullWidth
+            disabled={!className || !startTime || !endTime || !selectedTeacher}
+            style={{ marginTop: "10px", padding: "15px", fontSize: "16px" }}
+          >
+            Create
+          </Button>
+        </FormSection>
 
-      <form onSubmit={handleSubmit} className="space-y-2">
-        <input
-          type="text"
-          name="name"
-          placeholder="Class Name"
-          value={formData.name}
-          onChange={handleChange}
-          className="border rounded p-2 w-full"
-        />
-        <input
-          type="text"
-          name="startTime"
-          placeholder="Start Time"
-          value={formData.startTime}
-          onChange={handleChange}
-          className="border rounded p-2 w-full"
-        />
-        <input
-          type="text"
-          name="endTime"
-          placeholder="End Time"
-          value={formData.endTime}
-          onChange={handleChange}
-          className="border rounded p-2 w-full"
-        />
-        <input
-          type="number"
-          name="schedule"
-          placeholder="Schedule (0-6)"
-          value={formData.schedule}
-          onChange={handleChange}
-          className="border rounded p-2 w-full"
-        />
-        <input
-          type="text"
-          name="teacherId"
-          placeholder="Teacher ID"
-          value={formData.teacherId}
-          onChange={handleChange}
-          className="border rounded p-2 w-full"
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          Create Class
-        </button>
-      </form>
+        <ClassListSection>
+          <Typography variant="h6">Class List</Typography>
+          <ClassList>
+            {classList?.map((_class, index) => (
+              <Card
+                key={index}
+                style={{
+                  marginBottom: "10px",
+                  padding: "15px",
+                  background: "#e0e0e0",
+                  borderRadius: "10px",
+                }}
+              >
+                <CardContent>
+                  <p>{_class.name}</p>
+                  <p>{_class.time}</p>
+                  <p>{_class.teacher}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </ClassList>
+        </ClassListSection>
+      </ContentWrapper>
 
-      {/* ✅ Error ko‘rsatish */}
-      {status === "failed" && error && (
-        <p className="text-red-500 mt-2">{error}</p>
-      )}
-
-      {/* ✅ Success holati */}
-      {status === "succeeded" && (
-        <p className="text-green-500 mt-2">Class saved successfully!</p>
-      )}
-
-
-     
-    </div>
+      <Dialog
+        open={openTeacherDialog}
+        onClose={() => setOpenTeacherDialog(false)}
+      >
+        <DialogTitle>Teacher List</DialogTitle>
+        <DialogContent style={{ padding: "30px", width: "500px" }}>
+          {teachers.map((teacher, index) => (
+            <TeacherItem
+              key={index}
+              onClick={() => {
+                setSelectedTeacher(teacher);
+                setOpenTeacherDialog(false);
+              }}
+            >
+              <Typography>{teacher}</Typography>
+              <Button
+                variant="contained"
+                style={{ fontSize: "14px", padding: "8px 16px" }}
+              >
+                Select
+              </Button>
+            </TeacherItem>
+          ))}
+        </DialogContent>
+      </Dialog>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 40px;
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+`;
+
+const FormSection = styled.div`
+  width: 45%;
+  padding: 30px;
+  background: #f5f5f5;
+  border-radius: 20px;
+`;
+
+const ClassListSection = styled.div`
+  width: 45%;
+  padding: 30px;
+  background: #f5f5f5;
+  border-radius: 20px;
+  height: 400px;
+`;
+
+const ClassList = styled.div`
+  max-height: 350px;
+  padding-right: 10px;
+  overflow-y: auto;
+`;
+
+const TeacherItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  cursor: pointer;
+  background: #e0e0e0;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-size: 18px;
+`;
 
 export default ManageClasses;
