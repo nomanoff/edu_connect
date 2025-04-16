@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { setCookie } from "nookies";
-import { TextField, Button, Typography, Container } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  Container
+} from "@mui/material";
 import {
   postLoginAsync,
   setIsAuthenticated,
-  setUserRole,
+  setUserRole
 } from "../../utils/redux/authSlice";
-
 import styled from "styled-components";
-
 import ROUTES from "../../routes/routes";
 
 const Wrapper = styled.div`
@@ -22,30 +25,43 @@ const Wrapper = styled.div`
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   const handleLogin = () => {
-    // Backend API ga dispatch orqali yuborish
     dispatch(postLoginAsync({ email, password }))
       .unwrap()
       .then(({ token, role }) => {
         setCookie(null, "token", token, {
           maxAge: 30 * 24 * 60 * 60,
-          path: "/",
+          path: "/"
         });
 
-        // role : 0 - admin, 1 - teacher, 2 - parent
-
         dispatch(setIsAuthenticated(true));
-        dispatch(setUserRole("admin"));
-        navigate(ROUTES.ADMIN_DASHBOARD);
+
+        // role : 0 - admin, 1 - teacher, 2 - parent
+        switch (role) {
+          case 0:
+            dispatch(setUserRole("admin"));
+            navigate(ROUTES.ADMIN_DASHBOARD);
+            break;
+          case 1:
+            dispatch(setUserRole("teacher"));
+            navigate(ROUTES.TEACHER_DASHBOARD);
+            break;
+          case 2:
+            dispatch(setUserRole("parent"));
+            navigate(ROUTES.PARENT_DASHBOARD);
+            break;
+          default:
+            console.warn("Unknown role:", role);
+            break;
+        }
       })
       .catch((error) => {
         alert(error);
-        console.error("Login error: ", error);
-        // Handle login error, e.g., show error message
+        console.error("Login error:", error);
       });
   };
 
@@ -58,7 +74,7 @@ const Login = () => {
           background: "#fff",
           padding: "30px",
           borderRadius: "10px",
-          boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
+          boxShadow: "0px 0px 10px rgba(0,0,0,0.1)"
         }}
       >
         <Typography
@@ -87,6 +103,11 @@ const Login = () => {
           variant="outlined"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleLogin();
+            }
+          }}
         />
         <Button
           fullWidth

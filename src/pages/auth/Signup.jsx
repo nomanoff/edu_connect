@@ -11,9 +11,7 @@ import {
 } from "@mui/material";
 import styled from "styled-components";
 import { setCookie } from "nookies";
-
 import { useDispatch } from "react-redux";
-
 import {
   registerAdminAsync,
   registerParentAsync,
@@ -43,22 +41,13 @@ const Signup = () => {
   const [teacherKey, setTeacherKey] = useState("");
 
   const handleSignup = () => {
-    if (password.length < 6) {
-      alert("Password must be at least 6 characters!");
-      return;
-    }
+    if (password.length < 6) return alert("Password must be at least 6 characters!");
+    if (password !== confirmPassword) return alert("Passwords do not match!");
+    if (role === "0" && !adminKey) return alert("Admin Key is required for Admin role!");
+    if (role === "1" && !teacherKey) return alert("Teacher Key is required for Teacher role!");
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
+    const commonData = { name, email, password, role: Number(role) };
 
-    if (role === "0" && !adminKey) {
-      alert("Admin Key is required for Admin role!");
-      return;
-    }
-
-    // Admin role
     if (role === "0") {
       const adminData = {
         name: name,
@@ -71,21 +60,14 @@ const Signup = () => {
       dispatch(registerAdminAsync(adminData))
         .unwrap()
         .then(({ token }) => {
-          setCookie(null, "token", token, {
-            maxAge: 30 * 24 * 60 * 60,
-            path: "/",
-          });
-
+          setCookie(null, "token", token, { maxAge: 30 * 24 * 60 * 60, path: "/" });
           dispatch(setIsAuthenticated(true));
           dispatch(setUserRole("admin"));
           navigate(ROUTES.ADMIN_DASHBOARD);
         })
-        .catch((error) => {
-          alert(error);
-        });
+        .catch(alert);
     }
 
-    // Teacher role
     if (role === "1") {
       const teacherData = {
         name: name,
@@ -112,7 +94,6 @@ const Signup = () => {
         });
     }
 
-    // Parent role
     if (role === "2") {
       const parentData = {
         name: name,
@@ -139,23 +120,23 @@ const Signup = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleSignup();
+  };
+
   return (
     <Wrapper>
       <Container
         maxWidth="xs"
-        style={{
+        sx={{
           textAlign: "center",
           background: "#fff",
-          padding: "20px",
-          borderRadius: "10px",
-          boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
+          p: 3,
+          borderRadius: 2,
+          boxShadow: 3,
         }}
       >
-        <Typography
-          variant="h4"
-          gutterBottom
-          style={{ fontWeight: "bold", color: "#1976d2" }}
-        >
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold", color: "#1976d2" }}>
           EduConnect
         </Typography>
         <Typography variant="h6" gutterBottom>
@@ -169,6 +150,7 @@ const Signup = () => {
           variant="outlined"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <TextField
           required
@@ -178,32 +160,36 @@ const Signup = () => {
           variant="outlined"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <TextField
           fullWidth
-          sx={{ mb: "5px", p: "3px" }}
+          margin="dense"
           type="password"
           label="Password"
           variant="outlined"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <TextField
           fullWidth
-          sx={{ mb: "5px", p: "3px" }}
+          margin="dense"
           type="password"
           label="Confirm Password"
           variant="outlined"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
 
-        <FormControl fullWidth sx={{ mb: "5px", p: "3px" }}>
+        <FormControl fullWidth margin="dense">
           <InputLabel>Select Role</InputLabel>
           <Select
             value={role}
             onChange={(e) => setRole(e.target.value)}
             label="Select Role"
+            onKeyDown={handleKeyDown}
           >
             <MenuItem value="0">Admin</MenuItem>
             <MenuItem value="1">Teacher</MenuItem>
@@ -211,49 +197,45 @@ const Signup = () => {
           </Select>
         </FormControl>
 
-        {/* Admin */}
         {role === "0" && (
-          <>
-            <TextField
-              fullWidth
-              required
-              sx={{ mb: "5px", p: "3px" }}
-              type="password"
-              label="Admin Key"
-              variant="outlined"
-              value={adminKey}
-              onChange={(e) => setAdminKey(e.target.value)}
-            />
-          </>
+          <TextField
+            fullWidth
+            required
+            margin="dense"
+            type="password"
+            label="Admin Key"
+            variant="outlined"
+            value={adminKey}
+            onChange={(e) => setAdminKey(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
         )}
 
-        {/* Teacher */}
         {role === "1" && (
-          <>
-            <TextField
-              fullWidth
-              required
-              sx={{ mb: "5px", p: "3px" }}
-              type="password"
-              label="Teacher Key"
-              variant="outlined"
-              value={teacherKey}
-              onChange={(e) => setTeacherKey(e.target.value)}
-            />
-          </>
+          <TextField
+            fullWidth
+            required
+            margin="dense"
+            type="password"
+            label="Teacher Key"
+            variant="outlined"
+            value={teacherKey}
+            onChange={(e) => setTeacherKey(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
         )}
 
         <Button
           fullWidth
           variant="contained"
           color="primary"
-          sx={{ mt: "10px" }}
+          sx={{ mt: 2 }}
           onClick={handleSignup}
         >
           SIGN UP
         </Button>
 
-        <Typography variant="body2" sx={{ mt: "10px", color: "black" }}>
+        <Typography variant="body2" sx={{ mt: 2, color: "black" }}>
           Already have an account? <a href="/login">Login</a>
         </Typography>
       </Container>
