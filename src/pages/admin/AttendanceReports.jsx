@@ -11,7 +11,7 @@ const Container = styled.div`
 
 const ReportItem = styled.div`
   padding: 15px;
-  margin-top:50px;
+  margin-top:51px;
   
   border-radius: 6px;
 `;
