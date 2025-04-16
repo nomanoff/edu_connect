@@ -49,7 +49,8 @@ export const studentApi = {
 };
 
 // Class
+// Class
 export const classApi = {
-  // get class list
   getClassList: () => axios.get(`${CLASS_LIST}`),
+
 };

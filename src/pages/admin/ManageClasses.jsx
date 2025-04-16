@@ -13,40 +13,51 @@ import {
   RadioGroup,
   FormControlLabel,
 } from "@mui/material";
-import { selectAdmin } from "../../utils/redux/adminSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectClass, getClassListAsync, createClassAsync } from "../../utils/redux/classSlice";
+
+const teachers = [
+  { id: "3fa85f64-5717-4562-b3fc-2c963f66afa6", name: "Azizbek" },
+  { id: "8a749ccc-1ff7-4cb2-9d4f-89a8031f6179", name: "Farxod" },
+  { id: "b718e04d-91ec-4120-a0d4-3300c6e253d9", name: "Ali" },
+  { id: "ae76f1db-5c56-4ae5-a49c-5f4f212f26e8", name: "Bekzod" },
+];
 
 const ManageClasses = () => {
-  const { classList } = useSelector(selectAdmin);
+  const dispatch = useDispatch();
+  const { classList } = useSelector(selectClass);
+
   const [className, setClassName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [dayType, setDayType] = useState(0);
-  const [selectedTeacher, setSelectedTeacher] = useState("");
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [openTeacherDialog, setOpenTeacherDialog] = useState(false);
-  const [students, setStudents] = useState([]);
 
-  const teachers = ["Azizbek", "Farxod", "Ali", "Bekzod"];
+  useEffect(() => {
+    dispatch(getClassListAsync());
+  }, [dispatch]);
 
-  const handleAddStudent = () => {
+  const handleCreateClass = () => {
     if (className && startTime && endTime && selectedTeacher) {
-      const newStudent = {
-        className,
+      const classData = {
+        name: className,
         startTime,
         endTime,
-        dayType,
-        selectedTeacher,
+        schedule: dayType,
+        teacherId: selectedTeacher.id,
       };
-      setStudents([...students, newStudent]);
-      console.log("Yangi sinf ma'lumotlari:", newStudent);
+
+      dispatch(createClassAsync(classData));
+
+      // formani tozalaymiz
       setClassName("");
       setStartTime("");
       setEndTime("");
-      setSelectedTeacher("");
+      setSelectedTeacher(null);
     }
   };
 
-  useEffect(() => {}, [students]);
   return (
     <Container>
       <Typography variant="h5" style={{ marginBottom: "20px" }}>
@@ -82,18 +93,15 @@ const ManageClasses = () => {
           <RadioGroup
             row
             value={dayType}
-            onChange={(e) => setDayType(e.target.value === "0" ? 0 : 1)}
+            onChange={(e) => setDayType(parseInt(e.target.value))}
           >
             <FormControlLabel value={0} control={<Radio />} label="Odd" />
             <FormControlLabel value={1} control={<Radio />} label="Even" />
           </RadioGroup>
-          <Typography variant="subtitle1">
-            Selected Day Type: {dayType === 0 ? "Odd" : "Even"}
-          </Typography>
           <TextField
             label="Teacher"
             fullWidth
-            value={selectedTeacher}
+            value={selectedTeacher ? selectedTeacher.name : ""}
             InputProps={{ readOnly: true }}
             margin="normal"
           />
@@ -108,7 +116,7 @@ const ManageClasses = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={handleAddStudent}
+            onClick={handleCreateClass}
             fullWidth
             disabled={!className || !startTime || !endTime || !selectedTeacher}
             style={{ marginTop: "10px", padding: "15px", fontSize: "16px" }}
@@ -121,19 +129,11 @@ const ManageClasses = () => {
           <Typography variant="h6">Class List</Typography>
           <ClassList>
             {classList?.map((_class, index) => (
-              <Card
-                key={index}
-                style={{
-                  marginBottom: "10px",
-                  padding: "15px",
-                  background: "#e0e0e0",
-                  borderRadius: "10px",
-                }}
-              >
+              <Card key={index} style={{ marginBottom: "10px", padding: "15px", background: "#e0e0e0", borderRadius: "10px" }}>
                 <CardContent>
                   <p>{_class.name}</p>
-                  <p>{_class.time}</p>
-                  <p>{_class.teacher}</p>
+                  <p>{_class.startTime} - {_class.endTime}</p>
+                  <p>Teacher ID: {_class.teacherId}</p>
                 </CardContent>
               </Card>
             ))}
@@ -141,25 +141,19 @@ const ManageClasses = () => {
         </ClassListSection>
       </ContentWrapper>
 
-      <Dialog
-        open={openTeacherDialog}
-        onClose={() => setOpenTeacherDialog(false)}
-      >
+      <Dialog open={openTeacherDialog} onClose={() => setOpenTeacherDialog(false)}>
         <DialogTitle>Teacher List</DialogTitle>
         <DialogContent style={{ padding: "30px", width: "500px" }}>
-          {teachers.map((teacher, index) => (
+          {teachers.map((teacher) => (
             <TeacherItem
-              key={index}
+              key={teacher.id}
               onClick={() => {
                 setSelectedTeacher(teacher);
                 setOpenTeacherDialog(false);
               }}
             >
-              <Typography>{teacher}</Typography>
-              <Button
-                variant="contained"
-                style={{ fontSize: "14px", padding: "8px 16px" }}
-              >
+              <Typography>{teacher.name}</Typography>
+              <Button variant="contained" style={{ fontSize: "14px", padding: "8px 16px" }}>
                 Select
               </Button>
             </TeacherItem>
@@ -170,47 +164,15 @@ const ManageClasses = () => {
   );
 };
 
-const Container = styled.div`
-  padding: 40px;
-`;
-
-const ContentWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-`;
-
-const FormSection = styled.div`
-  width: 45%;
-  padding: 30px;
-  background: #f5f5f5;
-  border-radius: 20px;
-`;
-
-const ClassListSection = styled.div`
-  width: 45%;
-  padding: 30px;
-  background: #f5f5f5;
-  border-radius: 20px;
-  height: 400px;
-`;
-
-const ClassList = styled.div`
-  max-height: 350px;
-  padding-right: 10px;
-  overflow-y: auto;
-`;
-
+const Container = styled.div`padding: 40px;`;
+const ContentWrapper = styled.div`display: flex; justify-content: space-between; gap: 30px;`;
+const FormSection = styled.div`width: 45%; padding: 30px; background: #f5f5f5; border-radius: 20px;`;
+const ClassListSection = styled.div`width: 45%; padding: 30px; background: #f5f5f5; border-radius: 20px; height: 400px;`;
+const ClassList = styled.div`max-height: 350px; padding-right: 10px; overflow-y: auto;`;
 const TeacherItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  cursor: pointer;
-  background: #e0e0e0;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  font-size: 18px;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px; cursor: pointer; background: #e0e0e0;
+  margin-bottom: 10px; border-radius: 10px; font-size: 18px;
 `;
 
 export default ManageClasses;
