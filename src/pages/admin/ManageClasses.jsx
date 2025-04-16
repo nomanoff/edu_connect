@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import styled from "styled-components";
 import {
   Button,
@@ -13,20 +15,15 @@ import {
   RadioGroup,
   FormControlLabel,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { selectClass, getClassListAsync, createClassAsync } from "../../utils/redux/classSlice";
+import { getClassListAsync, postClassAsync } from "../../utils/redux/classSlice";
+import { getTeacherListAsync } from "../../utils/redux/teacherSlice";
 
-const teachers = [
-  { id: "3fa85f64-5717-4562-b3fc-2c963f66afa6", name: "Azizbek" },
-  { id: "8a749ccc-1ff7-4cb2-9d4f-89a8031f6179", name: "Farxod" },
-  { id: "b718e04d-91ec-4120-a0d4-3300c6e253d9", name: "Ali" },
-  { id: "ae76f1db-5c56-4ae5-a49c-5f4f212f26e8", name: "Bekzod" },
-];
 
 const ManageClasses = () => {
   const dispatch = useDispatch();
-  const { classList } = useSelector(selectClass);
 
+  const [teacherList, setTeacherList] = useState([]);
+  const [classList, setClassList] = useState([])
   const [className, setClassName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -35,34 +32,47 @@ const ManageClasses = () => {
   const [openTeacherDialog, setOpenTeacherDialog] = useState(false);
 
   useEffect(() => {
-    dispatch(getClassListAsync());
+    dispatch((getTeacherListAsync()))
+      .unwrap()
+      .then((data) => {
+        console.log('teacher list data: ', data)
+        setTeacherList(data)
+      })
+    dispatch(getClassListAsync())
+      .unwrap()
+      .then((data) => {
+        console.log('class list data: ', data)
+        setClassList(data)
+      })
   }, [dispatch]);
 
   const handleCreateClass = () => {
     if (className && startTime && endTime && selectedTeacher) {
+      const formatTimeWithSeconds = (timeStr) => {
+        const [hour, minute] = timeStr.split(":");
+        return `${hour}:${minute}:00`;
+      };
+  
       const classData = {
         name: className,
-        startTime,
-        endTime,
+        startTime: formatTimeWithSeconds(startTime),
+        endTime: formatTimeWithSeconds(endTime),
         schedule: dayType,
         teacherId: selectedTeacher.id,
       };
-
-      dispatch(createClassAsync(classData));
-
-      // formani tozalaymiz
+  
+      dispatch(postClassAsync(classData));
+  
       setClassName("");
       setStartTime("");
       setEndTime("");
       setSelectedTeacher(null);
     }
   };
+  
 
   return (
     <Container>
-      <Typography variant="h5" style={{ marginBottom: "20px" }}>
-        Welcome, Admin
-      </Typography>
       <ContentWrapper>
         <FormSection>
           <Typography variant="h6">Add Class</Typography>
@@ -73,16 +83,16 @@ const ManageClasses = () => {
             onChange={(e) => setClassName(e.target.value)}
             margin="normal"
           />
-          <TextField
-            label="Start Time"
+    <Typography variant="h6">Start Time</Typography>
+           <TextField
             fullWidth
             type="time"
             value={startTime}
             onChange={(e) => setStartTime(e.target.value)}
             margin="normal"
           />
+              <Typography variant="h6">End Time</Typography>
           <TextField
-            label="End Time"
             fullWidth
             type="time"
             value={endTime}
@@ -133,7 +143,6 @@ const ManageClasses = () => {
                 <CardContent>
                   <p>{_class.name}</p>
                   <p>{_class.startTime} - {_class.endTime}</p>
-                  <p>Teacher ID: {_class.teacherId}</p>
                 </CardContent>
               </Card>
             ))}
@@ -144,7 +153,7 @@ const ManageClasses = () => {
       <Dialog open={openTeacherDialog} onClose={() => setOpenTeacherDialog(false)}>
         <DialogTitle>Teacher List</DialogTitle>
         <DialogContent style={{ padding: "30px", width: "500px" }}>
-          {teachers.map((teacher) => (
+          {teacherList.map((teacher) => (
             <TeacherItem
               key={teacher.id}
               onClick={() => {
@@ -167,8 +176,8 @@ const ManageClasses = () => {
 const Container = styled.div`padding: 40px;`;
 const ContentWrapper = styled.div`display: flex; justify-content: space-between; gap: 30px;`;
 const FormSection = styled.div`width: 45%; padding: 30px; background: #f5f5f5; border-radius: 20px;`;
-const ClassListSection = styled.div`width: 45%; padding: 30px; background: #f5f5f5; border-radius: 20px; height: 400px;`;
-const ClassList = styled.div`max-height: 350px; padding-right: 10px; overflow-y: auto;`;
+const ClassListSection = styled.div`width: 45%; padding: 30px; background: #f5f5f5; border-radius: 20px; height: 430px;`;
+const ClassList = styled.div` height: 350px; padding-right: 10px; overflow-y: auto;`;
 const TeacherItem = styled.div`
   display: flex; justify-content: space-between; align-items: center;
   padding: 20px; cursor: pointer; background: #e0e0e0;

@@ -2,33 +2,57 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { classApi } from "../api";
 
 const initialState = {
-  studentList: [],
+  classList: [],
 };
 
-// get academy list thunk
-export const getClassesListAsync = createAsyncThunk(
-  "auth/getClassesList",
+// get class list thunk
+export const getClassListAsync = createAsyncThunk(
+  "class/getClassesList",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await classApi.getStudentList();
-
+      const response = await classApi.getClassList();
       return response.data;
     } catch (error) {
-      console.error("Error fetching student list:", error);
-      return rejectWithValue("Failed to fetch student list");
+      console.error("Error getting class list:", error);
+      return rejectWithValue("Failed to fetch class list");
     }
   }
 );
 
-const classesSlice = createSlice({
+// post class thunk
+export const postClassAsync = createAsyncThunk(
+  "class/postClass",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await classApi.postClass(data);
+      return response.data; // 👈 bu muhim, shuni saqlab qolamiz
+    } catch (error) {
+      console.error("Error creating a class:", error);
+      return rejectWithValue("Failed creating a class");
+    }
+  }
+);
+
+// slice
+const classSlice = createSlice({
   name: "class",
   initialState,
   reducers: {
     resetStudentSlice: () => initialState,
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getClassListAsync.fulfilled, (state, action) => {
+        state.classList = action.payload;
+      })
+      .addCase(postClassAsync.fulfilled, (state, action) => {
+        state.classList.push(action.payload); // 👈 yangi classni listga qo‘sh
+      });
+  },
 });
-export const selectClasses = (state) => state.class;
 
-export const { resetStudentSlice } = classesSlice.actions;
+export const selectClass = (state) => state.class;
 
-export default classesSlice.reducer;
+export const { resetStudentSlice } = classSlice.actions;
+
+export default classSlice.reducer;
