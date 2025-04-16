@@ -6,75 +6,87 @@ import { EdH1 } from "../../components/EdStyled";
 import AdminParticipants from "../../components/admin/AdminParticipants";
 import { getClassListAsync } from "../../utils/redux/classSlice";
 
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  min-height: calc(100vh - 54.5px);
-`;
-
-const MainWrapper = styled.main`
+const DashboardWrapper = styled.div`
   padding: 20px;
-  height: 550px;
-  margin: 20px;
-  border: 2px solid #808080;
-  max-width: 100%;
-  overflow: auto;
+  background-color: #f9f9f9;
 `;
 
-const TableHeader = styled.main`
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 25px;
-  max-width: 100%;
+const Title = styled.h2`
+  font-size: 20px;
+  margin-bottom: 10px;
 `;
 
-const AdminDashboard = () => {
-  const dispatch = useDispatch();
-  const [classList, setClassList] = useState([]);
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+`;
 
-  useEffect(() => {
-    dispatch(getClassListAsync())
-      .unwrap()
-      .then((response) => {
-        setClassList(response);
-      })
-      .catch((error) => {
-        setClassList([]);
-        console.error("error fetching class list: ", error);
-      });
-  }, [dispatch]);
+const Thead = styled.thead`
+  background-color: #007bff;
+  color: white;
+`;
+
+const Th = styled.th`
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  border-right: 1px solid #fff;
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+const Td = styled.td`
+  padding: 12px;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+const Tr = styled.tr`
+  &:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+`;
+
+const TeacherDashboard = () => {
+  const classes = [
+    { name: "Frontend 001", time: "17:00 – 19:00", students: 5, attendance: "90%" },
+    { name: "Backend 002", time: "15:00 – 17:00", students: 7, attendance: "89%" },
+    { name: "Python 003", time: "10:00 – 12:00", students: 6, attendance: "93%" },
+  ];
 
   return (
-    <Wrapper>
-      <EdH1 fontWeight={"700"} textAlign={"left"} padding={"20px"}>
-        Welcome, Adam
-      </EdH1>
-      <MainWrapper>
-        <TableHeader>
-          <EdH1 fontSize={"1.1rem"} padding={"10px"} width={"200px"}>
-            class name
-          </EdH1>
-          <EdH1 fontSize={"1.1rem"} padding={"10px"} width={"200px"}>
-            class time
-          </EdH1>
-          <EdH1 fontSize={"1.1rem"} padding={"10px"} width={"200px"}>
-            teacher
-          </EdH1>
-          <EdH1 fontSize={"1.1rem"} padding={"10px"} width={"200px"}>
-            number of students
-          </EdH1>
-          <EdH1 fontSize={"1.1rem"} padding={"10px"} width={"200px"}>
-            attendance rate
-          </EdH1>
-        </TableHeader>
-
-        {classList?.map((table, index) => (
-          <AdminParticipants key={index.toString()} table={table} />
-        ))}
-      </MainWrapper>
-    </Wrapper>
+    <DashboardWrapper>
+      <Title>Teacher Dashboard</Title>
+      <Table>
+        <Thead>
+          <tr>
+            <Th>Class Name</Th>
+            <Th>Class Time</Th>
+            <Th>No. of Students</Th>
+            <Th>Attendance Rate</Th>
+          </tr>
+        </Thead>
+        <tbody>
+          {classes.map((cls, index) => (
+            <Tr key={index}>
+              <Td>{cls.name}</Td>
+              <Td>{cls.time}</Td>
+              <Td>{cls.students}</Td>
+              <Td>{cls.attendance}</Td>
+            </Tr>
+          ))}
+        </tbody>
+      </Table>
+    </DashboardWrapper>
   );
 };
 
-export default AdminDashboard;
+export default TeacherDashboard;

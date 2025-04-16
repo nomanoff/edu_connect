@@ -82,7 +82,7 @@ const Button = styled.button`
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: ${(props) => (props.primary ? "#007bff" : "white")};
   color: ${(props) => (props.primary ? "white" : "#007bff")};
-  // border: ${(props) => (props.primary ? "none" : "2px solid #007bff")};
+  border: ${(props) => (props.primary ? "none" : "2px solid #007bff")};
 
   &:hover {
     transform: scale(1.05);
