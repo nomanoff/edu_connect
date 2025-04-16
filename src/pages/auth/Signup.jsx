@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   TextField,
   Button,
@@ -40,58 +40,127 @@ const Signup = () => {
   const [adminKey, setAdminKey] = useState("");
   const [teacherKey, setTeacherKey] = useState("");
 
+  // 🔽 Enter bosilganda handleSignup chaqiriladi
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === "Enter") {
+        handleSignup();
+      }
+    },
+    [name, email, password, confirmPassword, role, adminKey, teacherKey]
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
+  // 🔼 Qo‘shildi
+
   const handleSignup = () => {
-    if (password.length < 6) return alert("Password must be at least 6 characters!");
-    if (password !== confirmPassword) return alert("Passwords do not match!");
-    if (role === "0" && !adminKey) return alert("Admin Key is required for Admin role!");
-    if (role === "1" && !teacherKey) return alert("Teacher Key is required for Teacher role!");
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters!");
+      return;
+    }
 
-    const commonData = { name, email, password, role: Number(role) };
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
 
+    if (role === "0" && !adminKey) {
+      alert("Admin Key is required for Admin role!");
+      return;
+    }
+
+    // Admin role
     if (role === "0") {
-      dispatch(registerAdminAsync({ ...commonData, tokenOfAcademy: adminKey }))
+      const adminData = {
+        name,
+        email,
+        password,
+        role: Number(role),
+        tokenOfAcademy: adminKey,
+      };
+
+      dispatch(registerAdminAsync(adminData))
         .unwrap()
         .then(({ token }) => {
-          setCookie(null, "token", token, { maxAge: 30 * 24 * 60 * 60, path: "/" });
+          setCookie(null, "token", token, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: "/",
+          });
           dispatch(setIsAuthenticated(true));
           dispatch(setUserRole("admin"));
           navigate(ROUTES.ADMIN_DASHBOARD);
         })
-        .catch(alert);
+        .catch((error) => alert(error));
     }
 
+    // Teacher role
     if (role === "1") {
-      dispatch(registerTeacherAsync({ ...commonData, tokenForTeacher: teacherKey }))
+      const teacherData = {
+        name,
+        email,
+        password,
+        role: Number(role),
+        tokenForTeacher: teacherKey,
+      };
+
+      dispatch(registerTeacherAsync(teacherData))
         .unwrap()
-        .then(() => alert("Teacher registered successfully!"))
-        .catch(alert);
+        .then(({ token }) => {
+          setCookie(null, "token", token, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: "/",
+          });
+          dispatch(setIsAuthenticated(true));
+          dispatch(setUserRole("teacher"));
+          navigate(ROUTES.TEACHER_DASHBOARD);
+        })
+        .catch((error) => alert(error));
     }
 
+    // Parent role
     if (role === "2") {
-      dispatch(registerParentAsync(commonData))
-        .unwrap()
-        .then(() => alert("Parent registered successfully!"))
-        .catch(alert);
-    }
-  };
+      const parentData = {
+        name,
+        email,
+        password,
+        role: Number(role),
+      };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleSignup();
+      dispatch(registerParentAsync(parentData))
+        .unwrap()
+        .then(({ token }) => {
+          setCookie(null, "token", token, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: "/",
+          });
+          dispatch(setIsAuthenticated(true));
+          dispatch(setUserRole("parent"));
+          navigate(ROUTES.PARENT_DASHBOARD);
+        })
+        .catch((error) => alert(error));
+    }
   };
 
   return (
     <Wrapper>
       <Container
         maxWidth="xs"
-        sx={{
+        style={{
           textAlign: "center",
           background: "#fff",
-          p: 3,
-          borderRadius: 2,
-          boxShadow: 3,
+          padding: "20px",
+          borderRadius: "10px",
+          boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
         }}
       >
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold", color: "#1976d2" }}>
+        <Typography
+          variant="h4"
+          gutterBottom
+          style={{ fontWeight: "bold", color: "#1976d2" }}
+        >
           EduConnect
         </Typography>
         <Typography variant="h6" gutterBottom>
@@ -100,52 +169,46 @@ const Signup = () => {
 
         <TextField
           fullWidth
-          margin="dense"
+          sx={{ mb: "5px", p: "3px" }}
           label="Name"
           variant="outlined"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          onKeyDown={handleKeyDown}
         />
         <TextField
           required
           fullWidth
-          margin="dense"
+          sx={{ mb: "5px", p: "3px" }}
           label="Email"
           variant="outlined"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          onKeyDown={handleKeyDown}
         />
         <TextField
           fullWidth
-          margin="dense"
+          sx={{ mb: "5px", p: "3px" }}
           type="password"
           label="Password"
           variant="outlined"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={handleKeyDown}
         />
         <TextField
           fullWidth
-          margin="dense"
+          sx={{ mb: "5px", p: "3px" }}
           type="password"
           label="Confirm Password"
           variant="outlined"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          onKeyDown={handleKeyDown}
         />
 
-
-<FormControl fullWidth margin="dense">
+        <FormControl fullWidth sx={{ mb: "5px", p: "3px" }}>
           <InputLabel>Select Role</InputLabel>
           <Select
             value={role}
             onChange={(e) => setRole(e.target.value)}
             label="Select Role"
-            onKeyDown={handleKeyDown}
           >
             <MenuItem value="0">Admin</MenuItem>
             <MenuItem value="1">Teacher</MenuItem>
@@ -157,13 +220,12 @@ const Signup = () => {
           <TextField
             fullWidth
             required
-            margin="dense"
+            sx={{ mb: "5px", p: "3px" }}
             type="password"
             label="Admin Key"
             variant="outlined"
             value={adminKey}
             onChange={(e) => setAdminKey(e.target.value)}
-            onKeyDown={handleKeyDown}
           />
         )}
 
@@ -171,13 +233,12 @@ const Signup = () => {
           <TextField
             fullWidth
             required
-            margin="dense"
+            sx={{ mb: "5px", p: "3px" }}
             type="password"
             label="Teacher Key"
             variant="outlined"
             value={teacherKey}
             onChange={(e) => setTeacherKey(e.target.value)}
-            onKeyDown={handleKeyDown}
           />
         )}
 
@@ -185,13 +246,13 @@ const Signup = () => {
           fullWidth
           variant="contained"
           color="primary"
-          sx={{ mt: 2 }}
+          sx={{ mt: "10px" }}
           onClick={handleSignup}
         >
           SIGN UP
         </Button>
 
-        <Typography variant="body2" sx={{ mt: 2, color: "black" }}>
+        <Typography variant="body2" sx={{ mt: "10px", color: "black" }}>
           Already have an account? <a href="/login">Login</a>
         </Typography>
       </Container>
