@@ -50,7 +50,7 @@ const ManageClasses = () => {
 
       dispatch(createClassAsync(classData));
 
-
+      // formani tozalaymiz
       setClassName("");
       setStartTime("");
       setEndTime("");
