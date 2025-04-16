@@ -68,8 +68,6 @@ const Signup = () => {
         tokenOfAcademy: adminKey,
       };
 
-      console.log("Admin data to be dispatched:", adminData);
-
       dispatch(registerAdminAsync(adminData))
         .unwrap()
         .then(({ token }) => {
@@ -94,15 +92,20 @@ const Signup = () => {
         email: email,
         password: password,
         role: Number(role),
-        tokenForTeacher: adminKey,
+        tokenForTeacher: teacherKey,
       };
-
-      console.log("Teacher data to be dispatched:", teacherData);
 
       dispatch(registerTeacherAsync(teacherData))
         .unwrap()
-        .then(() => {
-          alert("Teacher registered successfully!");
+        .then(({ token }) => {
+          setCookie(null, "token", token, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: "/",
+          });
+
+          dispatch(setIsAuthenticated(true));
+          dispatch(setUserRole("teacher"));
+          navigate(ROUTES.TEACHER_DASHBOARD);
         })
         .catch((error) => {
           alert(error);
@@ -118,12 +121,17 @@ const Signup = () => {
         role: Number(role),
       };
 
-      console.log("Parent data to be dispatched:", parentData);
-
       dispatch(registerParentAsync(parentData))
         .unwrap()
-        .then(() => {
-          alert("Parent registered successfully!");
+        .then(({ token }) => {
+          setCookie(null, "token", token, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: "/",
+          });
+
+          dispatch(setIsAuthenticated(true));
+          dispatch(setUserRole("parent"));
+          navigate(ROUTES.PARENT_DASHBOARD);
         })
         .catch((error) => {
           alert(error);
@@ -156,7 +164,7 @@ const Signup = () => {
 
         <TextField
           fullWidth
-          sx={{ mb: "5px", p: "3px" }} 
+          sx={{ mb: "5px", p: "3px" }}
           label="Name"
           variant="outlined"
           value={name}
@@ -165,7 +173,7 @@ const Signup = () => {
         <TextField
           required
           fullWidth
-          sx={{ mb: "5px", p: "3px" }} 
+          sx={{ mb: "5px", p: "3px" }}
           label="Email"
           variant="outlined"
           value={email}
