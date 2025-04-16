@@ -49,15 +49,7 @@ const Signup = () => {
     const commonData = { name, email, password, role: Number(role) };
 
     if (role === "0") {
-      const adminData = {
-        name: name,
-        email: email,
-        password: password,
-        role: Number(role),
-        tokenOfAcademy: adminKey,
-      };
-
-      dispatch(registerAdminAsync(adminData))
+      dispatch(registerAdminAsync({ ...commonData, tokenOfAcademy: adminKey }))
         .unwrap()
         .then(({ token }) => {
           setCookie(null, "token", token, { maxAge: 30 * 24 * 60 * 60, path: "/" });
@@ -69,54 +61,17 @@ const Signup = () => {
     }
 
     if (role === "1") {
-      const teacherData = {
-        name: name,
-        email: email,
-        password: password,
-        role: Number(role),
-        tokenForTeacher: teacherKey,
-      };
-
-      dispatch(registerTeacherAsync(teacherData))
+      dispatch(registerTeacherAsync({ ...commonData, tokenForTeacher: teacherKey }))
         .unwrap()
-        .then(({ token }) => {
-          setCookie(null, "token", token, {
-            maxAge: 30 * 24 * 60 * 60,
-            path: "/",
-          });
-
-          dispatch(setIsAuthenticated(true));
-          dispatch(setUserRole("teacher"));
-          navigate(ROUTES.TEACHER_DASHBOARD);
-        })
-        .catch((error) => {
-          alert(error);
-        });
+        .then(() => alert("Teacher registered successfully!"))
+        .catch(alert);
     }
 
     if (role === "2") {
-      const parentData = {
-        name: name,
-        email: email,
-        password: password,
-        role: Number(role),
-      };
-
-      dispatch(registerParentAsync(parentData))
+      dispatch(registerParentAsync(commonData))
         .unwrap()
-        .then(({ token }) => {
-          setCookie(null, "token", token, {
-            maxAge: 30 * 24 * 60 * 60,
-            path: "/",
-          });
-
-          dispatch(setIsAuthenticated(true));
-          dispatch(setUserRole("parent"));
-          navigate(ROUTES.PARENT_DASHBOARD);
-        })
-        .catch((error) => {
-          alert(error);
-        });
+        .then(() => alert("Parent registered successfully!"))
+        .catch(alert);
     }
   };
 
@@ -145,7 +100,7 @@ const Signup = () => {
 
         <TextField
           fullWidth
-          sx={{ mb: "5px", p: "3px" }}
+          margin="dense"
           label="Name"
           variant="outlined"
           value={name}
@@ -155,7 +110,7 @@ const Signup = () => {
         <TextField
           required
           fullWidth
-          sx={{ mb: "5px", p: "3px" }}
+          margin="dense"
           label="Email"
           variant="outlined"
           value={email}
@@ -183,7 +138,8 @@ const Signup = () => {
           onKeyDown={handleKeyDown}
         />
 
-        <FormControl fullWidth margin="dense">
+
+<FormControl fullWidth margin="dense">
           <InputLabel>Select Role</InputLabel>
           <Select
             value={role}
