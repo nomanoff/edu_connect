@@ -1,7 +1,7 @@
 import axios from "axios";
 import { parseCookies } from "nookies";
 
-axios.defaults.baseURL = "http://109.73.205.134:5000"; // debug
+axios.defaults.baseURL = "https://edc-test.ilmhub.uz"; // debug
 
 axios.defaults.withCredentials = true;
 
