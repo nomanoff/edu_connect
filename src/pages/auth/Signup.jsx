@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   TextField,
   Button,
@@ -11,9 +11,7 @@ import {
 } from "@mui/material";
 import styled from "styled-components";
 import { setCookie } from "nookies";
-
 import { useDispatch } from "react-redux";
-
 import {
   registerAdminAsync,
   registerParentAsync,
@@ -42,6 +40,22 @@ const Signup = () => {
   const [adminKey, setAdminKey] = useState("");
   const [teacherKey, setTeacherKey] = useState("");
 
+  // 🔽 Enter bosilganda handleSignup chaqiriladi
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === "Enter") {
+        handleSignup();
+      }
+    },
+    [name, email, password, confirmPassword, role, adminKey, teacherKey]
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
+  // 🔼 Qo‘shildi
+
   const handleSignup = () => {
     if (password.length < 6) {
       alert("Password must be at least 6 characters!");
@@ -61,9 +75,9 @@ const Signup = () => {
     // Admin role
     if (role === "0") {
       const adminData = {
-        name: name,
-        email: email,
-        password: password,
+        name,
+        email,
+        password,
         role: Number(role),
         tokenOfAcademy: adminKey,
       };
@@ -75,22 +89,19 @@ const Signup = () => {
             maxAge: 30 * 24 * 60 * 60,
             path: "/",
           });
-
           dispatch(setIsAuthenticated(true));
           dispatch(setUserRole("admin"));
           navigate(ROUTES.ADMIN_DASHBOARD);
         })
-        .catch((error) => {
-          alert(error);
-        });
+        .catch((error) => alert(error));
     }
 
     // Teacher role
     if (role === "1") {
       const teacherData = {
-        name: name,
-        email: email,
-        password: password,
+        name,
+        email,
+        password,
         role: Number(role),
         tokenForTeacher: teacherKey,
       };
@@ -102,22 +113,19 @@ const Signup = () => {
             maxAge: 30 * 24 * 60 * 60,
             path: "/",
           });
-
           dispatch(setIsAuthenticated(true));
           dispatch(setUserRole("teacher"));
           navigate(ROUTES.TEACHER_DASHBOARD);
         })
-        .catch((error) => {
-          alert(error);
-        });
+        .catch((error) => alert(error));
     }
 
     // Parent role
     if (role === "2") {
       const parentData = {
-        name: name,
-        email: email,
-        password: password,
+        name,
+        email,
+        password,
         role: Number(role),
       };
 
@@ -128,14 +136,11 @@ const Signup = () => {
             maxAge: 30 * 24 * 60 * 60,
             path: "/",
           });
-
           dispatch(setIsAuthenticated(true));
           dispatch(setUserRole("parent"));
           navigate(ROUTES.PARENT_DASHBOARD);
         })
-        .catch((error) => {
-          alert(error);
-        });
+        .catch((error) => alert(error));
     }
   };
 
@@ -211,36 +216,30 @@ const Signup = () => {
           </Select>
         </FormControl>
 
-        {/* Admin */}
         {role === "0" && (
-          <>
-            <TextField
-              fullWidth
-              required
-              sx={{ mb: "5px", p: "3px" }}
-              type="password"
-              label="Admin Key"
-              variant="outlined"
-              value={adminKey}
-              onChange={(e) => setAdminKey(e.target.value)}
-            />
-          </>
+          <TextField
+            fullWidth
+            required
+            sx={{ mb: "5px", p: "3px" }}
+            type="password"
+            label="Admin Key"
+            variant="outlined"
+            value={adminKey}
+            onChange={(e) => setAdminKey(e.target.value)}
+          />
         )}
 
-        {/* Teacher */}
         {role === "1" && (
-          <>
-            <TextField
-              fullWidth
-              required
-              sx={{ mb: "5px", p: "3px" }}
-              type="password"
-              label="Teacher Key"
-              variant="outlined"
-              value={teacherKey}
-              onChange={(e) => setTeacherKey(e.target.value)}
-            />
-          </>
+          <TextField
+            fullWidth
+            required
+            sx={{ mb: "5px", p: "3px" }}
+            type="password"
+            label="Teacher Key"
+            variant="outlined"
+            value={teacherKey}
+            onChange={(e) => setTeacherKey(e.target.value)}
+          />
         )}
 
         <Button
