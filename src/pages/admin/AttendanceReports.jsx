@@ -6,11 +6,13 @@ const Container = styled.div`
   max-width: 800px;
   margin: auto;
   font-family: Arial, sans-serif;
+  
 `;
 
 const ReportItem = styled.div`
-  padding: 10px;
-  margin: 10px 0;
+  padding: 15px;
+  margin-top:52px;
+  
   border-radius: 6px;
 `;
 
@@ -25,9 +27,7 @@ const ProgressBar = styled.div`
 
 const ProgressFill = styled.div`
   height: 100%;
-  background: ${({ percent }) =>
-    percent >= 80 ? "#0bd511" : percent >= 40 ? "#ff9800" : "#ff0000"};
-  width: ${({ percent }) => percent}%;
+  
   transition: width 0.5s ease-in-out;
 `;
 
