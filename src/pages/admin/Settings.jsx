@@ -81,10 +81,22 @@ const Settings = () => {
       <Title>Settings</Title>
       <Card>
         <Label>Academy Name</Label>
-        <Input type="text" placeholder="Enter Academy Name" />
+        <Input 
+          type="text" 
+          name="input1"
+          placeholder="Enter Academy Name"  
+          value={formData.input1}
+          onChange={handleChange} 
+        />
         <Label>Academy Address</Label>
-        <Input type="text" placeholder="Academy Address" />
-        <Button>Save Changes</Button>
+        <Input 
+          type="text" 
+          name="input2"
+          placeholder="Academy Address"  
+          value={formData.input2}
+          onChange={handleChange} 
+        />
+        <Button onClick={handleClick}>Save Changes</Button>
       </Card>
     </Container>
   );

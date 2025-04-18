@@ -5,42 +5,54 @@ const initialState = {
   classList: [],
 };
 
-// get academy list thunk
+// get class list thunk
 export const getClassListAsync = createAsyncThunk(
-  "auth/getClassList",
+  "class/getClassesList",
   async (data, { rejectWithValue }) => {
     try {
       const response = await classApi.getClassList();
-
       return response.data;
     } catch (error) {
-      console.error("Error fetching class list:", error);
+      console.error("Error getting class list:", error);
       return rejectWithValue("Failed to fetch class list");
     }
   }
 );
 
+// post class thunk
+export const postClassAsync = createAsyncThunk(
+  "class/postClass",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await classApi.postClass(data);
+      return response.data; // 👈 bu muhim, shuni saqlab qolamiz
+    } catch (error) {
+      console.error("Error creating a class:", error);
+      return rejectWithValue("Failed creating a class");
+    }
+  }
+);
+
+// slice
 const classSlice = createSlice({
   name: "class",
   initialState,
   reducers: {
-    resetClassSlice: () => initialState,
+    resetStudentSlice: () => initialState,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getClassListAsync.pending, (state) => {
-        state.classList = [];
-      })
       .addCase(getClassListAsync.fulfilled, (state, action) => {
         state.classList = action.payload;
       })
-      .addCase(getClassListAsync.rejected, (state) => {
-        state.classList = [];
+      .addCase(postClassAsync.fulfilled, (state, action) => {
+        state.classList.push(action.payload); // 👈 yangi classni listga qo‘sh
       });
   },
 });
+
 export const selectClass = (state) => state.class;
 
-export const { resetClassSlice } = classSlice.actions;
+export const { resetStudentSlice } = classSlice.actions;
 
 export default classSlice.reducer;

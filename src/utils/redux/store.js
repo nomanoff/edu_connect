@@ -8,6 +8,7 @@ import academySlice from "./academySlice";
 import adminSlice from "./adminSlice";
 import studentSlice from "./studentSlice";
 import classSlice from "./classSlice";
+import teacherSlice from './teacherSlice';
 
 const rootReducer = combineReducers({
   auth: authSlice,
@@ -15,6 +16,8 @@ const rootReducer = combineReducers({
   admin: adminSlice,
   student: studentSlice,
   class: classSlice,
+  classSlice: classSlice,
+  teacherSlice: teacherSlice
 });
 
 const SetMarkerTransform = createTransform(
