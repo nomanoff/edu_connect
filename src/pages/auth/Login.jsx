@@ -67,7 +67,7 @@ const Login = () => {
       })
       .catch((error) => {
         setError(true);
-        setErrorMessage("Email yoki parol noto‘g‘ri!");
+        setErrorMessage("Incorrect email or password!");
         console.error("Login error:", error);
       });
   };
