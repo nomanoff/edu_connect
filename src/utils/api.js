@@ -20,7 +20,7 @@ const ACADEMIES_API_PREFIX = "/api/Academies";
 const CLASS_API_PREFIX = "/api/Classes";
 const AUTH_API_PREFIX = "/api/auth";
 const STUDENT_API_PREFIX = "/api/Students";
-const TEACHER_API_PREFIX = "/api/Teachers"
+const TEACHER_API_PREFIX = "/api/Teachers";
 
 // Auth
 export const authApi = {
@@ -52,7 +52,8 @@ export const studentApi = {
 // Class
 export const classApi = {
   getClassList: () => axios.get(`${CLASS_API_PREFIX}`),
-  postClass: (data) => axios.post(`${CLASS_API_PREFIX}`, data)
+  postClass: (data) => axios.post(`${CLASS_API_PREFIX}`, data),
+  deleteClass: (id) => axios.delete(`${CLASS_API_PREFIX}/${id}`),
 };
 
 // Teacher

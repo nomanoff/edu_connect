@@ -32,15 +32,16 @@ const Wrapper = styled.div`
 const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false); // 🔽 Yangi state
   const [role, setRole] = useState("");
   const [adminKey, setAdminKey] = useState("");
   const [teacherKey, setTeacherKey] = useState("");
 
-  // 🔽 Enter bosilganda handleSignup chaqiriladi
   const handleKeyDown = useCallback(
     (e) => {
       if (e.key === "Enter") {
@@ -54,7 +55,6 @@ const Signup = () => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
-  // 🔼 Qo‘shildi
 
   const handleSignup = () => {
     if (password.length < 6) {
@@ -63,8 +63,10 @@ const Signup = () => {
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      setPasswordError(true); // 🔽 xato bo'lsa errorni ko'rsat
       return;
+    } else {
+      setPasswordError(false);
     }
 
     if (role === "0" && !adminKey) {
@@ -200,7 +202,16 @@ const Signup = () => {
           label="Confirm Password"
           variant="outlined"
           value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
+            if (password !== e.target.value) {
+              setPasswordError(true);
+            } else {
+              setPasswordError(false);
+            }
+          }}
+          error={passwordError}
+          helperText={passwordError ? "The passwords do not match!" : ""}
         />
 
         <FormControl fullWidth sx={{ mb: "5px", p: "3px" }}>

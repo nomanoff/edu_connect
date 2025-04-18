@@ -14,16 +14,21 @@ import {
   Radio,
   RadioGroup,
   FormControlLabel,
+  Box,
+  CircularProgress,
 } from "@mui/material";
-import { getClassListAsync, postClassAsync } from "../../utils/redux/classSlice";
+import {
+  getClassListAsync,
+  postClassAsync,
+} from "../../utils/redux/classSlice";
 import { getTeacherListAsync } from "../../utils/redux/teacherSlice";
-
 
 const ManageClasses = () => {
   const dispatch = useDispatch();
 
+  const [isUploading, setIsUploading] = useState(false);
   const [teacherList, setTeacherList] = useState([]);
-  const [classList, setClassList] = useState([])
+  const [classList, setClassList] = useState([]);
   const [className, setClassName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -32,18 +37,18 @@ const ManageClasses = () => {
   const [openTeacherDialog, setOpenTeacherDialog] = useState(false);
 
   useEffect(() => {
-    dispatch((getTeacherListAsync()))
+    dispatch(getTeacherListAsync())
       .unwrap()
       .then((data) => {
-        console.log('teacher list data: ', data)
-        setTeacherList(data)
-      })
+        console.log("teacher list data: ", data);
+        setTeacherList(data);
+      });
     dispatch(getClassListAsync())
       .unwrap()
       .then((data) => {
-        console.log('class list data: ', data)
-        setClassList(data)
-      })
+        console.log("class list data: ", data);
+        setClassList(data);
+      });
   }, [dispatch]);
 
   const handleCreateClass = () => {
@@ -52,7 +57,7 @@ const ManageClasses = () => {
         const [hour, minute] = timeStr.split(":");
         return `${hour}:${minute}:00`;
       };
-  
+
       const classData = {
         name: className,
         startTime: formatTimeWithSeconds(startTime),
@@ -60,16 +65,33 @@ const ManageClasses = () => {
         schedule: dayType,
         teacherId: selectedTeacher.id,
       };
-  
-      dispatch(postClassAsync(classData));
-  
-      setClassName("");
-      setStartTime("");
-      setEndTime("");
-      setSelectedTeacher(null);
+
+      setIsUploading(true);
+      dispatch(postClassAsync(classData))
+        .unwrap()
+        .then(() => {
+          dispatch(getClassListAsync())
+            .unwrap()
+            .then((data) => {
+              setClassList(data);
+              setIsUploading(false);
+            })
+            .catch((error) => {
+              alert(error);
+              setIsUploading(false);
+            });
+
+          setClassName("");
+          setStartTime("");
+          setEndTime("");
+          setSelectedTeacher(null);
+        })
+        .catch((error) => {
+          alert(error);
+          setIsUploading(false);
+        });
     }
   };
-  
 
   return (
     <Container>
@@ -83,15 +105,15 @@ const ManageClasses = () => {
             onChange={(e) => setClassName(e.target.value)}
             margin="normal"
           />
-    <Typography variant="h6">Start Time</Typography>
-           <TextField
+          <Typography variant="h6">Start Time</Typography>
+          <TextField
             fullWidth
             type="time"
             value={startTime}
             onChange={(e) => setStartTime(e.target.value)}
             margin="normal"
           />
-              <Typography variant="h6">End Time</Typography>
+          <Typography variant="h6">End Time</Typography>
           <TextField
             fullWidth
             type="time"
@@ -135,14 +157,32 @@ const ManageClasses = () => {
           </Button>
         </FormSection>
 
+        {isUploading ? (
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Box />
+        )}
+
         <ClassListSection>
           <Typography variant="h6">Class List</Typography>
           <ClassList>
             {classList?.map((_class, index) => (
-              <Card key={index} style={{ marginBottom: "10px", padding: "15px", background: "#e0e0e0", borderRadius: "10px" }}>
+              <Card
+                key={index}
+                style={{
+                  marginBottom: "10px",
+                  padding: "15px",
+                  background: "#e0e0e0",
+                  borderRadius: "10px",
+                }}
+              >
                 <CardContent>
                   <p>{_class.name}</p>
-                  <p>{_class.startTime} - {_class.endTime}</p>
+                  <p>
+                    {_class.startTime} - {_class.endTime}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -150,7 +190,10 @@ const ManageClasses = () => {
         </ClassListSection>
       </ContentWrapper>
 
-      <Dialog open={openTeacherDialog} onClose={() => setOpenTeacherDialog(false)}>
+      <Dialog
+        open={openTeacherDialog}
+        onClose={() => setOpenTeacherDialog(false)}
+      >
         <DialogTitle>Teacher List</DialogTitle>
         <DialogContent style={{ padding: "30px", width: "500px" }}>
           {teacherList.map((teacher) => (
@@ -162,7 +205,10 @@ const ManageClasses = () => {
               }}
             >
               <Typography>{teacher.name}</Typography>
-              <Button variant="contained" style={{ fontSize: "14px", padding: "8px 16px" }}>
+              <Button
+                variant="contained"
+                style={{ fontSize: "14px", padding: "8px 16px" }}
+              >
                 Select
               </Button>
             </TeacherItem>
@@ -173,15 +219,42 @@ const ManageClasses = () => {
   );
 };
 
-const Container = styled.div`padding: 40px;`;
-const ContentWrapper = styled.div`display: flex; justify-content: space-between; gap: 30px;`;
-const FormSection = styled.div`width: 45%; padding: 30px; background: #f5f5f5; border-radius: 20px;`;
-const ClassListSection = styled.div`width: 45%; padding: 30px; background: #f5f5f5; border-radius: 20px; height: 430px;`;
-const ClassList = styled.div` height: 350px; padding-right: 10px; overflow-y: auto;`;
+const Container = styled.div`
+  padding: 40px;
+`;
+const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+`;
+const FormSection = styled.div`
+  width: 45%;
+  padding: 30px;
+  background: #f5f5f5;
+  border-radius: 20px;
+`;
+const ClassListSection = styled.div`
+  width: 45%;
+  padding: 30px;
+  background: #f5f5f5;
+  border-radius: 20px;
+  height: 430px;
+`;
+const ClassList = styled.div`
+  height: 350px;
+  padding-right: 10px;
+  overflow-y: auto;
+`;
 const TeacherItem = styled.div`
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 20px; cursor: pointer; background: #e0e0e0;
-  margin-bottom: 10px; border-radius: 10px; font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  cursor: pointer;
+  background: #e0e0e0;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-size: 18px;
 `;
 
 export default ManageClasses;
