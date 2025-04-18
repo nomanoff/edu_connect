@@ -90,6 +90,23 @@ const Button = styled.button`
   }
 `;
 
+const Buttonn = styled.button`
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: ${(props) => (props.primary ? "#007bff" : "white")};
+  color: ${(props) => (props.primary ? "white" : "#007bff")};
+  border: ${(props) => (props.primary ? "none" : "2px solid #007bff")};
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* Shadow bu yerda */
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+`;
+
 const HeroImage = styled.img`
   width: 550px;
   height: 330px;
@@ -129,7 +146,7 @@ const Home = () => {
             <Button primary onClick={() => navigate("/signup")}>
               Sign Up
             </Button>
-            <Button onClick={() => navigate("/login")}>Log In </Button>
+            <Buttonn onClick={() => navigate("/login")}>Log In </Buttonn>
           </ButtonGroup>
         </HeroText>
         <HeroImage src={heroImage} alt="Hero Image" />
