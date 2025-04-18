@@ -29,7 +29,14 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Xatolik holati uchun
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleLogin = () => {
+    setError(false);
+    setErrorMessage("");
+
     dispatch(postLoginAsync({ email, password }))
       .unwrap()
       .then(({ token, role }) => {
@@ -40,7 +47,6 @@ const Login = () => {
 
         dispatch(setIsAuthenticated(true));
 
-        // role : 0 - admin, 1 - teacher, 2 - parent
         switch (role) {
           case 0:
             dispatch(setUserRole("admin"));
@@ -60,7 +66,8 @@ const Login = () => {
         }
       })
       .catch((error) => {
-        alert(error);
+        setError(true);
+        setErrorMessage("Email yoki parol noto‘g‘ri!");
         console.error("Login error:", error);
       });
   };
@@ -93,6 +100,8 @@ const Login = () => {
           label="Email"
           variant="outlined"
           value={email}
+          error={error}
+          helperText={error ? errorMessage : ""}
           onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
@@ -102,6 +111,8 @@ const Login = () => {
           label="Password"
           variant="outlined"
           value={password}
+          error={error}
+          helperText={error ? errorMessage : ""}
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
