@@ -1,6 +1,5 @@
 import axios from "axios";
 import { parseCookies } from "nookies";
-import { registerTeacherAsync } from "./redux/teacherSlice";
 
 axios.defaults.baseURL = "https://edc-test.ilmhub.uz"; // debug
 
@@ -21,6 +20,7 @@ const ACADEMIES_API_PREFIX = "/api/Academies";
 const CLASS_API_PREFIX = "/api/Classes";
 const AUTH_API_PREFIX = "/api/auth";
 const STUDENT_API_PREFIX = "/api/Students";
+const TEACHER_API_PREFIX = "/api/Teachers";
 const CREATE_TEACHER_API = "/api/TokensForTeachers/generate";
 
 // Auth
@@ -35,12 +35,6 @@ export const authApi = {
   // /api/auth/login
   login: (data) => axios.post(`${AUTH_API_PREFIX}/login`, data),
 };
-
-// Teacher
-export const teacherApi = {
-  registerTeacherAsync: (data) => 
-    axios.post(`${CREATE_TEACHER_API}`, data)
-}
 
 // Academy
 export const academyApi = {
@@ -69,10 +63,4 @@ export const teacherApi = {
   
   registerTeacherAsync: (data) => 
     axios.post(`${CREATE_TEACHER_API}`, data)
-};
-
-// Teacher
-export const teacherToken = {
-  // post teacher token api 
-  getTeacherList: () => axios.get(`${CREATE_TEACHER_API}`)
 };
