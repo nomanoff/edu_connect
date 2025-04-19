@@ -8,7 +8,7 @@ import academySlice from "./academySlice";
 import adminSlice from "./adminSlice";
 import studentSlice from "./studentSlice";
 import classSlice from "./classSlice";
-import teacherSlice from './teacherSlice';
+import teacherSlice from "./teacherSlice";
 
 const rootReducer = combineReducers({
   auth: authSlice,
