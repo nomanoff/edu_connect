@@ -56,6 +56,7 @@ export const registerTeacherTokenAsync = createAsyncThunk(
   }
 );
 
+// Slice
 const teacherSlice = createSlice({
   name: "teacher",
   initialState,
@@ -111,4 +112,6 @@ export const selectTeachers = (state) => state.teacher;
 
 export const { resetTeacherSlice } = teacherSlice.actions;
 
+// Actions & Reducer
+export const { resetTeacherState } = teacherSlice.actions;
 export default teacherSlice.reducer;
