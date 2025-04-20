@@ -11,11 +11,11 @@ const Header = styled.header`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center; /* Har doim markazda turadi */
+  justify-content: center;
   padding: 10px;
 `;
 
-export const Crontainer = styled.div`
+export const Container = styled.div`
   max-width: 1440px;
   display: flex;
   gap: 691px;
@@ -24,13 +24,13 @@ export const Crontainer = styled.div`
 const NavContainer = styled.nav`
   display: flex;
   align-items: center;
-  gap: 20px; /* Elementlar orasidagi masofa */
+  gap: 20px;
 `;
 
 const Title = styled.h1`
   color: white;
   font-size: 25px;
-  margin-right: auto; /* Chapga yopishib qolmasligi uchun */
+  margin-right: auto;
 `;
 
 const NavLink = styled.a`
@@ -45,8 +45,8 @@ const NavLink = styled.a`
 
 const HeroSection = styled.div`
   display: flex;
-  max-width: 1340px; /* yoki o'zingiz xohlagan miqdor */
-  margin: 0 auto; /* Markazga joylash */
+  max-width: 1340px;
+  margin: 0 auto;
   align-items: center;
   justify-content: space-between;
   padding: 50px;
@@ -74,15 +74,16 @@ const ButtonGroup = styled.div`
   gap: 10px;
 `;
 
+//  Transient props ($primary) Fixed
 const Button = styled.button`
   padding: 12px 20px;
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-color: ${(props) => (props.primary ? "#007bff" : "white")};
-  color: ${(props) => (props.primary ? "white" : "#007bff")};
-  border: ${(props) => (props.primary ? "none" : "2px solid #007bff")};
+  background-color: ${(props) => (props.$primary ? "#007bff" : "white")};
+  color: ${(props) => (props.$primary ? "white" : "#007bff")};
+  border: ${(props) => (props.$primary ? "none" : "2px solid #007bff")};
 
   &:hover {
     transform: scale(1.05);
@@ -90,16 +91,16 @@ const Button = styled.button`
   }
 `;
 
-const Buttonn = styled.button`
+const BtnLogin = styled.button`
   padding: 12px 20px;
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-color: ${(props) => (props.primary ? "#007bff" : "white")};
-  color: ${(props) => (props.primary ? "white" : "#007bff")};
-  border: ${(props) => (props.primary ? "none" : "2px solid #007bff")};
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* Shadow bu yerda */
+  background-color: ${(props) => (props.$primary ? "#007bff" : "white")};
+  color: ${(props) => (props.$primary ? "white" : "#007bff")};
+  border: ${(props) => (props.$primary ? "none" : "2px solid #007bff")};
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 
   &:hover {
     transform: scale(1.05);
@@ -114,11 +115,11 @@ const HeroImage = styled.img`
 `;
 
 const Home = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate("");
   return (
     <>
       <Header>
-        <Crontainer>
+        <Container>
           <Title id="home">📖EduConnect</Title>
           <NavContainer>
             <NavLink href="#home">Home</NavLink>
@@ -127,7 +128,7 @@ const Home = () => {
             <NavLink href="#contact">Contact</NavLink>
             <Button onClick={() => navigate("/signup")}>Sign Up</Button>
           </NavContainer>
-        </Crontainer>
+        </Container>
       </Header>
 
       <HeroSection>
@@ -143,14 +144,15 @@ const Home = () => {
             effortlessly.
           </Description>
           <ButtonGroup>
-            <Button primary onClick={() => navigate("/signup")}>
+            <Button $primary onClick={() => navigate("/signup")}>
               Sign Up
             </Button>
-            <Buttonn onClick={() => navigate("/login")}>Log In </Buttonn>
+            <BtnLogin onClick={() => navigate("/login")}>Log In</BtnLogin>
           </ButtonGroup>
         </HeroText>
         <HeroImage src={heroImage} alt="Hero Image" />
       </HeroSection>
+
       <Features />
       <Footer />
     </>
