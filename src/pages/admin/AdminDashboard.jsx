@@ -1,18 +1,16 @@
+import styled from "styled-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import styled from "styled-components";
 import { EdH1 } from "../../components/EdStyled";
+import { getClassListAsync, selectClass } from "../../utils/redux/classSlice";
+import { getStudentListAsync, selectStudent } from "../../utils/redux/studentSlice";
 
-import { getClassListAsync } from "../../utils/redux/classSlice";
-import { selectAdmin } from "../../utils/redux/adminSlice";
-
+// Styled components
 const Wrapper = styled.div`
   width: 100%;
   height: calc(100vh - 49px);
   background-color: #f9f9f9;
   padding: 20px;
-  border: 2px solid #000;
   display: flex;
   flex-direction: column;
 `;
@@ -68,24 +66,24 @@ const Td = styled.td`
   }
 `;
 
+// Component
 const AdminDashboard = () => {
   const dispatch = useDispatch();
-  const { classList } = useSelector(selectAdmin);
+  const { classList } = useSelector(selectClass);
+  const { studentList } = useSelector(selectStudent);
 
   useEffect(() => {
-    dispatch(getClassListAsync({ academy_id: "a;sdkfja;slkdjfasdf" }))
-      .unwrap()
-      .then((response) => {
-        console.log("class list response: ", response);
-      })
-      .catch((error) => {
-        console.error("error getClassListAsync: ", error);
-      });
+    dispatch(getClassListAsync());
+    dispatch(getStudentListAsync());
   }, [dispatch]);
+
+  const getStudentCountByClassId = (classId) => {
+    return studentList.filter((student) => student.class_id === classId).length;
+  };
 
   return (
     <Wrapper>
-      <EdH1 fontWeight={"700"} textAlign={"left"} padding={"20px"}>
+      <EdH1 fontWeight="700" textAlign="left" padding="20px">
         Admin Dashboard
       </EdH1>
 
@@ -100,14 +98,20 @@ const AdminDashboard = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {classList?.map((cls, index) => (
-              <Tr key={index}>
-                <Td>{cls.name || "-"}</Td>
-                <Td>{cls.time || "-"}</Td>
-                <Td>-</Td>
-                <Td>-</Td>
+            {classList?.length > 0 ? (
+              classList.map((cls, index) => (
+                <Tr key={index}>
+                  <Td>{cls?.name || "-"}</Td>
+                  <Td>{cls?.time || "-"}</Td>
+                  <Td>{getStudentCountByClassId(cls?.id)}</Td>
+                  <Td>-</Td>
+                </Tr>
+              ))
+            ) : (
+              <Tr>
+                <Td colSpan="4">No classes found</Td>
               </Tr>
-            ))}
+            )}
           </Tbody>
         </Table>
       </TableWrapper>
