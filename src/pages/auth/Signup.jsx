@@ -37,10 +37,30 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordError, setPasswordError] = useState(false); // 🔽 Yangi state
   const [role, setRole] = useState("");
   const [adminKey, setAdminKey] = useState("");
   const [teacherKey, setTeacherKey] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+
+  const [errors, setErrors] = useState({
+    name: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+    role: false,
+  });
+
+  const validateFields = () => {
+    const newErrors = {
+      name: !name.trim(),
+      email: !email.trim(),
+      password: !password.trim(),
+      confirmPassword: !confirmPassword.trim() || confirmPassword !== password,
+      role: !role,
+    };
+    setErrors(newErrors);
+    return !Object.values(newErrors).some(Boolean);
+  };
 
   const handleKeyDown = useCallback(
     (e) => {
@@ -57,13 +77,15 @@ const Signup = () => {
   }, [handleKeyDown]);
 
   const handleSignup = () => {
+    if (!validateFields()) return;
+
     if (password.length < 6) {
       alert("Password must be at least 6 characters!");
       return;
     }
 
     if (password !== confirmPassword) {
-      setPasswordError(true); // 🔽 xato bo'lsa errorni ko'rsat
+      setPasswordError(true);
       return;
     } else {
       setPasswordError(false);
@@ -74,7 +96,6 @@ const Signup = () => {
       return;
     }
 
-    // Admin role
     if (role === "0") {
       const adminData = {
         name,
@@ -98,7 +119,6 @@ const Signup = () => {
         .catch((error) => alert(error));
     }
 
-    // Teacher role
     if (role === "1") {
       const teacherData = {
         name,
@@ -122,7 +142,6 @@ const Signup = () => {
         .catch((error) => alert(error));
     }
 
-    // Parent role
     if (role === "2") {
       const parentData = {
         name,
@@ -175,8 +194,15 @@ const Signup = () => {
           label="Name"
           variant="outlined"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            setName(e.target.value);
+            if (e.target.value.trim())
+              setErrors((prev) => ({ ...prev, name: false }));
+          }}
+          error={errors.name}
+          helperText={errors.name ? "Name is required" : ""}
         />
+
         <TextField
           required
           fullWidth
@@ -184,8 +210,15 @@ const Signup = () => {
           label="Email"
           variant="outlined"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            if (e.target.value.trim())
+              setErrors((prev) => ({ ...prev, email: false }));
+          }}
+          error={errors.email}
+          helperText={errors.email ? "Email is required" : ""}
         />
+
         <TextField
           fullWidth
           sx={{ mb: "5px", p: "3px" }}
@@ -193,8 +226,15 @@ const Signup = () => {
           label="Password"
           variant="outlined"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            if (e.target.value.trim())
+              setErrors((prev) => ({ ...prev, password: false }));
+          }}
+          error={errors.password}
+          helperText={errors.password ? "Password is required" : ""}
         />
+
         <TextField
           fullWidth
           sx={{ mb: "5px", p: "3px" }}
@@ -206,25 +246,44 @@ const Signup = () => {
             setConfirmPassword(e.target.value);
             if (password !== e.target.value) {
               setPasswordError(true);
+              setErrors((prev) => ({
+                ...prev,
+                confirmPassword: true,
+              }));
             } else {
               setPasswordError(false);
+              setErrors((prev) => ({
+                ...prev,
+                confirmPassword: false,
+              }));
             }
           }}
-          error={passwordError}
-          helperText={passwordError ? "The passwords do not match!" : ""}
+          error={errors.confirmPassword}
+          helperText={
+            errors.confirmPassword ? "Passwords do not match!" : ""
+          }
         />
 
-        <FormControl fullWidth sx={{ mb: "5px", p: "3px" }}>
+        <FormControl fullWidth sx={{ mb: "5px", p: "3px" }} error={errors.role}>
           <InputLabel>Select Role</InputLabel>
           <Select
             value={role}
-            onChange={(e) => setRole(e.target.value)}
+            onChange={(e) => {
+              setRole(e.target.value);
+              if (e.target.value)
+                setErrors((prev) => ({ ...prev, role: false }));
+            }}
             label="Select Role"
           >
             <MenuItem value="0">Admin</MenuItem>
             <MenuItem value="1">Teacher</MenuItem>
             <MenuItem value="2">Parent</MenuItem>
           </Select>
+          {errors.role && (
+            <Typography variant="caption" color="error">
+              Role is required
+            </Typography>
+          )}
         </FormControl>
 
         {role === "0" && (
