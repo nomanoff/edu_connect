@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectAuth } from "../../utils/redux/authSlice";
@@ -55,11 +55,12 @@ const Button = styled.button`
 
 const Settings = () => {
   const authSliceObj = useSelector(selectAuth);
-
-  //advanced-walleye-awaited.ngrok-free.app/api/Academies
+  const [formData, setFormData] = useState({
+    input1: "",
+    input2: ""
+  });
 
   useEffect(() => {
-    // Fetch academy list or any other data you need
     fetch("https://advanced-walleye-awaited.ngrok-free.app/api/Academies", {
       method: "GET",
       headers: {
@@ -75,10 +76,21 @@ const Settings = () => {
       });
   }, []);
 
-  console.log("adminId", authSliceObj);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleClick = () => {
+    console.log("Saving form data:", formData);
+    // send formData to backend if needed
+  };
+
   return (
     <Container>
-      <Title>Settings</Title>
       <Card>
         <Label>Academy Name</Label>
         <Input 
