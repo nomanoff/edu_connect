@@ -2,16 +2,11 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { setCookie } from "nookies";
-import {
-  TextField,
-  Button,
-  Typography,
-  Container
-} from "@mui/material";
+import { TextField, Button, Typography, Container } from "@mui/material";
 import {
   postLoginAsync,
   setIsAuthenticated,
-  setUserRole
+  setUserRole,
 } from "../../utils/redux/authSlice";
 import styled from "styled-components";
 import ROUTES from "../../routes/routes";
@@ -42,7 +37,7 @@ const Login = () => {
       .then(({ token, role }) => {
         setCookie(null, "token", token, {
           maxAge: 30 * 24 * 60 * 60,
-          path: "/"
+          path: "/",
         });
 
         dispatch(setIsAuthenticated(true));
@@ -81,7 +76,7 @@ const Login = () => {
           background: "#fff",
           padding: "30px",
           borderRadius: "10px",
-          boxShadow: "0px 0px 10px rgba(0,0,0,0.1)"
+          boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
         }}
       >
         <Typography
@@ -100,8 +95,8 @@ const Login = () => {
           label="Email"
           variant="outlined"
           value={email}
-          error={error}
-          helperText={error ? errorMessage : ""}
+          // error={error}
+          // helperText={error ? errorMessage : ""}
           onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
@@ -111,8 +106,8 @@ const Login = () => {
           label="Password"
           variant="outlined"
           value={password}
-          error={error}
-          helperText={error ? errorMessage : ""}
+          // error={error}
+          // helperText={error ? errorMessage : ""}
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
