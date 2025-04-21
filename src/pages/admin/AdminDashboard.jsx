@@ -1,31 +1,40 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { EdH1 } from "../../components/EdStyled";
-import AdminParticipants from "../../components/admin/AdminParticipants";
-import { getClassListAsync } from "../../utils/redux/classSlice";
+import { getClassListAsync, selectClass } from "../../utils/redux/classSlice";
+import { getStudentListAsync, selectStudent } from "../../utils/redux/studentSlice";
 
-const DashboardWrapper = styled.div`
-  padding: 20px;
+// Styled components
+const Wrapper = styled.div`
+  width: 100%;
+  height: calc(100vh - 49px);
   background-color: #f9f9f9;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 `;
 
-const Title = styled.h2`
-  font-size: 20px;
-  margin-bottom: 10px;
+const TableWrapper = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 `;
 
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
 const Thead = styled.thead`
   background-color: #007bff;
   color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `;
 
 const Th = styled.th`
@@ -39,6 +48,14 @@ const Th = styled.th`
   }
 `;
 
+const Tbody = styled.tbody``;
+
+const Tr = styled.tr`
+  &:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+`;
+
 const Td = styled.td`
   padding: 12px;
   border-top: 1px solid #ddd;
@@ -49,44 +66,57 @@ const Td = styled.td`
   }
 `;
 
-const Tr = styled.tr`
-  &:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-`;
+// Component
+const AdminDashboard = () => {
+  const dispatch = useDispatch();
+  const { classList } = useSelector(selectClass);
+  const { studentList } = useSelector(selectStudent);
 
-const TeacherDashboard = () => {
-  const classes = [
-    { name: "Frontend 001", time: "17:00 – 19:00", students: 5, attendance: "90%" },
-    { name: "Backend 002", time: "15:00 – 17:00", students: 7, attendance: "89%" },
-    { name: "Python 003", time: "10:00 – 12:00", students: 6, attendance: "93%" },
-  ];
+  useEffect(() => {
+    dispatch(getClassListAsync());
+    dispatch(getStudentListAsync());
+  }, [dispatch]);
+
+  const getStudentCountByClassId = (classId) => {
+    return studentList.filter((student) => student.class_id === classId).length;
+  };
 
   return (
-    <DashboardWrapper>
-      <Title>Teacher Dashboard</Title>
-      <Table>
-        <Thead>
-          <tr>
-            <Th>Class Name</Th>
-            <Th>Class Time</Th>
-            <Th>No. of Students</Th>
-            <Th>Attendance Rate</Th>
-          </tr>
-        </Thead>
-        <tbody>
-          {classes.map((cls, index) => (
-            <Tr key={index}>
-              <Td>{cls.name}</Td>
-              <Td>{cls.time}</Td>
-              <Td>{cls.students}</Td>
-              <Td>{cls.attendance}</Td>
+    <Wrapper>
+      <EdH1 fontWeight="700" textAlign="left" padding="20px">
+        Admin Dashboard
+      </EdH1>
+
+      <TableWrapper>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Class Name</Th>
+              <Th>Class Time</Th>
+              <Th>No. Of Students</Th>
+              <Th>Attendance Rate</Th>
             </Tr>
-          ))}
-        </tbody>
-      </Table>
-    </DashboardWrapper>
+          </Thead>
+          <Tbody>
+            {classList?.length > 0 ? (
+              classList.map((cls, index) => (
+                <Tr key={index}>
+                  <Td>{cls?.name || "-"}</Td>
+                  <Td>{cls?.time || "-"}</Td>
+                  <Td>{getStudentCountByClassId(cls?.id)}</Td>
+                  <Td>-</Td>
+                </Tr>
+              ))
+            ) : (
+              <Tr>
+                <Td colSpan="4">No classes found</Td>
+              </Tr>
+            )}
+          </Tbody>
+        </Table>
+      </TableWrapper>
+    </Wrapper>
   );
 };
 
-export default TeacherDashboard;
+export default AdminDashboard;
