@@ -175,33 +175,38 @@ const ManageClasses = () => {
 
 
 
-
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => setOpenTeacherDialog(true)}
-            style={{ margin: "15px 0", padding: "8px", fontSize: "14px", backgroundColor: "white", color: "black", borderRadius: "20px" }}
-          >
-            Choose
-          </Button>
-
           <input
-            label="Teacher"
-            fullWidth
-            value={selectedTeacher ? selectedTeacher.name : ""}
-            InputProps={{ readOnly: true }}
-            margin="normal"
-            style={{
-              border: "0px solid white",
-              borderRadius: "30px",
-              width: "300px",
-              height: "40px",
-              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
-              marginTop: "10px",
-              paddingLeft: "15px",
-              marginLeft: "20px"
-            }}
-          ></input>
+  type="text"
+  value={selectedTeacher ? selectedTeacher.name : ""}
+  readOnly
+  style={{
+    border: "0px solid white",
+    borderRadius: "30px",
+    width: "300px",
+    height: "40px",
+    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
+    marginTop: "10px",
+    paddingLeft: "15px"
+  }}
+/>
+
+<Button
+  variant="contained"
+  color="secondary"
+  onClick={() => setOpenTeacherDialog(true)}
+  style={{
+    margin: "15px 0",
+    padding: "8px",
+    fontSize: "14px",
+    backgroundColor: "white",
+    color: "green",
+    borderRadius: "20px",
+    marginLeft: "20px"
+  }}
+>
+  Choose
+</Button>
+
 
 
 
@@ -327,7 +332,7 @@ const FormSection = styled.div`
   border-radius: 20px;
   background-color: #1c94f6;
   color: white;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.338);
+  box-shadow: 0 8px 24px rgba(47, 47, 47, 0.2);
 `;
 const ClassListSection = styled.div`
   width: 45%;
@@ -337,9 +342,10 @@ const ClassListSection = styled.div`
   height: 430px;
   background-color: #1c94f6;
   color: white;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.338);
+  box-shadow: 0 8px 24px rgba(47, 47, 47, 0.2);
   height: 520px;
 `;
+
 const ClassList = styled.div`
   height: 420px;
   padding-right: 10px;

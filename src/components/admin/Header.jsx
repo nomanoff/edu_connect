@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { FaBell } from "react-icons/fa";
+import { FaBell, FaUserCircle } from "react-icons/fa";
 import useLogout from "../../utils/hooks/useLogout";
-
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -47,6 +47,10 @@ const IconWrapper = styled.div`
     transform: scale(1.2);
     color: #007bff;
   }
+
+  &:hover > div {
+    display: block;
+  }
 `;
 
 const AdminText = styled.span`
@@ -62,6 +66,10 @@ const AdminText = styled.span`
     transform: scale(1.1);
     color: #007bff;
   }
+
+  &:hover > div {
+    display: block;
+  }
 `;
 
 const DropdownMenu = styled.div`
@@ -74,6 +82,7 @@ const DropdownMenu = styled.div`
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   padding: 10px;
   font-size: 14px;
+  display: none;
   min-width: 150px;
   z-index: 10;
   width: 200px;
@@ -97,39 +106,8 @@ const MenuItem = styled.div`
 const Header = () => {
   const { logUserOut } = useLogout();
 
-  const [showAdminDropdown, setShowAdminDropdown] = useState(false);
-  const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
-
-  let adminTimer = null;
-  let notificationTimer = null;
-
-  const handleLogout = () => {
-    setShowAdminDropdown(false);
+  const handleLogout = async () => {
     logUserOut();
-  };
-
-  const handleAdminEnter = () => {
-    clearTimeout(adminTimer);
-    setShowAdminDropdown(true);
-    adminTimer = setTimeout(() => {
-      setShowAdminDropdown(false);
-    }, 1000);
-  };
-
-  const handleNotificationEnter = () => {
-    clearTimeout(notificationTimer);
-    setShowNotificationDropdown(true);
-    notificationTimer = setTimeout(() => {
-      setShowNotificationDropdown(false);
-    }, 5000);
-  };
-
-  const handleAdminItemClick = () => {
-    setShowAdminDropdown(false);
-  };
-
-  const handleNotificationItemClick = () => {
-    setShowNotificationDropdown(false);
   };
 
   return (
@@ -137,31 +115,31 @@ const Header = () => {
       <SearchInput type="text" placeholder="Search attendance..." />
 
       <RightSection>
-        <IconWrapper onMouseEnter={handleNotificationEnter}>
+
+      <AdminText>
+          Admin
+          <DropdownMenu>
+            <MenuItem>Edit profile</MenuItem>
+
+          </DropdownMenu>
+        </AdminText>
+
+        <IconWrapper>
           <FaBell />
-          {showNotificationDropdown && (
-            <DropdownMenu>
-              <MenuItem onClick={handleNotificationItemClick}>You have a new message</MenuItem>
-              <MenuItem onClick={handleNotificationItemClick}>Another notification...</MenuItem>
-            </DropdownMenu>
-          )}
+          <DropdownMenu>
+            <MenuItem>You have a new message</MenuItem>
+            <MenuItem>Another notification...</MenuItem>
+          </DropdownMenu>
         </IconWrapper>
 
-        <AdminText onMouseEnter={handleAdminEnter}>
-          Admin
-          {showAdminDropdown && (
-            <DropdownMenu>
-              <MenuItem onClick={handleAdminItemClick}>Edit profile</MenuItem>
-              <MenuItem onClick={handleLogout} style={{ color: "red" }}>
-                Logout
-              </MenuItem>
-            </DropdownMenu>
-          )}
-        </AdminText>
+        
+        <MenuItem onClick={handleLogout} style={{ color: "red" }}>
+              <LogoutIcon />
+            </MenuItem>
+            
       </RightSection>
     </HeaderContainer>
   );
 };
-
 
 export default Header;
