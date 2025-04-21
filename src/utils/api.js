@@ -55,8 +55,7 @@ export const studentApi = {
   updateStudent: (id, data) =>
     axios.patch(`${STUDENT_API_PREFIX}/${id}`, data),
   
-  // Talabani o'chirish (DELETE)
-  deleteStudent: (id) => axios.delete(`${STUDENT_API_PREFIX}/${id}`),
+ 
 };
 
 // Class API
