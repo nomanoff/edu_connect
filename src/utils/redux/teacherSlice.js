@@ -1,13 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { classApi, teacherApi } from "../api";
+import { teacherApi } from "../api";
 
 const initialState = {
   teacherList: [],
+  status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+  error: null,
 };
 
 export const getTeacherListAsync = createAsyncThunk(
   "teacher/getTeacherList",
-  async (data, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await teacherApi.getTeacherList();
       return response.data;
@@ -28,6 +30,7 @@ const teacherSlice = createSlice({
     builder
       .addCase(getTeacherListAsync.pending, (state) => {
         state.status = "loading";
+        state.error = null;
       })
       .addCase(getTeacherListAsync.fulfilled, (state, action) => {
         state.status = "succeeded";
@@ -41,7 +44,5 @@ const teacherSlice = createSlice({
 });
 
 export const selectTeachers = (state) => state.teacher;
-
 export const { resetTeacherSlice } = teacherSlice.actions;
-
 export default teacherSlice.reducer;

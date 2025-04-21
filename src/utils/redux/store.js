@@ -8,16 +8,15 @@ import academySlice from "./academySlice";
 import adminSlice from "./adminSlice";
 import studentSlice from "./studentSlice";
 import classSlice from "./classSlice";
-import teacherSlice from './teacherSlice';
+import teacherSlice from "./teacherSlice";
 
 const rootReducer = combineReducers({
   auth: authSlice,
   academy: academySlice,
   admin: adminSlice,
-  student: studentSlice,
-  class: classSlice,
-  classSlice: classSlice,
-  teacherSlice: teacherSlice
+  student: studentSlice, 
+  class: classSlice,     
+  teacher: teacherSlice, 
 });
 
 const SetMarkerTransform = createTransform(
@@ -27,9 +26,7 @@ const SetMarkerTransform = createTransform(
     }
     return inboundState;
   },
-  (outboundState) => {
-    return outboundState;
-  }
+  (outboundState) => outboundState
 );
 
 const persistConfig = {
