@@ -52,6 +52,7 @@ const TeacherParticipants = ({ teacher }) => {
             padding: "5px 13px",
             borderRadius: "10px",
             border: "none",
+            backgroundColor: "#fff",
             fontSize: "1.1rem",
             color: "#444",
             fontWeight: "700",
