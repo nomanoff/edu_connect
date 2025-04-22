@@ -1,9 +1,10 @@
-import styled from "styled-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { EdH1 } from "../../components/EdStyled";
+
 import { getClassListAsync, selectClass } from "../../utils/redux/classSlice";
-import { getStudentListAsync, selectStudent } from "../../utils/redux/studentSlice";
+
+import styled from "styled-components";
+import { EdH1 } from "../../components/EdStyled";
 
 // Styled components
 const Wrapper = styled.div`
@@ -66,20 +67,21 @@ const Td = styled.td`
   }
 `;
 
+// Time formatter
+const formatClassTime = (startTime, endTime) => {
+  if (!startTime || !endTime) return "-";
+  const format = (t) => t.slice(0, 5); // HH:mm:ss -> HH:mm
+  return `${format(startTime)} ~ ${format(endTime)}`;
+};
+
 // Component
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const { classList } = useSelector(selectClass);
-  const { studentList } = useSelector(selectStudent);
 
   useEffect(() => {
     dispatch(getClassListAsync());
-    dispatch(getStudentListAsync());
   }, [dispatch]);
-
-  const getStudentCountByClassId = (classId) => {
-    return studentList.filter((student) => student.class_id === classId).length;
-  };
 
   return (
     <Wrapper>
@@ -101,9 +103,9 @@ const AdminDashboard = () => {
             {classList?.length > 0 ? (
               classList.map((cls, index) => (
                 <Tr key={index}>
-                  <Td>{cls?.name || "-"}</Td>
-                  <Td>{cls?.time || "-"}</Td>
-                  <Td>{getStudentCountByClassId(cls?.id)}</Td>
+                  <Td>{cls?.name?.trim() || "-"}</Td>
+                  <Td>{formatClassTime(cls?.startTime, cls?.endTime)}</Td>
+                  <Td>{cls?.students?.length ?? 0}</Td>
                   <Td>-</Td>
                 </Tr>
               ))
