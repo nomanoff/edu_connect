@@ -111,7 +111,7 @@ const BtnLogin = styled.button`
 const HeroImage = styled.img`
   width: 550px;
   height: 330px;
-  border-radius: 10px;
+  border-radius: 11px;
 `;
 
 const Home = () => {
