@@ -1,9 +1,9 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Dialog } from "@mui/material";
 
-import { registerTeacherTokenAsync } from "../../utils/redux/teacherSlice";
+import { registerTeacherTokenAsync, selectTeachers } from "../../utils/redux/teacherSlice";
 
 import styled from "styled-components";
 import { EdButton_admin, EdH1 } from "../EdStyled";
@@ -38,6 +38,7 @@ const Dialog1 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
   text-align: center;
 `;
 
@@ -45,14 +46,19 @@ const AddNewTeacher = () => {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const copyToClipboard = () => {
-    // navigator.clipboard.;
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
-
   const dispatch = useDispatch();
-  
+  const teacherState = useSelector(selectTeachers); 
+  const teacherList = teacherState?.teacherList ?? [];
+
+  const latestToken = teacherList?.[teacherList.length - 1]?.tokenForTeacher?.trim();
+
+  const copyToClipboard = () => {
+    if (latestToken) {
+      navigator.clipboard.writeText(latestToken);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    }
+  };
 
   const handleCreateTeacher = () => {
     dispatch(registerTeacherTokenAsync());
@@ -76,13 +82,12 @@ const AddNewTeacher = () => {
       </EdButton_admin>
 
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <EdH1 fontSize="1.3rem" fontWeight={"700"}>
-        Generate Copy Token
+        <EdH1 fontSize="1.3rem" fontWeight="700">
+          Generate Copy Token
         </EdH1>
         <Dialog1>
-          
-          <EdH1 margin={"0 40px 0 0"}>
-            
+          <EdH1 margin="0 40px 0 0">
+            {latestToken ? latestToken : "Token is not defined"}
           </EdH1>
           <Button onClick={copyToClipboard}>
             copy {copied ? "✅" : <ContentCopyIcon />}
@@ -92,5 +97,6 @@ const AddNewTeacher = () => {
     </Wrapper>
   );
 };
+
 
 export default AddNewTeacher;
