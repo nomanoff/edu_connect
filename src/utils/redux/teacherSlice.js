@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { classApi, teacherApi } from "../api"; 
+import { authApi, teacherApi } from "../api";
 
 const initialState = {
   teacherList: [],
@@ -31,7 +31,10 @@ export const registerTeacherAsync = createAsyncThunk(
       console.log("Teacher created:", response.data);
       return response.data;
     } catch (error) {
-      console.error("Error creating teacher:", error.response?.data || error.message);
+      console.error(
+        "Error creating teacher:",
+        error.response?.data || error.message
+      );
       return rejectWithValue(
         error.response?.data?.message || "Failed to create teacher"
       );
@@ -39,16 +42,19 @@ export const registerTeacherAsync = createAsyncThunk(
   }
 );
 
-//  Teacher 
+//  Teacher
 export const registerTeacherTokenAsync = createAsyncThunk(
   "teacher/registerToken",
   async (data, { rejectWithValue }) => {
     try {
       const response = await teacherApi.registerTeacherAsync(data);
-      console.log("Token generated:", response.data);
+
       return response.data;
     } catch (error) {
-      console.error("Error generating teacher token:", error.response?.data || error.message);
+      console.error(
+        "Error generating teacher token:",
+        error.response?.data || error.message
+      );
       return rejectWithValue(
         error.response?.data?.message || "Failed to generate teacher token"
       );
@@ -90,13 +96,13 @@ const teacherSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Token 
+      // Token
       .addCase(registerTeacherTokenAsync.pending, (state) => {
         state.isCreated = false;
         state.error = null;
       })
       .addCase(registerTeacherTokenAsync.fulfilled, (state, action) => {
-        state.teacherId = action.payload;
+        state.teacherId = action.payload.tokenForNewTeacher;
         state.isCreated = true;
         state.error = null;
       })
@@ -107,7 +113,7 @@ const teacherSlice = createSlice({
   },
 });
 
-export const selectTeachers = (state) => state.teacher;
+export const selectTeacher = (state) => state.teacher;
 
 export const { resetTeacherSlice } = teacherSlice.actions;
 
