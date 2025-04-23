@@ -1,12 +1,15 @@
-import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Dialog } from "@mui/material";
 
-import { registerTeacherTokenAsync, selectTeachers } from "../../utils/redux/teacherSlice";
+import {
+  registerTeacherTokenAsync,
+  selectTeacher,
+} from "../../../utils/redux/teacherSlice";
 
 import styled from "styled-components";
-import { EdButton_admin, EdH1 } from "../EdStyled";
+import { EdButton_admin, EdH1 } from "../../../components/EdStyled";
 
 const Wrapper = styled.div`
   width: calc(100% - 40px);
@@ -47,14 +50,11 @@ const AddNewTeacher = () => {
   const [copied, setCopied] = useState(false);
 
   const dispatch = useDispatch();
-  const teacherState = useSelector(selectTeachers); 
-  const teacherList = teacherState?.teacherList ?? [];
-
-  const latestToken = teacherList?.[teacherList.length - 1]?.tokenForTeacher?.trim();
+  const { teacherId } = useSelector(selectTeacher);
 
   const copyToClipboard = () => {
-    if (latestToken) {
-      navigator.clipboard.writeText(latestToken);
+    if (teacherId) {
+      navigator.clipboard.writeText(teacherId);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     }
@@ -87,7 +87,7 @@ const AddNewTeacher = () => {
         </EdH1>
         <Dialog1>
           <EdH1 margin="0 40px 0 0">
-            {latestToken ? latestToken : "Token is not defined"}
+            {teacherId ? teacherId : "Token is not defined"}
           </EdH1>
           <Button onClick={copyToClipboard}>
             copy {copied ? "✅" : <ContentCopyIcon />}
@@ -97,6 +97,5 @@ const AddNewTeacher = () => {
     </Wrapper>
   );
 };
-
 
 export default AddNewTeacher;
