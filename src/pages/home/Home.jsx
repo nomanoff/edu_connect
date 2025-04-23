@@ -83,7 +83,7 @@ const Button = styled.button`
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: ${(props) => (props.$primary ? "#007bff" : "white")};
   color: ${(props) => (props.$primary ? "white" : "#007bff")};
-  border: ${(props) => (props.$primary ? "none" : "2px solid #007bff")};
+  border: ${(props) => (props.$primary ? "none" : "2px solid white")};
 
   &:hover {
     transform: scale(1.05);
@@ -111,7 +111,7 @@ const BtnLogin = styled.button`
 const HeroImage = styled.img`
   width: 550px;
   height: 330px;
-  border-radius: 10px;
+  border-radius: 11px;
 `;
 
 const Home = () => {
