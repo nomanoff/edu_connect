@@ -1,9 +1,10 @@
+import { useState } from "react";
 import styled from "styled-components";
 
-import AddNewTeacher from "../../components/admin/AddNewTeacher";
-import TeachersList from "../../components/admin/TeachersList";
 import { EdH1 } from "../../components/EdStyled";
-import { useState } from "react";
+
+import AddNewTeacher from "./template/AddNewTeacher";
+import TeachersList from "./template/TeachersList";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -25,9 +26,7 @@ const ManageTeachers = () => {
       >
         Manage Teachers
       </EdH1>
-
       <AddNewTeacher />
-
       <TeachersList teachers={teachers} />
     </Wrapper>
   );

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import { EdH1 } from "../EdStyled";
-import TeacherParticipants from "./TeacherParticipants";
+import { EdH1 } from "../../../components/EdStyled";
+import TeacherParticipants from "../../../components/admin/TeacherParticipants";
 
 const Wrapper = styled.div`
   width: calc(100% - 40px);
