@@ -1,7 +1,11 @@
-import { useDispatch } from "react-redux";
-import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Dialog } from "@mui/material";
 
-import { registerTeacherTokenAsync } from "../../utils/redux/teacherSlice";
+import { registerTeacherTokenAsync, selectTeachers } from "../../utils/redux/teacherSlice";
+
+import styled from "styled-components";
 import { EdButton_admin, EdH1 } from "../EdStyled";
 
 const Wrapper = styled.div`
@@ -9,14 +13,56 @@ const Wrapper = styled.div`
   border-radius: 5px;
   margin: 20px;
   border: 2px solid #808080;
-  padding: 20px;`
-;
+  padding: 20px;
+`;
+
+const Button = styled.button`
+  font-size: 1.3rem;
+  width: 150px;
+  height: 50px;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  background-color: #0082f5;
+  border-radius: 10px;
+  float: right;
+`;
+
+const Dialog1 = styled.div`
+  width: 350px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+`;
 
 const AddNewTeacher = () => {
+  const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+
   const dispatch = useDispatch();
+  const teacherState = useSelector(selectTeachers); 
+  const teacherList = teacherState?.teacherList ?? [];
+
+  const latestToken = teacherList?.[teacherList.length - 1]?.tokenForTeacher?.trim();
+
+  const copyToClipboard = () => {
+    if (latestToken) {
+      navigator.clipboard.writeText(latestToken);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    }
+  };
 
   const handleCreateTeacher = () => {
     dispatch(registerTeacherTokenAsync());
+    setOpen(true);
   };
 
   return (
@@ -34,8 +80,23 @@ const AddNewTeacher = () => {
       >
         Generate Key
       </EdButton_admin>
+
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <EdH1 fontSize="1.3rem" fontWeight="700">
+          Generate Copy Token
+        </EdH1>
+        <Dialog1>
+          <EdH1 margin="0 40px 0 0">
+            {latestToken ? latestToken : "Token is not defined"}
+          </EdH1>
+          <Button onClick={copyToClipboard}>
+            copy {copied ? "✅" : <ContentCopyIcon />}
+          </Button>
+        </Dialog1>
+      </Dialog>
     </Wrapper>
   );
 };
+
 
 export default AddNewTeacher;
