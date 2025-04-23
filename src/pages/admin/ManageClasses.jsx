@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deleteClassAsync } from "../../utils/redux/deleteClassSlice";
+import { deleteClassAsync } from "../../utils/redux/classSlice";
+
+
 
 
 
