@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   Button,
   TextField,
@@ -10,11 +11,18 @@ import {
   DialogContent,
 } from "@mui/material";
 import styled from "styled-components";
+import {
+  getStudentListAsync,
+  postStudentAsync,
+  deleteStudentAsync, 
+} from "../../utils/redux/studentSlice";
+import { getClassListAsync } from "../../utils/redux/classSlice";
 
+// Styled Components
 const Container = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   gap: 20px;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -23,7 +31,20 @@ const Container = styled.div`
 const Header = styled.div`
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  text-align: left;
+  width: 100%;
+  padding-left: 20px;
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+  max-width: 1100px;
 `;
 
 const Section = styled.div`
@@ -39,11 +60,15 @@ const StudentList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
 `;
 
 const ClassCard = styled(Card)`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 15px;
   background: #e0e0e0;
   border-radius: 8px;
@@ -81,27 +106,65 @@ const RightSection = styled(Section)`
 `;
 
 const ManageStudent = () => {
+  const dispatch = useDispatch();
+  const [classList, setClassList] = useState([]);
+  const [studentList, setStudentList] = useState([]);
   const [studentName, setStudentName] = useState("");
-  const [selectedClass, setSelectedClass] = useState("");
-  const [students, setStudents] = useState([]);
+  const [selectedClass, setSelectedClass] = useState(null);
   const [open, setOpen] = useState(false);
 
-  const classes = ["Frontend 001", "Frontend 002", "Frontend 003","Frontend 004"];
+  useEffect(() => {
+    dispatch(getClassListAsync())
+      .unwrap()
+      .then(setClassList);
+
+    refreshStudentList();
+  }, [dispatch]);
+
+  const refreshStudentList = () => {
+    dispatch(getStudentListAsync())
+      .unwrap()
+      .then(setStudentList);
+  };
 
   const handleAddStudent = () => {
     if (studentName && selectedClass) {
-      setStudents([...students, { name: studentName, class: selectedClass }]);
-      setStudentName("");
-      setSelectedClass("");
+      const newStudent = {
+        name: studentName,
+        className: selectedClass.name,
+      };
+
+      dispatch(postStudentAsync(newStudent))
+        .unwrap()
+        .then(() => {
+          refreshStudentList();
+          setStudentName("");
+          setSelectedClass(null);
+        })
+        .catch((err) => {
+          alert("Error while adding student: " + err);
+        });
     }
   };
 
+  const handleDeleteStudent = (id) => {
+    dispatch(deleteStudentAsync(id))
+      .unwrap()
+      .then(() => {
+        refreshStudentList();
+      })
+      .catch((err) => {
+        alert("Error while deleting student: " + err);
+      });
+  };
+
   return (
-    <div>
+    <Container>
       <Header>Manage Students</Header>
-      <Container>
+      <ContentWrapper>
+        {/* Left Section: Add Student */}
         <LeftSection>
-          <Typography variant="h6">Add class</Typography>
+          <Typography variant="h6">Add Student</Typography>
           <TextField
             label="Student Name"
             variant="outlined"
@@ -114,11 +177,15 @@ const ManageStudent = () => {
             label="Choose Class"
             variant="outlined"
             fullWidth
-            value={selectedClass}
+            value={selectedClass ? selectedClass.name : ""}
             InputProps={{ readOnly: true }}
             margin="normal"
           />
-          <Button variant="contained" color="secondary" onClick={() => setOpen(true)}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setOpen(true)}
+          >
             Choose
           </Button>
           <Button
@@ -133,34 +200,54 @@ const ManageStudent = () => {
           </Button>
         </LeftSection>
 
+        {/* Right Section: Student List */}
         <RightSection>
           <Typography variant="h6">Student List</Typography>
           <StudentList>
-            {students.map((student, index) => (
-              <ClassCard key={index}>
+            {studentList.map((student) => (
+              <ClassCard key={student.id}>
                 <CardContent>
                   <Typography>{student.name}</Typography>
+                  <Typography variant="caption">{student.className}</Typography>
                 </CardContent>
                 <CardContent>
-                  <Typography>{student.class}</Typography>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => handleDeleteStudent(student.id)}
+                  >
+                    Delete
+                  </Button>
                 </CardContent>
               </ClassCard>
             ))}
           </StudentList>
         </RightSection>
-        <Dialog open={open} onClose={() => setOpen(false)}>
-          <DialogTitle>Class List</DialogTitle>
-          <DialogContent>
-            {classes.map((className, index) => (
-              <ClassOption key={index} onClick={() => { setSelectedClass(className); setOpen(false); }}>
-                <Typography>{className}</Typography>
-                <Button variant="contained">Select</Button>
-              </ClassOption>
-            ))}
-          </DialogContent>
-        </Dialog>
-      </Container>
-    </div>
+      </ContentWrapper>
+
+      {/* Dialog: Choose Class */}
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>Class List</DialogTitle>
+        <DialogContent>
+          {classList.map((teacher) => (
+            <ClassOption
+              key={teacher.id}
+              onClick={() => {
+                setSelectedClass(teacher);
+                setOpen(false);
+              }}
+            >
+              <div>
+                <Typography>
+                  <strong>Class:</strong> {teacher.name}
+                </Typography>
+              </div>
+              <Button variant="contained">Select</Button>
+            </ClassOption>
+          ))}
+        </DialogContent>
+      </Dialog>
+    </Container>
   );
 };
 
