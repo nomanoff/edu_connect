@@ -1,17 +1,17 @@
-// src/utils/redux/teacherSlice.js
-
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { teacherApi } from "../api";
+import { authApi, teacherApi } from "../api";
 
 const initialState = {
   teacherList: [],
-  status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+  teacherId: null,
+  isCreated: false,
   error: null,
 };
 
+// Teacher listni olish
 export const getTeacherListAsync = createAsyncThunk(
   "teacher/getTeacherList",
-  async (_, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
       const response = await teacherApi.getTeacherList();
       return response.data;
@@ -22,16 +22,42 @@ export const getTeacherListAsync = createAsyncThunk(
   }
 );
 
-
-export const registerTeacherTokenAsync = createAsyncThunk(
-  "teacher/registerTeacherToken",
+// Register teacher
+export const registerTeacherAsync = createAsyncThunk(
+  "teacher/register",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await teacherApi.registerTeacherToken(data);
+      const response = await authApi.registerTeacher(data);
+      console.log("Teacher created:", response.data);
       return response.data;
     } catch (error) {
-      console.error("Error registering teacher token:", error);
-      return rejectWithValue("Failed to register teacher token");
+      console.error(
+        "Error creating teacher:",
+        error.response?.data || error.message
+      );
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to create teacher"
+      );
+    }
+  }
+);
+
+//  Teacher
+export const registerTeacherTokenAsync = createAsyncThunk(
+  "teacher/registerToken",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await teacherApi.registerTeacherAsync(data);
+
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error generating teacher token:",
+        error.response?.data || error.message
+      );
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to generate teacher token"
+      );
     }
   }
 );
@@ -46,7 +72,6 @@ const teacherSlice = createSlice({
     builder
       .addCase(getTeacherListAsync.pending, (state) => {
         state.status = "loading";
-        state.error = null;
       })
       .addCase(getTeacherListAsync.fulfilled, (state, action) => {
         state.status = "succeeded";
@@ -56,17 +81,40 @@ const teacherSlice = createSlice({
         state.status = "failed";
         state.error = action.payload;
       })
+
+      .addCase(registerTeacherAsync.pending, (state) => {
+        state.isCreated = false;
+        state.error = null;
+      })
+      .addCase(registerTeacherAsync.fulfilled, (state, action) => {
+        state.teacherId = action.payload.id;
+        state.isCreated = true;
+        state.error = null;
+      })
+      .addCase(registerTeacherAsync.rejected, (state, action) => {
+        state.isCreated = false;
+        state.error = action.payload;
+      })
+
+      // Token
+      .addCase(registerTeacherTokenAsync.pending, (state) => {
+        state.isCreated = false;
+        state.error = null;
+      })
       .addCase(registerTeacherTokenAsync.fulfilled, (state, action) => {
-        state.teacherList.push(action.payload); // yangi teacher qo‘shildi
+        state.teacherId = action.payload.tokenForNewTeacher;
+        state.isCreated = true;
+        state.error = null;
+      })
+      .addCase(registerTeacherTokenAsync.rejected, (state, action) => {
+        state.isCreated = false;
+        state.error = action.payload;
       });
   },
 });
 
-
-export const selectTeachers = (state) => state.teacher;
-
+export const selectTeacher = (state) => state.teacher;
 
 export const { resetTeacherSlice } = teacherSlice.actions;
-
 
 export default teacherSlice.reducer;
