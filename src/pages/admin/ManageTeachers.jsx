@@ -1,0 +1,35 @@
+import { useState } from "react";
+import styled from "styled-components";
+
+import { EdH1 } from "../../components/EdStyled";
+
+import AddNewTeacher from "./template/AddNewTeacher";
+import TeachersList from "./template/TeachersList";
+
+const Wrapper = styled.div`
+  width: 100%;
+`;
+
+const ManageTeachers = () => {
+  const [teachers, setTeachers] = useState([
+    { name: "John Doe", email: "john@example.com", subject: "ew[qf[jq" },
+    { name: "Sarah Smith", email: "sarah@example.com", subject: "eapfjaw" },
+  ]);
+
+  return (
+    <Wrapper>
+      <EdH1
+        fontWeight={"700"}
+        textAlign={"left"}
+        padding={"20px"}
+        fontSize={"1.3rem"}
+      >
+        Manage Teachers
+      </EdH1>
+      <AddNewTeacher />
+      <TeachersList teachers={teachers} />
+    </Wrapper>
+  );
+};
+
+export default ManageTeachers;

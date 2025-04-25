@@ -12,8 +12,7 @@ import { FooterContent } from "../../components/Divs";
 import { FooterSection } from "../../components/Divs";
 import { SocialIcons } from "../../components/Divs";
 
-import { FlexContainer } from '../../components/Divs';
-
+import { FlexContainer } from "../../components/Divs";
 
 import { CTAButton } from "../../components/Buttons";
 
@@ -26,21 +25,20 @@ import { Copyright } from "../../components/Tags";
 import { Title } from "../../components/Titles";
 import { Divider } from "../../components/Titles";
 
-
 import {
   FaFacebookF,
   FaTwitter,
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 export default function Footer() {
+  const navigate = useNavigate();
   return (
     <>
       <Section>
-        <Title>
-          <h2>What People Say</h2>
-        </Title>
+        <Title id="about">What People Say</Title>
         <CardsContainer>
           <Card>
             <Quote>
@@ -85,19 +83,18 @@ export default function Footer() {
           </Card>
         </CardsContainer>
       </Section>
-
       <FlexContainer>
-
-      <CTAContainer>
-        <h2>Ready to Transform Communication?</h2>
-        <p>
-          Join thousands of teachers and parents already using EduConnect to
-          stay connected.
-        </p>
-        <CTAButton>Get Started Today →</CTAButton>
-      </CTAContainer>
+        <CTAContainer>
+          <h2>Ready to Transform Communication?</h2>
+          <p>
+            Join thousands of teachers and parents already using EduConnect to
+            stay connected.
+          </p>
+          <CTAButton onClick={() => navigate("/signup")}>
+            Get Started Today →
+          </CTAButton>
+        </CTAContainer>
       </FlexContainer>
-
       <FooterContainer>
         <FooterContent>
           <FooterSection>
