@@ -3,18 +3,18 @@ import { useDispatch } from "react-redux";
 import {
   Button,
   TextField,
-  Card,
-  CardContent,
   Typography,
   Dialog,
   DialogTitle,
   DialogContent,
+  IconButton,
 } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import styled from "styled-components";
 import {
   getStudentListAsync,
   postStudentAsync,
-  deleteStudentAsync, 
+  deleteStudentAsync,
 } from "../../utils/redux/studentSlice";
 import { getClassListAsync } from "../../utils/redux/classSlice";
 
@@ -25,12 +25,12 @@ const Container = styled.div`
   align-items: center;
   gap: 20px;
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", sans-serif;
 `;
 
 const Header = styled.div`
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 28px;
+  font-weight: 700;
   margin-top: 30px;
   margin-bottom: 10px;
   text-align: left;
@@ -45,15 +45,29 @@ const ContentWrapper = styled.div`
   gap: 20px;
   width: 100%;
   max-width: 1100px;
+  max-height: 700px;
+  overflow-y: auto;
 `;
 
 const Section = styled.div`
-  border: 2px solid #ccc;
+  border: 2px solid #e0e0e0;
   padding: 25px;
-  width: 450px;
-  background: #f5f5f5;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  background: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+`;
+
+const LeftSection = styled(Section)`
+  flex: 1;
+`;
+
+const RightSection = styled(Section)`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  overflow: hidden;
 `;
 
 const StudentList = styled.div`
@@ -63,46 +77,60 @@ const StudentList = styled.div`
   max-height: 400px;
   overflow-y: auto;
   padding-right: 10px;
+  margin-top: 10px;
 `;
 
-const ClassCard = styled(Card)`
+const StudentCard = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  background: #e0e0e0;
-  border-radius: 8px;
+  padding: 16px 24px;
+  border-left: 6px solid #1976d2;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+`;
+
+const StudentInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  span {
+    font-size: 14px;
+    color: #888;
+  }
 `;
 
 const ClassOption = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #e0e0e0;
-  padding: 20px;
-  margin-bottom: 15px;
+  background: #f0f0f0;
+  padding: 16px;
+  margin-bottom: 12px;
   cursor: pointer;
   border-radius: 10px;
-  transition: 0.3s;
-  font-size: 18px;
-  width: 400px;
+  transition: all 0.3s;
+  font-size: 16px;
 
   &:hover {
-    background: #d6d6d6;
-    transform: scale(1.05);
+    background: #e0e0e0;
+    transform: scale(1.03);
   }
-
-  button {
-    margin-left: 50px;
-  }
-`;
-
-const LeftSection = styled(Section)`
-  flex: 1;
-`;
-
-const RightSection = styled(Section)`
-  flex: 1;
 `;
 
 const ManageStudent = () => {
@@ -205,21 +233,19 @@ const ManageStudent = () => {
           <Typography variant="h6">Student List</Typography>
           <StudentList>
             {studentList.map((student) => (
-              <ClassCard key={student.id}>
-                <CardContent>
-                  <Typography>{student.name}</Typography>
-                  <Typography variant="caption">{student.className}</Typography>
-                </CardContent>
-                <CardContent>
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    onClick={() => handleDeleteStudent(student.id)}
-                  >
-                    Delete
-                  </Button>
-                </CardContent>
-              </ClassCard>
+              <StudentCard key={student.id}>
+                <StudentInfo>
+                  <h3>{student.name}</h3>
+                  <span>{student.className}</span>
+                </StudentInfo>
+                <IconButton
+                  onClick={() => handleDeleteStudent(student.id)}
+                  color="error"
+                  aria-label="delete student"
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </StudentCard>
             ))}
           </StudentList>
         </RightSection>
@@ -237,11 +263,9 @@ const ManageStudent = () => {
                 setOpen(false);
               }}
             >
-              <div>
-                <Typography>
-                  <strong>Class:</strong> {teacher.name}
-                </Typography>
-              </div>
+              <Typography>
+                <strong>Class:</strong> {teacher.name}
+              </Typography>
               <Button variant="contained">Select</Button>
             </ClassOption>
           ))}
