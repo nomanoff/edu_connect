@@ -32,7 +32,7 @@ export const authApi = {
   registerParent: (data) =>
     axios.post(`${AUTH_API_PREFIX}/register-parent`, data),
   login: (data) => axios.post(`${AUTH_API_PREFIX}/login`, data),
-  deleteTeacher: (id) => axios.delete(`/teachers/${id}`),
+  deleteTeacher: (id) => axios.delete(`${TEACHER_API_PREFIX}/${id}`),
 };
 
 // Academy API

@@ -92,7 +92,7 @@ const TeachersList = () => {
         dispatch(getTeacherListAsync());
       })
       .catch((error) => {
-        console.error("Failed to delete teacher:", error);
+        console.log("Failed to delete teacher:", error);
       });
   };
 
