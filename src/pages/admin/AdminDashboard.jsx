@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getClassListAsync, selectClass } from "../../utils/redux/classSlice";
 
 import styled from "styled-components";
-import { EdH1 } from "../../components/EdStyled";
 
 // Styled components
 const Wrapper = styled.div`
@@ -19,7 +18,7 @@ const Wrapper = styled.div`
 const TableWrapper = styled.div`
   flex: 1;
   overflow-y: auto;
-  margin-top: 20px;
+  margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 8px;
 `;
@@ -39,7 +38,7 @@ const Thead = styled.thead`
 `;
 
 const Th = styled.th`
-  padding: 12px;
+  padding: 12px 15px;
   text-align: left;
   font-weight: 600;
   border-right: 1px solid #fff;
@@ -58,7 +57,7 @@ const Tr = styled.tr`
 `;
 
 const Td = styled.td`
-  padding: 12px;
+  padding: 12px 23px;
   border-top: 1px solid #ddd;
   border-right: 1px solid #ddd;
 
@@ -85,10 +84,6 @@ const AdminDashboard = () => {
 
   return (
     <Wrapper>
-      <EdH1 fontWeight="700" textAlign="left" padding="20px">
-        Admin Dashboard
-      </EdH1>
-
       <TableWrapper>
         <Table>
           <Thead>

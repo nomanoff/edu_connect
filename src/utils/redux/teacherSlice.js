@@ -42,6 +42,20 @@ export const registerTeacherAsync = createAsyncThunk(
   }
 );
 
+// Delete teacher
+export const deleteTeacherAsync = createAsyncThunk(
+  "teacher/delete",
+  async (id, { rejectWithValue }) => {
+    try {
+      await authApi.deleteTeacher(id);
+      return id;
+    } catch (error) {
+      console.log("Error deleting teacher:", error);
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 //  Teacher
 export const registerTeacherTokenAsync = createAsyncThunk(
   "teacher/registerToken",
