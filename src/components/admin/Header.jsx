@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FaBell, FaUserCircle } from "react-icons/fa";
 import useLogout from "../../utils/hooks/useLogout";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -91,7 +92,7 @@ const MenuItem = styled.div`
   padding: 8px;
   border-bottom: 1px solid #eee;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 1s;
 
   &:last-child {
     border-bottom: none;
@@ -114,6 +115,15 @@ const Header = () => {
       <SearchInput type="text" placeholder="Search attendance..." />
 
       <RightSection>
+
+      <AdminText>
+          Admin
+          <DropdownMenu>
+            <MenuItem>Edit profile</MenuItem>
+
+          </DropdownMenu>
+        </AdminText>
+
         <IconWrapper>
           <FaBell />
           <DropdownMenu>
@@ -121,15 +131,12 @@ const Header = () => {
             <MenuItem>Another notification...</MenuItem>
           </DropdownMenu>
         </IconWrapper>
-        <AdminText>
-          Admin
-          <DropdownMenu>
-            <MenuItem>Edit profile</MenuItem>
-            <MenuItem onClick={handleLogout} style={{ color: "red" }}>
-              Logout
+
+        
+        <MenuItem onClick={handleLogout} style={{ color: "red" }}>
+              <LogoutIcon />
             </MenuItem>
-          </DropdownMenu>
-        </AdminText>
+            
       </RightSection>
     </HeaderContainer>
   );
