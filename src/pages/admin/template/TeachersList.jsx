@@ -1,93 +1,125 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { EdH1 } from "../../../components/EdStyled";
-import TeacherParticipants from "../../../components/admin/TeacherParticipants";
+import {
+  deleteTeacherAsync,
+  getTeacherListAsync,
+  selectTeacher,
+} from "../../../utils/redux/teacherSlice";
 
 const Wrapper = styled.div`
-  width: calc(100% - 40px);
-  border-radius: 5px;
-  margin: 20px;
-  border: 2px solid #808080;
+  width: 100%;
+  height: calc(65vh - 49px);
+  background-color: #f9f9f9;
   padding: 20px;
-  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
 `;
 
-const MainWrapper = styled.main`
-  padding: 0;
+const TableWrapper = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 `;
 
-const TeachersList = ({ teachers }) => {
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+`;
+
+const Thead = styled.thead`
+  background-color: #007bff;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+`;
+
+const Th = styled.th`
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-right: 1px solid #fff;
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+const Tbody = styled.tbody``;
+
+const Tr = styled.tr`
+  &:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+`;
+
+const Td = styled.td`
+  padding: 12px 23px;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+`;
+
+const Button = styled.button`
+  background-color: #007bff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  &:hover {
+    background-color: #dc3545;
+  }
+`;
+
+const TeachersList = () => {
+  const dispatch = useDispatch();
+  const { teacherList } = useSelector(selectTeacher);
+
+  useEffect(() => {
+    dispatch(getTeacherListAsync());
+  }, [dispatch]);
+
+  const handleDelete = (id) => {
+    dispatch(deleteTeacherAsync(id))
+      .unwrap()
+      .then(() => {
+        dispatch(getTeacherListAsync());
+      })
+      .catch((error) => {
+        console.log("Failed to delete teacher:", error);
+      });
+  };
+
   return (
     <Wrapper>
-      <EdH1
-        textAlign={"left"}
-        padding={"0"}
-        fontSize={"1.3rem"}
-        fontWeight={"700"}
-        margin={"0px"}
-      >
-        Teachers List
-      </EdH1>
-      <MainWrapper boxShadow={"none"} padding={"0"}>
-        <table
-          style={{
-            width: "100%",
-          }}
-        >
-          <thead
-            style={{
-              border: "2px solid #000",
-              backgroundColor: "#0082f5",
-              color: "#fff",
-              height: "40px",
-            }}
-          >
-            <tr>
-              <th
-                style={{
-                  fontSize: "1.3rem",
-                  fontWeight: "700",
-                  border: "2px solid #999",
-                }}
-              >
-                Name
-              </th>
-              <th
-                style={{
-                  fontSize: "1.3rem",
-                  fontWeight: "700",
-                  border: "2px solid #999",
-                }}
-              >
-                Email
-              </th>
-              <th
-                style={{
-                  fontSize: "1.3rem",
-                  fontWeight: "700",
-                  border: "2px solid #999",
-                }}
-              >
-                Token
-              </th>
-              <th
-                style={{
-                  fontSize: "1.3rem",
-                  fontWeight: "700",
-                  border: "2px solid #999",
-                }}
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {teachers.map((teacher, index) => (
-              <TeacherParticipants key={index} teacher={teacher} />
+      <TableWrapper>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Teacher Name</Th>
+              <Th>Teacher Email</Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {teacherList.map((teach) => (
+              <Tr key={teach.id}>
+                <Td>{teach?.name?.trim()}</Td>
+                <Td>{teach?.email?.trim()}</Td>
+                <Td>
+                  <Button onClick={() => handleDelete(teach.id)}>Remove</Button>
+                </Td>
+              </Tr>
             ))}
-          </tbody>
-        </table>
-      </MainWrapper>
+          </Tbody>
+        </Table>
+      </TableWrapper>
     </Wrapper>
   );
 };
