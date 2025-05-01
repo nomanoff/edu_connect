@@ -10,7 +10,7 @@ import {
 
 const Wrapper = styled.div`
   width: 100%;
-  height: calc(65vh - 49px);
+  height: calc(80vh - 49px);
   background-color: #f9f9f9;
   padding: 20px;
   display: flex;
