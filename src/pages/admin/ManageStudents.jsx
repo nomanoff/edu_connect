@@ -23,7 +23,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 50px;
   padding: 20px;
   font-family: "Segoe UI", sans-serif;
 `;
@@ -31,7 +31,7 @@ const Container = styled.div`
 const Header = styled.div`
   font-size: 28px;
   font-weight: 700;
-  margin-top: 30px;
+  margin-top: 10px;
   margin-bottom: 10px;
   text-align: left;
   width: 100%;
