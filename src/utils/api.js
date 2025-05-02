@@ -21,6 +21,7 @@ const AUTH_API_PREFIX = "/api/auth";
 const STUDENT_API_PREFIX = "/api/Students";
 const TEACHER_API_PREFIX = "/api/Teachers";
 const TEACHERS_TOKEN = "/api/TokensForTeachers/generate";
+const ATTENDANCE_API_PREFIX = "/api/Attendances";
 
 // Auth API
 export const authApi = {
@@ -58,6 +59,16 @@ export const classApi = {
 // Teacher API
 export const teacherApi = {
   getTeacherList: () => axios.get(`${TEACHER_API_PREFIX}`),
-
   registerTeacherAsync: () => axios.post(`${TEACHERS_TOKEN}`),
+};
+
+// Attendance API
+export const attendanceApi = {
+  postAttendance: () => axios.post(`${ATTENDANCE_API_PREFIX}`),
+  getAttendanceListAsync: () =>
+    axios.get(`${ATTENDANCE_API_PREFIX}/${id}`, date),
+  getAttendanceListAsync: () =>
+    axios.get(`${ATTENDANCE_API_PREFIX}/${studentId}/${id}`, date),
+  getAttendanceListAsync: () =>
+    axios.get(`${ATTENDANCE_API_PREFIX}/all/${studentId}`),
 };
