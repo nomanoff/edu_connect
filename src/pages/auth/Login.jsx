@@ -63,7 +63,7 @@ const Login = () => {
       .catch((error) => {
         setError(true);
         setErrorMessage("Incorrect email or password!");
-        console.error("Login error:", error);
+        console.log("Login error:", error);
       });
   };
 

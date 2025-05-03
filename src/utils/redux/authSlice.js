@@ -58,8 +58,8 @@ export const postLoginAsync = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      console.error("Error fetching academy list:", error);
-      return rejectWithValue("Failed to fetch academy list");
+      console.error("Error login 1:", error);
+      return rejectWithValue("error login 2");
     }
   }
 );
