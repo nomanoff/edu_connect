@@ -1,13 +1,66 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { getClassListAsync, selectClass } from "../../utils/redux/classSlice";
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 40px auto 40px 30px;
-  background: #f9f9f9;
+const Wrapper = styled.div`
+  width: 100%;
+  height: calc(100vh - 50px);
+  background-color: #f9f9f9;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+`;
+
+const TableWrapper = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+`;
+
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+`;
+
+const Thead = styled.thead`
+  background-color: #007bff;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+`;
+
+const Th = styled.th`
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-right: 1px solid #fff;
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+const Tbody = styled.tbody``;
+
+const Tr = styled.tr`
+  &:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+`;
+
+const Td = styled.td`
+  padding: 12px 23px;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+
+  &:last-child {
+    border-right: none;
+  }
 `;
 
 const Header = styled.div`
@@ -45,67 +98,6 @@ const Select = styled.select`
   border-radius: 5px;
 `;
 
-const InputGroup = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Input = styled.input`
-  width: 250px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-right: 10px;
-`;
-
-const Button = styled.button`
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-
-  &:hover {
-    background: #0056b3;
-  }
-`;
-
-const TableWrapper = styled.div`
-  margin-top: 25px;
-  background: #fff;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-`;
-
-const TableContainer = styled.div`
-  max-height: 250px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-`;
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-`;
-
-const Th = styled.th`
-  background: #007bff;
-  color: white;
-  padding: 12px;
-  text-align: left;
-  width: 33%;
-`;
-
-const Td = styled.td`
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-  width: 33%;
-`;
-
 const DeleteButton = styled.button`
   background: #dc3545;
   color: white;
@@ -120,84 +112,77 @@ const DeleteButton = styled.button`
   }
 `;
 
-const classes = ["Frontend-001", "Frontend-002", "Frontend-003", "Frontend-004", "Frontend-005"];
+const HeaderWrapper = styled.div`
+  width: 100%;
+`;
 
 export default function Attendance() {
-  const [selectedClass, setSelectedClass] = useState("");
-  const [homeworkTitle, setHomeworkTitle] = useState("");
-  const [homeworkData, setHomeworkData] = useState([]);
+  const dispatch = useDispatch();
+  const { classList } = useSelector(selectClass);
+  const [selectedClassId, setSelectedClassId] = useState("");
 
-  const assignHomework = () => {
-    if (selectedClass && homeworkTitle) {
-      setHomeworkData([...homeworkData, { className: selectedClass, homework: homeworkTitle }]);
-      setHomeworkTitle("");
-    }
-  };
+  useEffect(() => {
+    dispatch(getClassListAsync());
+  }, [dispatch]);
 
-  const deleteHomework = (index) => {
-    setHomeworkData(homeworkData.filter((_, i) => i !== index));
-  };
+  const selectedClass = classList.find((cls) => cls.id === selectedClassId);
 
   return (
-    <Container>
-      <Header>
-        <Title>Manage Performance & Homework</Title>
-        <Subtitle>Assign homework and evaluate student performance.</Subtitle>
-      </Header>
+    <Wrapper>
+      <HeaderWrapper>
+        <Header>
+          <Title>Manage Performance & Homework</Title>
+          <Subtitle>Assign homework and evaluate student performance.</Subtitle>
+        </Header>
 
-      <Section>
-        <Label>Select Class:</Label>
-        <Select value={selectedClass} onChange={(e) => setSelectedClass(e.target.value)}>
-          <option value="">Select Class</option>
-          {classes.map((className) => (
-            <option key={className} value={className}>
-              {className}
-            </option>
-          ))}
-        </Select>
-      </Section>
-
-      <Section>
-        <Label>Assagin Homework:</Label>
-        <InputGroup>
-          <Input
-            type="text"
-            placeholder="Enter Homework Title"
-            value={homeworkTitle}
-            onChange={(e) => setHomeworkTitle(e.target.value)}
-          />
-          <Button onClick={assignHomework}>+ Assign</Button>
-        </InputGroup>
-      </Section>
-
+        <Section>
+          <Label>Select Class:</Label>
+          <Select
+            value={selectedClassId}
+            onChange={(e) => setSelectedClassId(e.target.value)}
+          >
+            <option value="">Select Class</option>
+            {classList.map((cls) => (
+              <option key={cls.id} value={cls.id}>
+                {cls.name}
+              </option>
+            ))}
+          </Select>
+        </Section>
+      </HeaderWrapper>
 
       <TableWrapper>
-        <h2>Homework</h2>
-        <TableContainer>
-          <Table>
-            <thead>
-              <tr>
-                <Th>Class Name</Th>
-                <Th>Homework Content</Th>
-                <Th>Actions</Th>
-              </tr>
-            </thead>
-            <tbody>
-              {homeworkData.map((entry, index) => (
-                <tr key={index}>
-                  <Td>{entry.className}</Td>
-                  <Td>{entry.homework}</Td>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Student Name</Th>
+              <Th>Homework Content</Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {selectedClass && selectedClass.students.length > 0 ? (
+              selectedClass.students.map((student, index) => (
+                <Tr key={index}>
+                  <Td>{student.name || "Unnamed"}</Td>
+                  <Td>--</Td>
                   <Td>
-                    <DeleteButton onClick={() => deleteHomework(index)}>
-                      ✖️ Delete
-                    </DeleteButton>
+                    <DeleteButton>✖️ Delete</DeleteButton>
                   </Td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </TableContainer>
+                </Tr>
+              ))
+            ) : (
+              <Tr>
+                <Td colSpan="3">
+                  {selectedClass
+                    ? "No students in this class."
+                    : "Please select a class."}
+                </Td>
+              </Tr>
+            )}
+          </Tbody>
+        </Table>
       </TableWrapper>
-    </Container>
+    </Wrapper>
   );
 }
