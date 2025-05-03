@@ -28,7 +28,6 @@ export const registerTeacherAsync = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await authApi.registerTeacher(data);
-      console.log("Teacher created:", response.data);
       return response.data;
     } catch (error) {
       console.error(
@@ -61,8 +60,7 @@ export const registerTeacherTokenAsync = createAsyncThunk(
   "teacher/registerToken",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await teacherApi.registerTeacherAsync(data);
-
+      const response = await teacherApi.registerTeacherAsync();
       return response.data;
     } catch (error) {
       console.error(
@@ -96,21 +94,17 @@ const teacherSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(registerTeacherAsync.pending, (state) => {
-        state.isCreated = false;
-        state.error = null;
-      })
       .addCase(registerTeacherAsync.fulfilled, (state, action) => {
         state.teacherId = action.payload.id;
         state.isCreated = true;
-        state.error = null;
-      })
-      .addCase(registerTeacherAsync.rejected, (state, action) => {
-        state.isCreated = false;
-        state.error = action.payload;
       })
 
-      // Token
+      .addCase(deleteTeacherAsync.fulfilled, (state, action) => {
+        state.teacherList = state.teacherList.filter(
+          (t) => t.id !== action.payload
+        );
+      })
+
       .addCase(registerTeacherTokenAsync.pending, (state) => {
         state.isCreated = false;
         state.error = null;
@@ -118,7 +112,6 @@ const teacherSlice = createSlice({
       .addCase(registerTeacherTokenAsync.fulfilled, (state, action) => {
         state.teacherId = action.payload.tokenForNewTeacher;
         state.isCreated = true;
-        state.error = null;
       })
       .addCase(registerTeacherTokenAsync.rejected, (state, action) => {
         state.isCreated = false;
@@ -128,7 +121,6 @@ const teacherSlice = createSlice({
 });
 
 export const selectTeacher = (state) => state.teacher;
-
 export const { resetTeacherSlice } = teacherSlice.actions;
 
 export default teacherSlice.reducer;
