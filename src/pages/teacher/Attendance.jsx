@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getClassListAsync, selectClass } from "../../utils/redux/classSlice";
 import {
-  getAttendanceByClassAndDate,
   postAttendanceAsync,
-  selectAttendance,
+  getAttendanceByClassAndDate,
 } from "../../utils/redux/attendancesSlice";
+import {
+  getStudentListAsync,
+  selectStudent,
+} from "../../utils/redux/studentSlice";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -104,24 +107,32 @@ const Td = styled.td`
 export default function Attendance() {
   const dispatch = useDispatch();
   const { classList } = useSelector(selectClass);
-  const { attendanceList } = useSelector(selectAttendance);
+  const { studentList } = useSelector(selectStudent);
 
   const [selectedClassId, setSelectedClassId] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
 
-  const selectedClass = classList.find((cls) => cls.id === selectedClassId);
-
   useEffect(() => {
     dispatch(getClassListAsync());
+    dispatch(getStudentListAsync());
   }, [dispatch]);
 
+  const filteredStudents = studentList.filter(
+    (student) => student.classId === selectedClassId
+  );
+
   const handleSubmit = () => {
-    if (selectedClassId && selectedDate) {
-      dispatch(getAttendanceByClassAndDate({ classId: selectedClassId, date: selectedDate }));
+    if (!selectedClassId || !selectedDate) {
+      alert("Iltimos, sinf va sanani tanlang.");
+      return;
     }
+
+    dispatch(getAttendanceByClassAndDate({ classId: selectedClassId, date: selectedDate }));
   };
 
   const handlePostAttendance = (studentId) => {
+    if (!selectedClassId) return;
+
     dispatch(
       postAttendanceAsync({
         studentId,
@@ -135,12 +146,15 @@ export default function Attendance() {
     <Wrapper>
       <Header>
         <Title>Manage Attendance</Title>
-        <Subtitle>Select class and date to view attendance.</Subtitle>
+        <Subtitle>Select class and date to mark attendance.</Subtitle>
       </Header>
 
       <Section>
         <Label>Class:</Label>
-        <Select value={selectedClassId} onChange={(e) => setSelectedClassId(e.target.value)}>
+        <Select
+          value={selectedClassId}
+          onChange={(e) => setSelectedClassId(e.target.value)}
+        >
           <option value="">Select Class</option>
           {classList.map((cls) => (
             <option key={cls.id} value={cls.id}>
@@ -168,8 +182,8 @@ export default function Attendance() {
             </Tr>
           </Thead>
           <Tbody>
-            {selectedClass && selectedClass.students.length > 0 ? (
-              selectedClass.students.map((student) => (
+            {filteredStudents.length > 0 ? (
+              filteredStudents.map((student) => (
                 <Tr key={student.id}>
                   <Td>{student.name}</Td>
                   <Td>
@@ -182,7 +196,9 @@ export default function Attendance() {
             ) : (
               <Tr>
                 <Td colSpan="2">
-                  {selectedClass ? "No students in this class." : "Please select a class."}
+                  {selectedClassId
+                    ? "No students in this class."
+                    : "Please select a class."}
                 </Td>
               </Tr>
             )}
