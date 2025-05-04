@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FaBell, FaUserCircle } from "react-icons/fa";
 import useLogout from "../../utils/hooks/useLogout";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -13,20 +13,6 @@ const HeaderContainer = styled.div`
   position: fixed;
   width: calc(100% - 300px);
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-`;
-
-const SearchInput = styled.input`
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-  width: 250px;
-  outline: none;
-  transition: border 0.3s ease;
-
-  &:focus {
-    border: 1px solid #007bff;
-  }
 `;
 
 const RightSection = styled.div`
@@ -103,6 +89,10 @@ const MenuItem = styled.div`
   }
 `;
 
+const H1 = styled.h1`
+  font-size: 1.3rem;
+`;
+
 const Header = () => {
   const { logUserOut } = useLogout();
 
@@ -112,15 +102,15 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <SearchInput type="text" placeholder="Search attendance..." />
+      <RightSection>
+        <H1>Welcome EduConnect !</H1>
+      </RightSection>
 
       <RightSection>
-
-      <AdminText>
+        <AdminText>
           Admin
           <DropdownMenu>
             <MenuItem>Edit profile</MenuItem>
-
           </DropdownMenu>
         </AdminText>
 
@@ -132,11 +122,9 @@ const Header = () => {
           </DropdownMenu>
         </IconWrapper>
 
-        
         <MenuItem onClick={handleLogout} style={{ color: "red" }}>
-              <LogoutIcon />
-            </MenuItem>
-            
+          <LogoutIcon />
+        </MenuItem>
       </RightSection>
     </HeaderContainer>
   );
