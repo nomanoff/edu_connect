@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import styled from "styled-components";
+
 import { getClassListAsync, selectClass } from "../../utils/redux/classSlice";
 import {
   postAttendanceAsync,
@@ -106,42 +108,24 @@ const Td = styled.td`
 
 export default function Attendance() {
   const dispatch = useDispatch();
-  const { classList } = useSelector(selectClass);
-  const { studentList } = useSelector(selectStudent);
 
-  const [selectedClassId, setSelectedClassId] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
+  const {classList} = useSelector(selectClass);
+  const [selectedClass, setSelectedClass] = useState(null);
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
   useEffect(() => {
-    dispatch(getClassListAsync());
-    dispatch(getStudentListAsync());
-  }, [dispatch]);
+    dispatch(getClassListAsync())
+  }, [dispatch])
 
-  const filteredStudents = studentList.filter(
-    (student) => student.classId === selectedClassId
-  );
-
-  const handleSubmit = () => {
-    if (!selectedClassId || !selectedDate) {
-      alert("Iltimos, sinf va sanani tanlang.");
-      return;
-    }
-
-    dispatch(getAttendanceByClassAndDate({ classId: selectedClassId, date: selectedDate }));
-  };
-
-  const handlePostAttendance = (studentId) => {
-    if (!selectedClassId) return;
-
-    dispatch(
-      postAttendanceAsync({
-        studentId,
-        classId: selectedClassId,
-        attendanceStatus: 0,
-      })
-    );
-  };
-
+  // const handleChoseClass = () => {
+  //   if(className && studentName){
+  //     const attendanceData = {
+  //       classId: className,
+  //       studentId: studentName,
+  //     }
+  //   }
+  // }
+ 
   return (
     <Wrapper>
       <Header>
@@ -152,12 +136,12 @@ export default function Attendance() {
       <Section>
         <Label>Class:</Label>
         <Select
-          value={selectedClassId}
-          onChange={(e) => setSelectedClassId(e.target.value)}
+          // value={selectedClassId}
+          // onChange={(e) => setSelectedClassId(e.target.value)}
         >
           <option value="">Select Class</option>
-          {classList.map((cls) => (
-            <option key={cls.id} value={cls.id}>
+          {classList.map((cls, index) => (
+            <option key={index} value={cls.id}>
               {cls.name}
             </option>
           ))}
@@ -166,11 +150,11 @@ export default function Attendance() {
         <Label>Date:</Label>
         <Input
           type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
+          // value={selectedDate}
+          // onChange={(e) => setSelectedDate(e.target.value)}
         />
 
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button >Submit</Button>
       </Section>
 
       <TableWrapper>
@@ -178,33 +162,50 @@ export default function Attendance() {
           <Thead>
             <Tr>
               <Th>Student Name</Th>
-              <Th>Mark Attendance</Th>
+              <Th>Actions</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {filteredStudents.length > 0 ? (
-              filteredStudents.map((student) => (
-                <Tr key={student.id}>
-                  <Td>{student.name}</Td>
-                  <Td>
-                    <Button onClick={() => handlePostAttendance(student.id)}>
-                      Mark Absent
-                    </Button>
-                  </Td>
-                </Tr>
-              ))
-            ) : (
-              <Tr>
-                <Td colSpan="2">
-                  {selectedClassId
-                    ? "No students in this class."
-                    : "Please select a class."}
-                </Td>
-              </Tr>
-            )}
+            
           </Tbody>
         </Table>
       </TableWrapper>
     </Wrapper>
   );
 }
+
+// const { classList } = useSelector(selectClass);
+// const { studentList } = useSelector(selectStudent);
+
+// const [selectedClassId, setSelectedClassId] = useState("");
+// const [selectedDate, setSelectedDate] = useState("");
+
+// useEffect(() => {
+//   dispatch(getClassListAsync());
+//   dispatch(getStudentListAsync());
+// }, [dispatch]);
+
+// const filteredStudents = studentList.filter(
+//   (student) => student.classId === selectedClassId
+// );
+
+// const handleSubmit = () => {
+//   if (!selectedClassId || !selectedDate) {
+//     alert("Iltimos, sinf va sanani tanlang.");
+//     return;
+//   }
+
+//   dispatch(getAttendanceByClassAndDate({ classId: selectedClassId, date: selectedDate }));
+// };
+
+// const handlePostAttendance = (studentId) => {
+//   if (!selectedClassId) return;
+
+//   dispatch(
+//     postAttendanceAsync({
+//       studentId,
+//       classId: selectedClassId,
+//       attendanceStatus: 0,
+//     })
+//   );
+// };
