@@ -27,6 +27,7 @@ import TeacherClassList from "../pages/teacher/ManageClasses";
 import Attendance from "../pages/teacher/Attendance";
 import Assignments from "../pages/teacher/Assignments";
 import ParentSettings from "../pages/parent/ParentSettings";
+import Message from "../pages/teacher/Message";
 
 const MainRoutes = ({ isAuthenticated, userRole }) => {
   return (
@@ -76,6 +77,7 @@ const MainRoutes = ({ isAuthenticated, userRole }) => {
             <Route path="class-list" element={<TeacherClassList />} />
             <Route path="attendance" element={<Attendance />} />
             <Route path="assignments" element={<Assignments />} />
+            <Route path="message" element={<Message />} />
           </Route>
         )}
 
