@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import Features from "./Features";
 import Footer from "./Footer";
 
-import heroImage from "../../pages/home/images/image1.png";
+
 
 const Header = styled.header`
   background-color: rgb(0, 158, 245);
