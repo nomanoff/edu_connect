@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  max-width: 100%px;
+  max-width: 100%;
   margin: auto;
   padding: 14px;
   font-family: Arial, sans-serif;
@@ -24,6 +24,7 @@ const Title = styled.h2`
 const Form = styled.div`
   display: flex;
   gap: 10px;
+  margin-bottom: 10px;
 `;
 
 const Input = styled.input`
@@ -51,7 +52,6 @@ const Button = styled.button`
   font-size: 15px;
   display: flex;
   align-items: center;
-  margin-top: 5px;
   gap: 5px;
 
   &:hover {
@@ -78,14 +78,38 @@ const Td = styled.td`
   border-bottom: 1px solid #ddd;
 `;
 
-const RemoveIcon = styled.span`
-  color: red;
-  font-weight: bold;
+const StudentList = styled.ul`
+  margin-top: 10px;
+  list-style: none;
+  padding: 0;
+`;
+
+const StudentItem = styled.li`
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  gap: 10px;
 `;
 
 const ManageClasses = () => {
   return (
     <Container>
+
+      {/* Create New Class */}
+      <Section>
+        <Title>Create New Class</Title>
+        <Form>
+          <Input type="text" placeholder="Class Name" />
+          <Select>
+            <option>Mathematics</option>
+            <option>Physics</option>
+            <option>Chemistry</option>
+          </Select>
+          <Button>Add Class</Button>
+        </Form>
+      </Section>
+
+      {/* My Classes */}
       <Section>
         <Title>My Classes</Title>
         <Table>
@@ -94,6 +118,7 @@ const ManageClasses = () => {
               <Th>Class Name</Th>
               <Th>Subject</Th>
               <Th>Students</Th>
+              <Th>Actions</Th>
             </tr>
           </thead>
           <tbody>
@@ -101,19 +126,48 @@ const ManageClasses = () => {
               <Td>Grade 10 - Math</Td>
               <Td>Mathematics</Td>
               <Td>25 Students</Td>
-
+              <Td>
+                <Button>Edit</Button>{" "}
+                <Button danger>Remove</Button>
+              </Td>
             </tr>
             <tr>
               <Td>Grade 9 - Science</Td>
               <Td>Physics</Td>
               <Td>30 Students</Td>
-
+              <Td>
+                <Button>Edit</Button>{" "}
+                <Button danger>Remove</Button>
+              </Td>
             </tr>
           </tbody>
         </Table>
       </Section>
 
+      {/* Assign Students */}
+      <Section>
+        <Title>Assign Students</Title>
+        <Form>
+          <Select>
+            <option>Select Class</option>
+            <option>Grade 10 - Math</option>
+          </Select>
+          <Input placeholder="Enter Student Email" />
+          <Button>Assign Student</Button>
+        </Form>
 
+        <Title>Students in Grade 10 - Math</Title>
+        <StudentList>
+          <StudentItem>
+            John Doe
+            <Button danger>Remove</Button>
+          </StudentItem>
+          <StudentItem>
+            Jane Smith
+            <Button danger>Remove</Button>
+          </StudentItem>
+        </StudentList>
+      </Section>
     </Container>
   );
 };

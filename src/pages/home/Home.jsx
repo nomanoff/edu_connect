@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import Features from "./Features";
 import Footer from "./Footer";
 
-import heroImage from "../../pages/home/images/image1.png";
+// import heroImage from "../../pages/home/images/image1.png";
 
 const Header = styled.header`
   background-color: rgb(0, 158, 245);
@@ -109,7 +109,9 @@ const BtnLogin = styled.button`
 `;
 
 const HeroImage = styled.img`
+  background-image:url("https://i.postimg.cc/0QFp3g9f/photo-2025-05-07-16-42-01.jpg");
   width: 550px;
+  background-size:cover;
   height: 330px;
   border-radius: 11px;
 `;
@@ -150,7 +152,7 @@ const Home = () => {
             <BtnLogin onClick={() => navigate("/login")}>Log In</BtnLogin>
           </ButtonGroup>
         </HeroText>
-        <HeroImage src={heroImage} alt="Hero Image" />
+        <HeroImage/>
       </HeroSection>
 
       <Features />
