@@ -34,6 +34,7 @@ const Layout = ({ userRole, children }) => {
       { name: "My Classes", path: "/teacher/class-list" },
       { name: "Attendance", path: "/teacher/attendance" },
       { name: "Assignments", path: "/teacher/assignments" },
+      { name: "Message", path: "/teacher/message"},
     ],
     parent: [
       { name: "Dashboard", path: "/parent" },
