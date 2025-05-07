@@ -122,7 +122,7 @@ const Home = () => {
         <Container>
           <Title id="home">📖EduConnect</Title>
           <NavContainer>
-            <NavLink href="#home">Home</NavLink>
+            <NavLink href="#home">Hame</NavLink>
             <NavLink href="#features">Features</NavLink>
             <NavLink href="#about">About</NavLink>
             <NavLink href="#contact">Contact</NavLink>
