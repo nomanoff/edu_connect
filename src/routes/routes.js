@@ -10,6 +10,7 @@ const ROUTES = {
   SETTINGS: "/settings",
   PARENT: "/parent",
   MANAGE_CLASSES: "/manageClasses",
+  MESSAGE: "/message",
 };
 
 export default ROUTES;
