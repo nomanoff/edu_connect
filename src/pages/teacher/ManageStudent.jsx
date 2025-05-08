@@ -25,6 +25,7 @@ const Form = styled.div`
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
+  flex-wrap: wrap;
 `;
 
 const Input = styled.input`
@@ -33,6 +34,7 @@ const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 15px;
+  min-width: 200px;
 `;
 
 const Select = styled.select`
@@ -41,6 +43,9 @@ const Select = styled.select`
   border-radius: 4px;
   font-size: 15px;
 `;
+
+
+
 
 const Button = styled.button`
   background: ${(props) => (props.danger ? "#d9534f" : "#007bff")};
@@ -91,62 +96,61 @@ const StudentItem = styled.li`
   gap: 10px;
 `;
 
-const ManageClasses = () => {
+const ManageStudent = () => {
   return (
     <Container>
 
-      {/* Create New Class */}
+      {/* Add New Student */}
       <Section>
-        <Title>Create New Class</Title>
+        <Title>Add New Student</Title>
         <Form>
-          <Input type="text" placeholder="Class Name" />
+          <Input type="text" placeholder="Student Name" />
+          <Input type="email" placeholder="Student Email" />
           <Select>
-            <option>Mathematics</option>
-            <option>Physics</option>
-            <option>Chemistry</option>
+            <option>Select Class</option>
+            <option>Grade 10 - Math</option>
+            <option>Grade 9 - Science</option>
           </Select>
-          <Button>Add Class</Button>
+          <Button>Add Student</Button>
         </Form>
       </Section>
 
-      {/* My Classes */}
+      {/* My Students */}
       <Section>
-        <Title>My Classes</Title>
+        <Title>My Students</Title>
         <Table>
           <thead>
             <tr>
-              <Th>Class Name</Th>
-              <Th>Subject</Th>
-              <Th>Students</Th>
+              <Th>Student Name</Th>
+              <Th>Email</Th>
+              <Th>Class</Th>
               <Th>Actions</Th>
             </tr>
           </thead>
           <tbody>
             <tr>
+              <Td>John Doe</Td>
+              <Td>john@example.com</Td>
               <Td>Grade 10 - Math</Td>
-              <Td>Mathematics</Td>
-              <Td>25 Students</Td>
               <Td>
-                <Button>Edit</Button>{" "}
-                <Button danger>Remove</Button>
+                <Button>Edit</Button> <Button danger>Remove</Button>
               </Td>
             </tr>
             <tr>
+              <Td>Jane Smith</Td>
+              <Td>jane@example.com</Td>
               <Td>Grade 9 - Science</Td>
-              <Td>Physics</Td>
-              <Td>30 Students</Td>
               <Td>
-                <Button>Edit</Button>{" "}
-                <Button danger>Remove</Button>
+                <Button>Edit</Button> <Button danger>Remove</Button>
               </Td>
             </tr>
           </tbody>
         </Table>
       </Section>
 
-      {/* Assign Students */}
+      {/* Assign Students to Class */}
       <Section>
-        <Title>Assign Students</Title>
+        <Title>Assign Students to Class</Title>
         <Form>
           <Select>
             <option>Select Class</option>
@@ -159,12 +163,10 @@ const ManageClasses = () => {
         <Title>Students in Grade 10 - Math</Title>
         <StudentList>
           <StudentItem>
-            John Doe
-            <Button danger>Remove</Button>
+            John Doe <Button danger>Remove</Button>
           </StudentItem>
           <StudentItem>
-            Jane Smith
-            <Button danger>Remove</Button>
+            Jane Smith <Button danger>Remove</Button>
           </StudentItem>
         </StudentList>
       </Section>
@@ -172,4 +174,15 @@ const ManageClasses = () => {
   );
 };
 
-export default ManageClasses;
+export default ManageStudent;
+
+
+
+
+
+
+
+
+
+
+

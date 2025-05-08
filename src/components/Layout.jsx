@@ -31,10 +31,12 @@ const Layout = ({ userRole, children }) => {
     ],
     teacher: [
       { name: "Dashboard", path: "/teacher" },
-      { name: "My Classes", path: "/teacher/class-list" },
+      { name: "Manage Classes", path: "/teacher/class-list" },
+      { name: "Manage Students", path: "/teacher/student"},
       { name: "Attendance", path: "/teacher/attendance" },
       { name: "Assignments", path: "/teacher/assignments" },
       { name: "Message", path: "/teacher/message"},
+      
     ],
     parent: [
       { name: "Dashboard", path: "/parent" },

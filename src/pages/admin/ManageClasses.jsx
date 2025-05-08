@@ -115,7 +115,7 @@ const ManageClasses = () => {
             style={{
               border: "none",
               borderRadius: "30px",
-              width: "420px",
+              width: "100%",
               height: "40px",
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
               marginTop: "10px",
@@ -135,7 +135,7 @@ const ManageClasses = () => {
             style={{
               border: "0px solid white",
               borderRadius: "30px",
-              width: "420px",
+              width: "100%",
               height: "40px",
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
               marginTop: "10px",
@@ -156,7 +156,7 @@ const ManageClasses = () => {
             style={{
               border: "0px solid white",
               borderRadius: "30px",
-              width: "420px",
+              width: "100%",
               height: "40px",
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
               marginTop: "10px",
@@ -184,7 +184,7 @@ const ManageClasses = () => {
   style={{
     border: "0px solid white",
     borderRadius: "30px",
-    width: "300px",
+    width: "100%",
     height: "40px",
     boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
     marginTop: "10px",
