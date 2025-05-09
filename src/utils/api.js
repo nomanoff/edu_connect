@@ -64,11 +64,11 @@ export const teacherApi = {
 
 // Attendance API
 export const attendanceApi = {
-  postAttendance: () => axios.post(`${ATTENDANCE_API_PREFIX}`),
-  getAttendanceListAsync: () =>
-    axios.get(`${ATTENDANCE_API_PREFIX}/${id}`, date),
-  getAttendanceListAsync: () =>
-    axios.get(`${ATTENDANCE_API_PREFIX}/${studentId}/${id}`, date),
-  getAttendanceListAsync: () =>
+  postAttendance: (data) => axios.post(`${ATTENDANCE_API_PREFIX}`, data),
+  getByClassAndDate: (classId, date) =>
+    axios.get(`${ATTENDANCE_API_PREFIX}/${classId}/${date}`),
+  getByStudentClassDate: (studentId, classId, date) =>
+    axios.get(`${ATTENDANCE_API_PREFIX}/${studentId}/${classId}/${date}`),
+  getAllByStudent: (studentId) =>
     axios.get(`${ATTENDANCE_API_PREFIX}/all/${studentId}`),
 };
