@@ -205,3 +205,100 @@ const Th = styled.th`
 const Td = styled.td`
   padding: 12px;
 `;
+
+export default function Attendance() {
+  const dispatch = useDispatch();
+
+  const { classList } = useSelector(selectClass);
+
+  const [selectedClassId, setSelectedClassId] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+
+  useEffect(() => {
+    dispatch(getClassListAsync());
+  }, [dispatch]);
+
+  const handleSubmit = () => {
+    if (!selectedClassId || !selectedDate) {
+      alert("Iltimos, sinf va sanani tanlang.");
+      return;
+    }
+
+    dispatch(
+      getAttendanceByClassAndDate({
+        classId: selectedClassId,
+        date: selectedDate,
+      })
+    );
+  };
+
+  const handlePostAttendance = (studentId) => {
+    dispatch(
+      postAttendanceAsync({
+        studentId,
+        classId: selectedClassId,
+        attendanceStatus: 0, // yoki 1 — yo‘qlama statusi
+      })
+    );
+  };
+
+  const filteredStudents = studentList.filter(
+    (student) => student.classId === selectedClassId
+  );
+
+  return (
+    <Wrapper>
+      <Header>
+        <Title>Manage Attendance</Title>
+        <Subtitle>Select class and date to mark attendance.</Subtitle>
+      </Header>
+
+      <Section>
+        <Label>Class:</Label>
+        <Select
+          value={selectedClassId}
+          onChange={(e) => setSelectedClassId(e.target.value)}
+        >
+          <option value="">Select Class</option>
+          {classList.map((cls) => (
+            <option key={cls.id} value={cls.id}>
+              {cls.name}
+            </option>
+          ))}
+        </Select>
+
+        <Label>Date:</Label>
+        <Input
+          type="date"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+        />
+
+        <Button onClick={handleSubmit}>Submit</Button>
+      </Section>
+
+      <TableWrapper>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Student Name</Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {filteredStudents.map((student) => (
+              <Tr key={student.id}>
+                <Td>{student.name}</Td>
+                <Td>
+                  <Button onClick={() => handlePostAttendance(student.id)}>
+                    Mark Absent
+                  </Button>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </TableWrapper>
+    </Wrapper>
+  );
+}
