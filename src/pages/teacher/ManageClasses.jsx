@@ -97,18 +97,7 @@ const ManageClasses = () => {
     <Container>
 
       {/* Create New Class */}
-      <Section>
-        <Title>Create New Class</Title>
-        <Form>
-          <Input type="text" placeholder="Class Name" />
-          <Select>
-            <option>Mathematics</option>
-            <option>Physics</option>
-            <option>Chemistry</option>
-          </Select>
-          <Button>Add Class</Button>
-        </Form>
-      </Section>
+
 
       {/* My Classes */}
       <Section>
@@ -146,29 +135,7 @@ const ManageClasses = () => {
       </Section>
 
       {/* Assign Students */}
-      <Section>
-        <Title>Assign Students</Title>
-        <Form>
-          <Select>
-            <option>Select Class</option>
-            <option>Grade 10 - Math</option>
-          </Select>
-          <Input placeholder="Enter Student Email" />
-          <Button>Assign Student</Button>
-        </Form>
 
-        <Title>Students in Grade 10 - Math</Title>
-        <StudentList>
-          <StudentItem>
-            John Doe
-            <Button danger>Remove</Button>
-          </StudentItem>
-          <StudentItem>
-            Jane Smith
-            <Button danger>Remove</Button>
-          </StudentItem>
-        </StudentList>
-      </Section>
     </Container>
   );
 };

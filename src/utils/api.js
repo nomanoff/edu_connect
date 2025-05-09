@@ -53,7 +53,9 @@ export const studentApi = {
 export const classApi = {
   getClassList: () => axios.get(`${CLASS_API_PREFIX}`),
   postClass: (data) => axios.post(`${CLASS_API_PREFIX}`, data),
+  getClassById: (id) => axios.get(`${CLASS_API_PREFIX}/${id}`),
   deleteClass: (id) => axios.delete(`${CLASS_API_PREFIX}/${id}`),
+  getMyClass: () => axios.get(`${CLASS_API_PREFIX}/my-classes`),
 };
 
 // Teacher API
