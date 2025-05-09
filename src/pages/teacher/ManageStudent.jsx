@@ -101,19 +101,7 @@ const ManageStudent = () => {
     <Container>
 
       {/* Add New Student */}
-      <Section>
-        <Title>Add New Student</Title>
-        <Form>
-          <Input type="text" placeholder="Student Name" />
-          <Input type="email" placeholder="Student Email" />
-          <Select>
-            <option>Select Class</option>
-            <option>Grade 10 - Math</option>
-            <option>Grade 9 - Science</option>
-          </Select>
-          <Button>Add Student</Button>
-        </Form>
-      </Section>
+      
 
       {/* My Students */}
       <Section>
@@ -149,27 +137,7 @@ const ManageStudent = () => {
       </Section>
 
       {/* Assign Students to Class */}
-      <Section>
-        <Title>Assign Students to Class</Title>
-        <Form>
-          <Select>
-            <option>Select Class</option>
-            <option>Grade 10 - Math</option>
-          </Select>
-          <Input placeholder="Enter Student Email" />
-          <Button>Assign Student</Button>
-        </Form>
-
-        <Title>Students in Grade 10 - Math</Title>
-        <StudentList>
-          <StudentItem>
-            John Doe <Button danger>Remove</Button>
-          </StudentItem>
-          <StudentItem>
-            Jane Smith <Button danger>Remove</Button>
-          </StudentItem>
-        </StudentList>
-      </Section>
+     
     </Container>
   );
 };
