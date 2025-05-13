@@ -7,7 +7,7 @@ export const postParentAsync = createAsyncThunk(
   'parent/postParent',
   async (parentData) => {
     try {
-      const data = await parentApi.postClass(parentData);
+      const data = await parentApi.postParent(parentData);
       return data;
     } catch (error) {
       console.error("Error creating parent", error);

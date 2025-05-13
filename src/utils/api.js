@@ -26,7 +26,7 @@ const CLASS_API_PREFIX = "/api/Classes";
 const AUTH_API_PREFIX = "/api/auth";
 const STUDENT_API_PREFIX = "/api/Students";
 const TEACHER_API_PREFIX = "/api/Teachers";
-const PARENT_API_PREFIX = "/api/Parent";
+const PARENT_API_PREFIX = "/api/Parents";
 
 // ====== Auth API ======
 export const authApi = {
@@ -66,7 +66,7 @@ export const teacherApi = {
   registerTeacherAsync: () => axios.post(`${TEACHERS_TOKEN}`),
 };
 
-// Attendance API
+// ====== Attendance API ======
 export const attendanceApi = {
   postAttendance: (data) => axios.post(`${ATTENDANCE_API_PREFIX}`, data),
   getByClassAndDate: (classId, date) =>
@@ -78,7 +78,6 @@ export const attendanceApi = {
 };
 
 // ====== Parent API ======
-// Nomi to‘g‘rilangan, chalkashlik yo‘q
 export const parentApi = {
   getParentList: () => axios.get(`${PARENT_API_PREFIX}`),
   postParent: (data) => axios.post(`${PARENT_API_PREFIX}`, data),
