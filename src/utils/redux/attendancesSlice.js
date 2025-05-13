@@ -7,7 +7,9 @@ const initialState = {
   error: null,
 };
 
-// post attendance thunk
+// THUNKS
+
+// Post new attendance
 export const postAttendanceAsync = createAsyncThunk(
   "attendance/postAttendance",
   async (data, { rejectWithValue }) => {
@@ -15,13 +17,13 @@ export const postAttendanceAsync = createAsyncThunk(
       const response = await attendanceApi.postAttendance(data);
       return response.data;
     } catch (error) {
-      console.error("Error creating an attendance:", error);
+      console.error("Error creating attendance:", error);
       return rejectWithValue("Failed to create attendance");
     }
   }
 );
 
-// get attendance by classId and date
+// Get attendance by classId and date
 export const getAttendanceByClassAndDate = createAsyncThunk(
   "attendance/getByClassAndDate",
   async ({ classId, date }, { rejectWithValue }) => {
@@ -35,21 +37,25 @@ export const getAttendanceByClassAndDate = createAsyncThunk(
   }
 );
 
-// get attendance by studentId and classId and date
+// Get attendance by studentId, classId and date
 export const getAttendanceByStudentClassDate = createAsyncThunk(
   "attendance/getByStudentClassDate",
   async ({ studentId, classId, date }, { rejectWithValue }) => {
     try {
-      const response = await attendanceApi.getByStudentClassDate(studentId, classId, date);
+      const response = await attendanceApi.getByStudentClassDate(
+        studentId,
+        classId,
+        date
+      );
       return response.data;
     } catch (error) {
-      console.error("Error fetching student-class-date attendance:", error);
+      console.error("Error fetching attendance by student/class/date:", error);
       return rejectWithValue("Failed to fetch specific attendance");
     }
   }
 );
 
-// get all attendances by studentId
+// Get all attendance records by studentId
 export const getAllAttendanceByStudent = createAsyncThunk(
   "attendance/getAllByStudent",
   async (studentId, { rejectWithValue }) => {
@@ -57,13 +63,13 @@ export const getAllAttendanceByStudent = createAsyncThunk(
       const response = await attendanceApi.getAllByStudent(studentId);
       return response.data;
     } catch (error) {
-      console.error("Error fetching all student attendances:", error);
+      console.error("Error fetching all attendance for student:", error);
       return rejectWithValue("Failed to fetch all attendances for student");
     }
   }
 );
 
-// Slice
+// SLICE
 const attendanceSlice = createSlice({
   name: "attendance",
   initialState,
@@ -72,6 +78,7 @@ const attendanceSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // fulfilled cases
       .addCase(postAttendanceAsync.fulfilled, (state, action) => {
         state.attendanceList.push(action.payload);
       })
@@ -84,21 +91,33 @@ const attendanceSlice = createSlice({
       .addCase(getAllAttendanceByStudent.fulfilled, (state, action) => {
         state.attendanceList = action.payload;
       })
+
+      // pending
       .addMatcher(
-        (action) => action.type.startsWith("attendance/") && action.type.endsWith("/pending"),
+        (action) =>
+          action.type.startsWith("attendance/") &&
+          action.type.endsWith("/pending"),
         (state) => {
           state.loading = true;
           state.error = null;
         }
       )
+
+      // fulfilled
       .addMatcher(
-        (action) => action.type.startsWith("attendance/") && action.type.endsWith("/fulfilled"),
+        (action) =>
+          action.type.startsWith("attendance/") &&
+          action.type.endsWith("/fulfilled"),
         (state) => {
           state.loading = false;
         }
       )
+
+      // rejected
       .addMatcher(
-        (action) => action.type.startsWith("attendance/") && action.type.endsWith("/rejected"),
+        (action) =>
+          action.type.startsWith("attendance/") &&
+          action.type.endsWith("/rejected"),
         (state, action) => {
           state.loading = false;
           state.error = action.payload;
@@ -107,6 +126,7 @@ const attendanceSlice = createSlice({
   },
 });
 
+// EXPORTS
 export const selectAttendance = (state) => state.attendance;
 export const { resetAttendanceSlice } = attendanceSlice.actions;
 export default attendanceSlice.reducer;
