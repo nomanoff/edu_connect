@@ -27,12 +27,16 @@ const AUTH_API_PREFIX = "/api/auth";
 const STUDENT_API_PREFIX = "/api/Students";
 const TEACHER_API_PREFIX = "/api/Teachers";
 const PARENT_API_PREFIX = "/api/Parents";
+const ATTENDANCE_API_PREFIX = "/api/Attendances"
 
 // ====== Auth API ======
 export const authApi = {
-  registerAdmin: (data) => axios.post(`${AUTH_API_PREFIX}/register-admin`, data),
-  registerTeacher: (data) => axios.post(`${AUTH_API_PREFIX}/register-teacher`, data),
-  registerParent: (data) => axios.post(`${AUTH_API_PREFIX}/register-parent`, data),
+  registerAdmin: (data) =>
+    axios.post(`${AUTH_API_PREFIX}/register-admin`, data),
+  registerTeacher: (data) =>
+    axios.post(`${AUTH_API_PREFIX}/register-teacher`, data),
+  registerParent: (data) =>
+    axios.post(`${AUTH_API_PREFIX}/register-parent`, data),
   login: (data) => axios.post(`${AUTH_API_PREFIX}/login`, data),
   deleteTeacher: (id) => axios.delete(`${TEACHER_API_PREFIX}/${id}`),
 };
@@ -47,8 +51,10 @@ export const academyApi = {
 export const studentApi = {
   getStudentList: () => axios.get(`${STUDENT_API_PREFIX}`),
   postStudent: (data) => axios.post(`${STUDENT_API_PREFIX}`, data),
-  getStudent: (id) => axios.get(`${STUDENT_API_PREFIX}/${id}`),
+  getStudentById: (id) => axios.get(`${STUDENT_API_PREFIX}/${id}`),
   deleteStudent: (id) => axios.delete(`${STUDENT_API_PREFIX}/${id}`),
+  getStudentByToken: (token) =>
+    axios.get(`${STUDENT_API_PREFIX}/by-token/${token}`),
 };
 
 // ====== Class API ======
