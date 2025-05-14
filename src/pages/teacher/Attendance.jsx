@@ -1,304 +1,310 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+// import { useEffect, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import styled from "styled-components";
 
-import { getClassListAsync, selectClass } from "../../utils/redux/classSlice";
-import {
-  postAttendanceAsync,
-  getAttendanceByClassAndDate,
-  selectAttendance,
-} from "../../utils/redux/attendancesSlice";
+// import { getClassListAsync, selectClass } from "../../utils/redux/classSlice";
+// import {
+//   postAttendanceAsync,
+//   getAttendanceByClassAndDate,
+//   selectAttendance,
+// } from "../../utils/redux/attendancesSlice";
 
-export default function Attendance() {
-  const dispatch = useDispatch();
-  const { classList } = useSelector(selectClass);
-  const { attendanceList } = useSelector(selectAttendance);
+// export default function Attendance() {
+//   const dispatch = useDispatch();
+//   const { classList } = useSelector(selectClass);
+//   const { attendanceList } = useSelector(selectAttendance);
 
-  const [selectedClassId, setSelectedClassId] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
+//   const [selectedClassId, setSelectedClassId] = useState("");
+//   const [selectedDate, setSelectedDate] = useState("");
 
-  useEffect(() => {
-    dispatch(getClassListAsync());
-    dispatch(getAttendanceByClassAndDate());
-  }, [dispatch]);
+//   useEffect(() => {
+//     dispatch(getClassListAsync());
+//     dispatch(getAttendanceByClassAndDate());
+//   }, [dispatch]);
 
-  const handleSubmit = () => {
-    if (!selectedClassId || !selectedDate) {
-      alert("Iltimos, sinf va sanani tanlang.");
-      return;
-    }
+//   const handleSubmit = () => {
+//     if (!selectedClassId || !selectedDate) {
+//       alert("Iltimos, sinf va sanani tanlang.");
+//       return;
+//     }
 
-    dispatch(
-      getAttendanceByClassAndDate({
-        classId: selectedClassId,
-        date: selectedDate,
-      })
-    );
-  };
+//     dispatch(
+//       getAttendanceByClassAndDate({
+//         classId: selectedClassId,
+//         date: selectedDate,
+//       })
+//     );
+//   };
 
-  const handlePostAttendance = (studentId) => {
-    if (!selectedClassId || !selectedDate) return;
+//   const handlePostAttendance = (studentId) => {
+//     if (!selectedClassId || !selectedDate) return;
 
-    dispatch(
-      postAttendanceAsync({
-        studentId,
-        classId: selectedClassId,
-        date: selectedDate,
-        attendanceStatus: 1, // 1 = present
-      })
-    );
-  };
+//     dispatch(
+//       postAttendanceAsync({
+//         studentId,
+//         classId: selectedClassId,
+//         date: selectedDate,
+//         attendanceStatus: 1, // 1 = present
+//       })
+//     );
+//   };
 
-  return (
-    <Wrapper>
-      <Header>
-        <Title>Manage Attendance</Title>
-        <Subtitle>Select class and date to mark attendance.</Subtitle>
-      </Header>
+//   return (
+//     <Wrapper>
+//       <Header>
+//         <Title>Manage Attendance</Title>
+//         <Subtitle>Select class and date to mark attendance.</Subtitle>
+//       </Header>
 
-      <Section>
-        <Label>Class:</Label>
-        <Select
-          value={selectedClassId}
-          onChange={(e) => setSelectedClassId(e.target.value)}
-        >
-          <option value="">Select Class</option>
-          {classList.map((cls) => (
-            <option key={cls.id} value={cls.id}>
-              {cls.name}
-            </option>
-          ))}
-        </Select>
+//       <Section>
+//         <Label>Class:</Label>
+//         <Select
+//           value={selectedClassId}
+//           onChange={(e) => setSelectedClassId(e.target.value)}
+//         >
+//           <option value="">Select Class</option>
+//           {classList.map((cls) => (
+//             <option key={cls.id} value={cls.id}>
+//               {cls.name}
+//             </option>
+//           ))}
+//         </Select>
 
-        <Label>Date:</Label>
-        <Input
-          type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-        />
+//         <Label>Date:</Label>
+//         <Input
+//           type="date"
+//           value={selectedDate}
+//           onChange={(e) => setSelectedDate(e.target.value)}
+//         />
 
-        <Button onClick={handleSubmit}>Submit</Button>
-      </Section>
+//         <Button onClick={handleSubmit}>Submit</Button>
+//       </Section>
 
-      <TableWrapper>
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>Student Name</Th>
-              <Th>Actions</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {attendanceList?.length > 0 ? (
-              attendanceList.map((student, index) => (
-                <Tr key={index}>
-                  <Td>{student.studentName || "No name"}</Td>
-                  <Td>
-                    <Button onClick={() => handlePostAttendance(student.studentId)}>
-                      Mark Present
-                    </Button>
-                  </Td>
-                </Tr>
-              ))
-            ) : (
-              <Tr>
-                <Td colSpan="2">Ma'lumot topilmadi.</Td>
-              </Tr>
-            )}
-          </Tbody>
-        </Table>
-      </TableWrapper>
-    </Wrapper>
-  );
-}
+//       <TableWrapper>
+//         <Table>
+//           <Thead>
+//             <Tr>
+//               <Th>Student Name</Th>
+//               <Th>Actions</Th>
+//             </Tr>
+//           </Thead>
+//           <Tbody>
+//             {attendanceList?.length > 0 ? (
+//               attendanceList.map((student, index) => (
+//                 <Tr key={index}>
+//                   <Td>{student.studentName || "No name"}</Td>
+//                   <Td>
+//                     <Button onClick={() => handlePostAttendance(student.studentId)}>
+//                       Mark Present
+//                     </Button>
+//                   </Td>
+//                 </Tr>
+//               ))
+//             ) : (
+//               <Tr>
+//                 <Td colSpan="2">Ma'lumot topilmadi.</Td>
+//               </Tr>
+//             )}
+//           </Tbody>
+//         </Table>
+//       </TableWrapper>
+//     </Wrapper>
+//   );
+// }
 
-// Styled components (unchanged as per request)
-const Wrapper = styled.div`
-  width: 100%;
-  height: calc(100vh - 50px);
-  background-color: #f9f9f9;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-`;
+// // Styled components (unchanged as per request)
+// const Wrapper = styled.div`
+//   width: 100%;
+//   height: calc(100vh - 50px);
+//   background-color: #f9f9f9;
+//   padding: 20px;
+//   display: flex;
+//   flex-direction: column;
+// `;
 
-const Header = styled.div`
-  text-align: left;
-  margin-bottom: 20px;
-`;
+// const Header = styled.div`
+//   text-align: left;
+//   margin-bottom: 20px;
+// `;
 
-const Title = styled.h1`
-  font-size: 22px;
-  color: #333;
-  margin-bottom: 5px;
-`;
+// const Title = styled.h1`
+//   font-size: 22px;
+//   color: #333;
+//   margin-bottom: 5px;
+// `;
 
-const Subtitle = styled.p`
-  font-size: 14px;
-  color: #666;
-`;
+// const Subtitle = styled.p`
+//   font-size: 14px;
+//   color: #666;
+// `;
 
-const Section = styled.div`
-  margin-bottom: 15px;
-  display: flex;
-  gap: 20px;
-  align-items: center;
-`;
+// const Section = styled.div`
+//   margin-bottom: 15px;
+//   display: flex;
+//   gap: 20px;
+//   align-items: center;
+// `;
 
-const Label = styled.label`
-  font-weight: bold;
-`;
+// const Label = styled.label`
+//   font-weight: bold;
+// `;
 
-const Select = styled.select`
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
+// const Select = styled.select`
+//   padding: 8px;
+//   border: 1px solid #ccc;
+//   border-radius: 5px;
+// `;
 
-const Input = styled.input`
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
+// const Input = styled.input`
+//   padding: 8px;
+//   border: 1px solid #ccc;
+//   border-radius: 5px;
+// `;
 
-const Button = styled.button`
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-`;
+// const Button = styled.button`
+//   padding: 8px 16px;
+//   background-color: #007bff;
+//   color: white;
+//   border: none;
+//   border-radius: 5px;
+//   cursor: pointer;
+// `;
 
-const TableWrapper = styled.div`
-  flex: 1;
-  overflow-y: auto;
-  margin-top: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-`;
+// const TableWrapper = styled.div`
+//   flex: 1;
+//   overflow-y: auto;
+//   margin-top: 10px;
+//   border: 1px solid #ccc;
+//   border-radius: 8px;
+// `;
 
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  background-color: white;
-`;
+// const Table = styled.table`
+//   width: 100%;
+//   border-collapse: collapse;
+//   background-color: white;
+// `;
 
-const Thead = styled.thead`
-  background-color: #007bff;
-  color: white;
-`;
+// const Thead = styled.thead`
+//   background-color: #007bff;
+//   color: white;
+// `;
 
-const Tbody = styled.tbody``;
+// const Tbody = styled.tbody``;
 
-const Tr = styled.tr`
-  &:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-`;
+// const Tr = styled.tr`
+//   &:nth-child(even) {
+//     background-color: #f2f2f2;
+//   }
+// `;
 
-const Th = styled.th`
-  padding: 12px;
-  text-align: left;
-`;
+// const Th = styled.th`
+//   padding: 12px;
+//   text-align: left;
+// `;
 
-const Td = styled.td`
-  padding: 12px;
-`;
+// const Td = styled.td`
+//   padding: 12px;
+// `;
 
-export default function Attendance() {
-  const dispatch = useDispatch();
+// export default function Attendance() {
+//   const dispatch = useDispatch();
 
-  const { classList } = useSelector(selectClass);
+//   const { classList } = useSelector(selectClass);
 
-  const [selectedClassId, setSelectedClassId] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
+//   const [selectedClassId, setSelectedClassId] = useState("");
+//   const [selectedDate, setSelectedDate] = useState("");
 
-  useEffect(() => {
-    dispatch(getClassListAsync());
-  }, [dispatch]);
+//   useEffect(() => {
+//     dispatch(getClassListAsync());
+//   }, [dispatch]);
 
-  const handleSubmit = () => {
-    if (!selectedClassId || !selectedDate) {
-      alert("Iltimos, sinf va sanani tanlang.");
-      return;
-    }
+//   const handleSubmit = () => {
+//     if (!selectedClassId || !selectedDate) {
+//       alert("Iltimos, sinf va sanani tanlang.");
+//       return;
+//     }
 
-    dispatch(
-      getAttendanceByClassAndDate({
-        classId: selectedClassId,
-        date: selectedDate,
-      })
-    );
-  };
+//     dispatch(
+//       getAttendanceByClassAndDate({
+//         classId: selectedClassId,
+//         date: selectedDate,
+//       })
+//     );
+//   };
 
-  const handlePostAttendance = (studentId) => {
-    dispatch(
-      postAttendanceAsync({
-        studentId,
-        classId: selectedClassId,
-        attendanceStatus: 0, // yoki 1 — yo‘qlama statusi
-      })
-    );
-  };
+//   const handlePostAttendance = (studentId) => {
+//     dispatch(
+//       postAttendanceAsync({
+//         studentId,
+//         classId: selectedClassId,
+//         attendanceStatus: 0, // yoki 1 — yo‘qlama statusi
+//       })
+//     );
+//   };
 
-  const filteredStudents = studentList.filter(
-    (student) => student.classId === selectedClassId
-  );
+//   const filteredStudents = studentList.filter(
+//     (student) => student.classId === selectedClassId
+//   );
 
-  return (
-    <Wrapper>
-      <Header>
-        <Title>Manage Attendance</Title>
-        <Subtitle>Select class and date to mark attendance.</Subtitle>
-      </Header>
+//   return (
+//     <Wrapper>
+//       <Header>
+//         <Title>Manage Attendance</Title>
+//         <Subtitle>Select class and date to mark attendance.</Subtitle>
+//       </Header>
 
-      <Section>
-        <Label>Class:</Label>
-        <Select
-          value={selectedClassId}
-          onChange={(e) => setSelectedClassId(e.target.value)}
-        >
-          <option value="">Select Class</option>
-          {classList.map((cls) => (
-            <option key={cls.id} value={cls.id}>
-              {cls.name}
-            </option>
-          ))}
-        </Select>
+//       <Section>
+//         <Label>Class:</Label>
+//         <Select
+//           value={selectedClassId}
+//           onChange={(e) => setSelectedClassId(e.target.value)}
+//         >
+//           <option value="">Select Class</option>
+//           {classList.map((cls) => (
+//             <option key={cls.id} value={cls.id}>
+//               {cls.name}
+//             </option>
+//           ))}
+//         </Select>
 
-        <Label>Date:</Label>
-        <Input
-          type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-        />
+//         <Label>Date:</Label>
+//         <Input
+//           type="date"
+//           value={selectedDate}
+//           onChange={(e) => setSelectedDate(e.target.value)}
+//         />
 
-        <Button onClick={handleSubmit}>Submit</Button>
-      </Section>
+//         <Button onClick={handleSubmit}>Submit</Button>
+//       </Section>
 
-      <TableWrapper>
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>Student Name</Th>
-              <Th>Actions</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {filteredStudents.map((student) => (
-              <Tr key={student.id}>
-                <Td>{student.name}</Td>
-                <Td>
-                  <Button onClick={() => handlePostAttendance(student.id)}>
-                    Mark Absent
-                  </Button>
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableWrapper>
-    </Wrapper>
-  );
-}
+//       <TableWrapper>
+//         <Table>
+//           <Thead>
+//             <Tr>
+//               <Th>Student Name</Th>
+//               <Th>Actions</Th>
+//             </Tr>
+//           </Thead>
+//           <Tbody>
+//             {filteredStudents.map((student) => (
+//               <Tr key={student.id}>
+//                 <Td>{student.name}</Td>
+//                 <Td>
+//                   <Button onClick={() => handlePostAttendance(student.id)}>
+//                     Mark Absent
+//                   </Button>
+//                 </Td>
+//               </Tr>
+//             ))}
+//           </Tbody>
+//         </Table>
+//       </TableWrapper>
+//     </Wrapper>
+//   );
+// }
+
+const Attendance = () => {
+  return null;
+};
+
+export default Attendance;
