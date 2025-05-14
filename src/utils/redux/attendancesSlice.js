@@ -32,7 +32,7 @@ export const getAttendanceByClassAndDate = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.error("Error fetching attendance:", error);
-      return rejectWithValue("Failed to fetch attendance by class and date");
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch attendance");
     }
   }
 );
@@ -120,7 +120,7 @@ const attendanceSlice = createSlice({
           action.type.endsWith("/rejected"),
         (state, action) => {
           state.loading = false;
-          state.error = action.payload;
+          state.error = action.payload || "Something went wrong";
         }
       );
   },
