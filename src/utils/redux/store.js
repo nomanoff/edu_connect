@@ -11,6 +11,7 @@ import studentSlice from "./studentSlice";
 import classSlice from "./classSlice";
 import teacherSlice from "./teacherSlice";
 import parentSlice from "./parentSlice";
+import attendancesSlice from "./attendancesSlice";
 
 // Barcha reducerlarni birlashtirish
 const rootReducer = combineReducers({
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   class: classSlice,
   teacher: teacherSlice,
   parent: parentSlice,
+  attendance: attendancesSlice,
 });
 
 // Transform faqat kerakli key'ga ishlaydi
