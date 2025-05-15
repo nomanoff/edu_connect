@@ -91,7 +91,6 @@ const AdminDashboard = () => {
               <Th>Class Name</Th>
               <Th>Class Time</Th>
               <Th>No. Of Students</Th>
-              <Th>Attendance Rate</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -101,7 +100,6 @@ const AdminDashboard = () => {
                   <Td>{cls?.name?.trim() || "-"}</Td>
                   <Td>{formatClassTime(cls?.startTime, cls?.endTime)}</Td>
                   <Td>{cls?.students?.length ?? 0}</Td>
-                  <Td>-</Td>
                 </Tr>
               ))
             ) : (
