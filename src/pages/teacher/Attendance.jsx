@@ -144,7 +144,6 @@ const Div = styled.div`
   width: 100%;
 `;
 
-
 export default function Attendance() {
   const dispatch = useDispatch();
   const { classList } = useSelector(selectClass);

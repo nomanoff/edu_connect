@@ -1,97 +1,256 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const Container = styled.div`
+import { getClassListAsync, selectClass } from "../../utils/redux/classSlice";
+import {
+  getAttendanceByClassAndDate,
+  selectAttendance,
+} from "../../utils/redux/attendancesSlice";
+
+import styled from "styled-components";
+import DoneIcon from "@mui/icons-material/Done";
+import ClearIcon from "@mui/icons-material/Clear";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: calc(100vh - 50px);
+  background-color: #f9f9f9;
   padding: 20px;
-  max-width: 800px;
-  margin: auto;
-  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
 `;
 
-const TopControls = styled.div`
+const Section = styled.div`
+  margin-bottom: 15px;
   display: flex;
-  gap: 10px;
-  margin-bottom: 30px;
+  gap: 20px;
+  align-items: center;
+`;
+
+const Label = styled.label`
+  font-weight: bold;
+  margin-bottom: 15px;
 `;
 
 const Select = styled.select`
-  padding: 10px;
-  border-radius: 6px;
+  padding: 8px;
   border: 1px solid #ccc;
+  border-radius: 5px;
+`;
+
+const TableWrapper = styled.div`
   flex: 1;
+  overflow-y: auto;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+`;
+
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+`;
+
+const Thead = styled.thead`
+  background-color: #007bff;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+`;
+
+const Th = styled.th`
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-right: 1px solid #fff;
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+const Tbody = styled.tbody``;
+
+const Tr = styled.tr`
+  &:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+`;
+
+const Td = styled.td`
+  padding: 12px 23px;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+const Div = styled.div`
+  display: grid;
 `;
 
 const Input = styled.input`
-  padding: 10px;
-  border-radius: 6px;
+  padding: 8px;
   border: 1px solid #ccc;
-  flex: 1;
+  border-radius: 5px;
+`;
+
+const Button = styled.button`
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+
+const DivGreen = styled.div`
+  border: none;
+  border-radius: 8px;
+  padding: 5px 15px;
+  font-size: 1.1rem;
+  align-items: center;
+  background-color: #18d118;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  width: 25%;
+`;
+
+const DivRed = styled.div`
+  border: none;
+  border-radius: 8px;
+  padding: 5px 15px;
+  font-size: 1.1rem;
+  align-items: center;
+  background-color: #ea2828;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  width: 25%;
+`;
+
+const DivYellow = styled.div`
+  border: none;
+  border-radius: 8px;
+  padding: 5px 15px;
+  font-size: 1.1rem;
+  align-items: center;
+  background-color: #ffbb3d;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  width: 25%;
 `;
 
 const AttendanceReports = () => {
-  const [reports, setReports] = useState([]);
-  const [selectedRole, setSelectedRole] = useState("");
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
+  const dispatch = useDispatch();
+  const { classList } = useSelector(selectClass);
+  const { attendanceList } = useSelector(selectAttendance);
 
-  const handleMonthChange = (e) => {
-    const val = parseInt(e.target.value, 10);
-    if (val > 12) setMonth("1");
-    else if (val < 1) setMonth("12");
-    else setMonth(e.target.value);
-  };
+  const [selectedClassId, setSelectedClassId] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  useEffect(() => {
+    dispatch(getClassListAsync());
+  }, [dispatch]);
 
-  const handleDayChange = (e) => {
-    const val = parseInt(e.target.value, 10);
-    if (val > 7) setDay("1");
-    else if (val < 1) setDay("7");
-    else setDay(e.target.value);
+  const handleChoseAttendance = () => {
+    if (selectedClassId && selectedDate) {
+      const attendanceData = {
+        classId: selectedClassId,
+        date: selectedDate,
+      };
+      console.log("attendance", attendanceList);
+      dispatch(getAttendanceByClassAndDate(attendanceData));
+    } else {
+      alert("Please Chose class or enter date!");
+    }
   };
 
   return (
-    <Container>
-      <TopControls>
-        <Select
-          value={selectedRole}
-          onChange={(e) => setSelectedRole(e.target.value)}
-        >
-          <option value="">Select Role</option>
-          <option value="test">test</option>
-          <option value="test 2">test 2</option>
-          <option value="test 3">test 3</option>
-          <option value="test 4">test 4</option>
-          <option value="test 5">test 5</option>
-          <option value="test 6">test 6</option>
-          <option value="test 7">test 7</option>
-        </Select>
+    <Wrapper>
+      <Section>
+        <Div>
+          <Label>Class:</Label>
+          <Select
+            value={selectedClassId}
+            onChange={(e) => setSelectedClassId(e.target.value)}
+          >
+            <option value="">Select Class</option>
+            {classList.map((cls) => (
+              <option key={cls.id} value={cls.id}>
+                {cls.name}
+              </option>
+            ))}
+          </Select>
+        </Div>
 
-        <Input
-          type="number"
-          placeholder="Year"
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-        />
+        <Div>
+          <Label>Date:</Label>
+          <Input
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+          />
+        </Div>
 
-        <Input
-          type="number"
-          placeholder="Month"
-          value={month}
-          min="1"
-          max="12"
-          onChange={handleMonthChange}
-        />
+        <Div>
+          <Label>Submit:</Label>
+          <Button onClick={handleChoseAttendance}>Submit</Button>
+        </Div>
+      </Section>
 
-        <Input
-          type="number"
-          placeholder="Day"
-          value={day}
-          min="1"
-          max="7"
-          onChange={handleDayChange}
-        />
-      </TopControls>
-    </Container>
+      <TableWrapper>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Student Name</Th>
+              <Th>Attendance</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {attendanceList.length > 0 ? (
+              attendanceList.map((data, index) => (
+                <Tr key={index}>
+                  <Td>{data.studentName}</Td>
+                  {data.attendanceStatus === 0 ? (
+                    <Td>
+                      <DivGreen>
+                        <DoneIcon />
+                        Present
+                      </DivGreen>
+                    </Td>
+                  ) : data.attendanceStatus === 1 ? (
+                    <Td>
+                      <DivRed>
+                        <ClearIcon />
+                        Absent
+                      </DivRed>
+                    </Td>
+                  ) : (
+                    <Td>
+                      <DivYellow>
+                        <WarningAmberIcon />
+                        Tardy
+                      </DivYellow>
+                    </Td>
+                  )}
+                </Tr>
+              ))
+            ) : (
+              <Tr>
+                <Td colSpan="2">No students found!</Td>
+              </Tr>
+            )}
+          </Tbody>
+        </Table>
+      </TableWrapper>
+    </Wrapper>
   );
 };
 
