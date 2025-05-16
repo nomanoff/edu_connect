@@ -37,7 +37,7 @@ const ParentDashboard = () => {
 
   const goToSettings = () => {
     // Bu yerda kerakli parent ID ni dinamik ravishda o‘tkazing
-    navigate("/parent/settings/"); // Masalan: 123 ni haqiqiy ID bilan almashtiring
+    navigate("/parent/settings"); // Masalan: 123 ni haqiqiy ID bilan almashtiring
   };
 
   return (
