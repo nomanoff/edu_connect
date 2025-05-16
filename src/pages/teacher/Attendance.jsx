@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getMyClassAsync, selectClass } from "../../utils/redux/classSlice";
-import { postAttendanceAsync, selectAttendance } from "../../utils/redux/attendancesSlice";
+import {
+  postAttendanceAsync,
+  selectAttendance,
+} from "../../utils/redux/attendancesSlice";
 
 import styled from "styled-components";
 import DoneIcon from "@mui/icons-material/Done";
@@ -164,9 +167,7 @@ export default function Attendance() {
 
       dispatch(postAttendanceAsync(attendanceData))
         .unwrap()
-        .then(() => {
-          alert("Attendance posted successfully!");
-        })
+        .then()
         .catch((error) => {
           alert(error);
         });
