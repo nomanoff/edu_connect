@@ -1,10 +1,14 @@
-// ParentSettings.jsx
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { postParentAsync } from "../../utils/redux/parentSlice";
 
+import {
+  getStudentByTokenAsync,
+  selectStudent,
+} from "../../utils/redux/studentSlice";
+
+// Styled Components
 const TitleContainer = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -119,16 +123,10 @@ const ResultContainer = styled.div`
   overflow-y: auto;
 `;
 
-const ChildCard = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f8f8f8;
-  padding: 15px;
-  border-radius: 8px;
-  width: 80%;
-  margin-top: 10px;
-  border: 2px solid #ccc;
+const StudentName = styled.h1`
+  color: #222;
+  font-size: 32px;
+  margin-bottom: 30px;
 `;
 
 const DashboardButton = styled.button`
@@ -150,35 +148,15 @@ const DashboardButton = styled.button`
 `;
 
 export const ParentSettings = () => {
-  const [childId, setChildId] = useState("");
-  const [children, setChildren] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleFindChild = async () => {
-    if (!childId) {
-      alert("Please enter a child ID!");
-      return;
-    }
+  const { studentDetail } = useSelector(selectStudent);
+  const [selectedStudentToken, setSelectedStudentToken] = useState("");
 
-    const parentData = {
-      name: "Parent Name", // Replace with actual parent name if available
-      email: "parent@example.com", // Replace with actual parent email if available
-      children: [
-        {
-          studentId: childId,
-          name: "Child Name" // Replace with actual child name if available
-        }
-      ]
-    };
-
-    try {
-      const response = await dispatch(postParentAsync(parentData)).unwrap();
-      setChildren((prevChildren) => [...prevChildren, response]);
-      setChildId("");
-    } catch (error) {
-      console.error("Failed to add child:", error);
-      alert("Failed to add child. Please try again.");
+  const handleFindChild = () => {
+    if (selectedStudentToken.trim() !== "") {
+      dispatch(getStudentByTokenAsync(selectedStudentToken));
     }
   };
 
@@ -197,31 +175,28 @@ export const ParentSettings = () => {
       </SubtitleContainer>
 
       <InputContainer>
-        <Label>Enter child id</Label>
+        <Label>Enter child ID</Label>
         <InputWrapper>
           <Input
             type="text"
             placeholder="ex: ad124d"
-            value={childId}
-            onChange={(e) => setChildId(e.target.value)}
+            value={selectedStudentToken}
+            onChange={(e) => setSelectedStudentToken(e.target.value)}
           />
           <Button onClick={handleFindChild}>Find</Button>
         </InputWrapper>
       </InputContainer>
 
-      {children.length > 0 && (
-        <ResultContainer>
-          {children.map((child, index) => (
-            <ChildCard key={index}>
-              <span>{child.children[0].name}</span>
-              <span>{child.children[0].studentId}</span>
-            </ChildCard>
-          ))}
-          <DashboardButton onClick={handleGoToDashboard}>
-            Go to Dashboard
-          </DashboardButton>
-        </ResultContainer>
-      )}
+      <ResultContainer>
+        {studentDetail?.name && (
+          <div>
+            <StudentName>{studentDetail.name}</StudentName>
+          </div>
+        )}
+        <DashboardButton onClick={handleGoToDashboard}>
+          Go to Dashboard
+        </DashboardButton>
+      </ResultContainer>
     </>
   );
 };

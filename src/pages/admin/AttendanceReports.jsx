@@ -165,7 +165,7 @@ const AttendanceReports = () => {
         classId: selectedClassId,
         date: selectedDate,
       };
-      console.log("attendance", attendanceList);
+      
       dispatch(getAttendanceByClassAndDate(attendanceData));
     } else {
       alert("Please Chose class or enter date!");
