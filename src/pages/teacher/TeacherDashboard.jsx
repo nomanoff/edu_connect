@@ -1,148 +1,115 @@
-import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+
+import { getMyClassAsync, selectClass } from "../../utils/redux/classSlice";
+
 import styled from "styled-components";
 
-const Container = styled.div`
-  font-family: Arial, sans-serif;
+const Wrapper = styled.div`
+  width: 100%;
+  height: calc(100vh - 50px);
+  background-color: #f9f9f9;
   padding: 20px;
-`;
-
-const Header = styled.h2`
-  color: #007bff;
-`;
-
-const InfoContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  flex-direction: column;
 `;
 
-const InfoBox = styled.div`
+const TableWrapper = styled.div`
   flex: 1;
-  text-align: center;
-  padding: 15px;
-  border: 1px solid #ddd;
-  margin: 0 10px;
-  border-radius: 5px;
+  overflow-y: auto;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
 `;
 
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  background-color: white;
+`;
+
+const Thead = styled.thead`
+  background-color: #007bff;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `;
 
 const Th = styled.th`
-  background: #007bff;
-  color: white;
-  padding: 10px;
-`;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-right: 1px solid #fff;
 
-const Td = styled.td`
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: center;
-`;
-
-const MessageBox = styled.div`
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 5px;
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  margin-top: 10px;
-`;
-
-const Input = styled.input`
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-`;
-
-const Button = styled.button`
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin-left: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  &:hover {
-    background: #0056b3;
+  &:last-child {
+    border-right: none;
   }
 `;
 
+const Tbody = styled.tbody``;
+
+const Tr = styled.tr`
+  &:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+`;
+
+const Td = styled.td`
+  padding: 12px 23px;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+// Time formatter
+const formatClassTime = (startTime, endTime) => {
+  if (!startTime || !endTime) return "-";
+  const format = (t) => t.slice(0, 5); // HH:mm:ss -> HH:mm
+  return `${format(startTime)} ~ ${format(endTime)}`;
+};
+
 const TeacherDashboard = () => {
+  const dispatch = useDispatch();
+  const { classList } = useSelector(selectClass);
+
+  useEffect(() => {
+    dispatch(getMyClassAsync());
+  }, [dispatch]);
+
   return (
-    <Container>
-      <Header>Child: Alice Johnson</Header>
-      <InfoContainer>
-        <InfoBox>Attendance: 95% This Month</InfoBox>
-        <InfoBox>Performance: Grade A</InfoBox>
-        <InfoBox>Homework Completion: ✅ 8/10 Assignments Done</InfoBox>
-      </InfoContainer>
-
-      <Table>
-        <thead>
-          <tr>
-            <Th>Date</Th>
-            <Th>Status</Th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <Td>March 1</Td>
-            <Td>✅ Present</Td>
-          </tr>
-          <tr>
-            <Td>March 2</Td>
-            <Td>✅ Present</Td>
-          </tr>
-          <tr>
-            <Td>March 3</Td>
-            <Td>⚠️ Tardy</Td>
-          </tr>
-        </tbody>
-      </Table>
-
-      <Table>
-        <thead>
-          <tr>
-            <Th>Subject</Th>
-            <Th>Homework Status</Th>
-            <Th>Performance</Th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <Td>Math</Td>
-            <Td>✅ Completed</Td>
-            <Td>Grade A</Td>
-          </tr>
-          <tr>
-            <Td>Science</Td>
-            <Td>❌ Not Submitted</Td>
-            <Td>Grade B</Td>
-          </tr>
-        </tbody>
-      </Table>
-
-      <MessageBox>
-        <p>
-          <strong>Teacher:</strong> Please ensure Alice submits the next
-          assignment.
-        </p>
-        <p>
-          <strong>Parent:</strong> Thanks for the update! I will remind her.
-        </p>
-        <InputContainer>
-          <Input type="text" placeholder="Type your message..." />
-          <Button>Send</Button>
-        </InputContainer>
-      </MessageBox>
-    </Container>
+    <Wrapper>
+      <TableWrapper>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Class Name</Th>
+              <Th>Class Time</Th>
+              <Th>No. of Student</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {classList.length > 0 ? (
+              classList.map((cls, index) => (
+                <Tr key={index}>
+                  <Td>{cls?.name?.trim()}</Td>
+                  <Td>{formatClassTime(cls?.startTime, cls?.endTime)}</Td>
+                  <Td>{cls?.students?.length ?? 0}</Td>
+                </Tr>
+              ))
+            ) : (
+              <Tr>
+                <Td colSpan="2">No students found!</Td>
+              </Tr>
+            )}
+          </Tbody>
+        </Table>
+      </TableWrapper>
+    </Wrapper>
   );
 };
 

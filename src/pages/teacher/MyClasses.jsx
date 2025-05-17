@@ -92,7 +92,7 @@ const StudentItem = styled.li`
 `;
 
 
-const ManageClasses = () => {
+const MyClasses = () => {
   return (
     <Container>
 
@@ -140,4 +140,4 @@ const ManageClasses = () => {
   );
 };
 
-export default ManageClasses;
+export default MyClasses;
