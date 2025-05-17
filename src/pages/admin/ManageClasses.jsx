@@ -321,11 +321,13 @@ const ManageClasses = () => {
 
 const Container = styled.div`
   padding: 40px;
+
 `;
 const ContentWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 30px;
+
 `;
 const FormSection = styled.div`
   width: 45%;
@@ -342,6 +344,8 @@ const ClassListSection = styled.div`
   border-radius: 20px;
   height: 430px;
   background-color: #1c94f6;
+
+
   color: white;
   box-shadow: 0 8px 24px rgba(47, 47, 47, 0.2);
   height: 520px;

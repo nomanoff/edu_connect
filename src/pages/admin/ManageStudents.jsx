@@ -45,17 +45,23 @@ const ContentWrapper = styled.div`
   gap: 20px;
   width: 100%;
   max-width: 1100px;
-  max-height: 700px;
+  height: 700px;
   overflow-y: auto;
+  background-color: white;
+
+  margin-top: 20px;
 `;
 
 const Section = styled.div`
-  border: 2px solid #e0e0e0;
-  padding: 25px;
-  width: 100%;
-  background: #fafafa;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  width: 45%;
+  padding: 30px;
+  border-radius: 20px;
+  height: 430px;
+  background-color: #1c94f6;
+
+  color: white;
+  box-shadow: 0 8px 24px rgba(47, 47, 47, 0.2);
+  height: 350px;
 `;
 
 const LeftSection = styled(Section)`
@@ -68,6 +74,7 @@ const RightSection = styled(Section)`
   flex-direction: column;
   max-height: 500px;
   overflow: hidden;
+  height: 500px;
 `;
 
 const StudentList = styled.div`
@@ -77,43 +84,84 @@ const StudentList = styled.div`
   max-height: 400px;
   overflow-y: auto;
   padding-right: 10px;
+  padding-left: 10px;
   margin-top: 10px;
 `;
 
 const StudentCard = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 24px;
-  border-left: 6px solid #1976d2;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: 0.3s ease;
+position: relative;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+padding: 16px 30px;
+border-left: 6px solid #1976d2;
+background-color: white;
+border-radius: 12px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+transition: 0.3s ease;
+margin-top: 5px;
+overflow: hidden;
 
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-  }
+&:hover {
+  transform: scale(1.03);
+}
+
+&:hover .submit-wrapper {
+  height: 100px;
+  opacity: 1;
+  padding-top: 10px;
+}
+`;
+
+const SubmitButtonWrapper = styled.div`
+height: 0;
+overflow: hidden;
+transition: all 0.3s ease;
+opacity: 0;
+
+display: flex;
+justify-content: flex-end;
+
+button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+
+  width: 300px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 320px;
+}
+
 `;
 
 const StudentInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+display: flex;
+justify-content: space-between;
+align-items: center;
 
-  h3 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-  }
+h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
 
-  span {
-    font-size: 14px;
-    color: #888;
-  }
+span {
+  font-size: 14px;
+  color: #888;
+}
 `;
+
+
+
+// const Button = styled.button `
+
+// `;
 
 const ClassOption = styled.div`
   display: flex;
@@ -133,6 +181,12 @@ const ClassOption = styled.div`
   }
 `;
 
+const FlexContainer = styled.div`
+  display: flex;
+  margin-top: 30px;
+  gap: 10px;
+`;
+
 const ManageStudent = () => {
   const dispatch = useDispatch();
   const [classList, setClassList] = useState([]);
@@ -142,7 +196,7 @@ const ManageStudent = () => {
   const [selectedClassId, setSelectedClassId] = useState(null);
   const [open, setOpen] = useState(false);
 
-  const chooseButtonRef = useRef(); 
+  const chooseButtonRef = useRef();
 
   useEffect(() => {
     dispatch(getClassListAsync()).unwrap().then(setClassList);
@@ -158,7 +212,7 @@ const ManageStudent = () => {
     if (studentName && selectedClass) {
       const newStudent = {
         name: studentName,
-        classIds: [selectedClassId], 
+        classIds: [selectedClassId],
       };
 
       dispatch(postStudentAsync(newStudent))
@@ -187,42 +241,87 @@ const ManageStudent = () => {
 
   return (
     <Container>
-      <Header>Manage Students</Header>
       <ContentWrapper>
         {/* Left Section: Add Student */}
         <LeftSection>
           <Typography variant="h6">Add Student</Typography>
-          <TextField
+
+          <input
             label="Student Name"
             variant="outlined"
             fullWidth
             value={studentName}
             onChange={(e) => setStudentName(e.target.value)}
             margin="normal"
+
+            style={{
+              border: "none",
+              borderRadius: "30px",
+              width: "100%",
+              height: "40px",
+              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
+              marginTop: "10px",
+              paddingLeft: "15px",
+              fontSize: "16px",
+            }}
           />
-          <TextField
-            label="Choose Class"
-            variant="outlined"
-            fullWidth
-            value={selectedClass ? selectedClass.name : ""}
-            InputProps={{ readOnly: true }}
-            margin="normal"
-          />
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => setOpen(true)}
-            ref={chooseButtonRef} // ✅ ref added
-          >
-            Choose
-          </Button>
+
+          {/* new not work code */}
+
+          <FlexContainer>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => setOpen(true)}
+              ref={chooseButtonRef}
+              style={{
+                margin: "15px 0",
+                fontSize: "14px",
+                backgroundColor: "white",
+                color: "green",
+                borderRadius: "20px",
+              }}
+            >
+              Choose
+            </Button>
+
+            <input
+              label="Choose Class"
+              variant="outlined"
+              fullWidth
+              value={selectedClass ? selectedClass.name : ""}
+              InputProps={{ readOnly: true }}
+              margin="normal"
+              type="text"
+              readOnly
+              style={{
+                border: "0px solid white",
+                borderRadius: "30px",
+                width: "100%",
+                height: "40px",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
+                marginTop: "10px",
+                paddingLeft: "15px",
+              }}
+            />
+          </FlexContainer>
+
           <Button
             variant="contained"
             color="primary"
             onClick={handleAddStudent}
             fullWidth
             disabled={!studentName || !selectedClass}
-            style={{ marginTop: "10px" }}
+            style={{
+              marginTop: "10px",
+              padding: "15px",
+              fontSize: "17px",
+              backgroundColor: "white",
+              color: "black",
+              height: "40px",
+              marginTop: "30px",
+              cursor: "pointer",
+            }}
           >
             Create
           </Button>
@@ -235,21 +334,32 @@ const ManageStudent = () => {
             {studentList.map((student) => (
               <StudentCard key={student.id}>
                 <StudentInfo>
-                  <h3>{student.name}</h3>
-                  <span>{student.className}</span>
+                  <div>
+                    <h3>{student.name}</h3>
+                    <span>{student.className}</span>
+                  </div>
+                  <IconButton
+                    onClick={() => handleDeleteStudent(student.id)}
+                    color="error"
+                    aria-label="delete student"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
                 </StudentInfo>
-                <IconButton
-                  onClick={() => handleDeleteStudent(student.id)}
-                  color="error"
-                  aria-label="delete student"
-                >
-                  <DeleteIcon />
-                </IconButton>
+
+                <SubmitButtonWrapper className="submit-wrapper">
+                  <button onClick={() => handleSubmit(student.id)}>Copy Token</button>
+                </SubmitButtonWrapper>
               </StudentCard>
             ))}
           </StudentList>
+
         </RightSection>
       </ContentWrapper>
+
+
+
+
 
       {/* Dialog: Choose Class */}
       <Dialog
@@ -278,6 +388,10 @@ const ManageStudent = () => {
           ))}
         </DialogContent>
       </Dialog>
+
+
+
+
     </Container>
   );
 };
