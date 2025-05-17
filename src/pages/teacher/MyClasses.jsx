@@ -1,142 +1,168 @@
-import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { getMyClassAsync, selectClass } from "../../utils/redux/classSlice";
+import { useEffect, useState } from "react";
 
-const Container = styled.div`
-  max-width: 100%;
-  margin: auto;
-  padding: 14px;
-  font-family: Arial, sans-serif;
+const Wrapper = styled.div`
+  width: 100%;
+  height: calc(100vh - 50px);
+  background-color: #f9f9f9;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Section = styled.div`
-  background: #fff;
-  padding: 14px;
-  border-radius: 8px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 14px;
-`;
-
-const Title = styled.h2`
-  margin-bottom: 10px;
-  font-size: 18px;
-`;
-
-const Form = styled.div`
+  margin-bottom: 15px;
   display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 20px;
+  align-items: center;
 `;
 
-const Input = styled.input`
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 15px;
+const Label = styled.label`
+  font-weight: bold;
+  margin-bottom: 15px;
 `;
 
 const Select = styled.select`
   padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 15px;
+  border-radius: 5px;
 `;
 
-const Button = styled.button`
-  background: ${(props) => (props.danger ? "#d9534f" : "#007bff")};
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 4px;
+const TableWrapper = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-
-  &:hover {
-    background: ${(props) => (props.danger ? "#c9302c" : "#0056b3")};
-  }
 `;
 
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
-  font-size: 15px;
+  background-color: white;
+`;
+
+const Thead = styled.thead`
+  background-color: #007bff;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `;
 
 const Th = styled.th`
-  background: #007bff;
-  color: white;
-  padding: 8px;
+  padding: 12px 15px;
   text-align: left;
+  font-weight: 600;
+  border-right: 1px solid #fff;
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+const Tbody = styled.tbody``;
+
+const Tr = styled.tr`
+  &:nth-child(even) {
+    background-color: #f2f2f2;
+  }
 `;
 
 const Td = styled.td`
+  padding: 12px 23px;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+const Div = styled.div`
+  display: grid;
+`;
+
+const Input = styled.input`
   padding: 8px;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 `;
 
-const StudentList = styled.ul`
-  margin-top: 10px;
-  list-style: none;
-  padding: 0;
+const Button = styled.button`
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 `;
-
-const StudentItem = styled.li`
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  gap: 10px;
-`;
-
 
 const MyClasses = () => {
+  const dispatch = useDispatch();
+  const { classList } = useSelector(selectClass);
+  const [selectedClassId, setSelectedClassId] = useState("");
+
+  useEffect(() => {
+    dispatch(getMyClassAsync());
+  }, [dispatch]);
+
+  const selectedClassObj = classList.find((cls) => cls.id === selectedClassId);
+
+  const fixedStudents =
+    selectedClassObj?.students?.map((s) => ({
+      ...s,
+      studentId: s.studentId || "Unknown",
+      studentName: s.studentName || "Unknown", 
+    })) || [];
+
   return (
-    <Container>
-
-      {/* Create New Class */}
-
-
-      {/* My Classes */}
+    <Wrapper>
       <Section>
-        <Title>My Classes</Title>
-        <Table>
-          <thead>
-            <tr>
-              <Th>Class Name</Th>
-              <Th>Subject</Th>
-              <Th>Students</Th>
-              <Th>Actions</Th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <Td>Grade 10 - Math</Td>
-              <Td>Mathematics</Td>
-              <Td>25 Students</Td>
-              <Td>
-                <Button>Edit</Button>{" "}
-                <Button danger>Remove</Button>
-              </Td>
-            </tr>
-            <tr>
-              <Td>Grade 9 - Science</Td>
-              <Td>Physics</Td>
-              <Td>30 Students</Td>
-              <Td>
-                <Button>Edit</Button>{" "}
-                <Button danger>Remove</Button>
-              </Td>
-            </tr>
-          </tbody>
-        </Table>
+        <Div>
+          <Label>My Classes:</Label>
+          <Select
+            value={selectedClassId}
+            onChange={(e) => setSelectedClassId(e.target.value)}
+          >
+            <option value="">My Classes</option>
+            {classList.map((cls) => (
+              <option key={cls.id} value={cls.id}>
+                {cls.name}
+              </option>
+            ))}
+          </Select>
+        </Div>
       </Section>
 
-      {/* Assign Students */}
-
-    </Container>
+      <TableWrapper>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Student Name</Th>
+              <Th>Student ID</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {fixedStudents.length > 0 ? (
+              fixedStudents.map((data, index) => (
+                <Tr key={index}>
+                  <Td>{data.studnetName}</Td>
+                  <Td>{data.studentId}</Td>
+                </Tr>
+              ))
+            ) : (
+              <Tr>
+                <Td colSpan="2">No students found!</Td>
+              </Tr>
+            )}
+          </Tbody>
+        </Table>
+      </TableWrapper>
+    </Wrapper>
   );
 };
 
