@@ -3,13 +3,17 @@ import { combineReducers } from "redux";
 import storageSession from "redux-persist/lib/storage/session";
 import { persistReducer, createTransform } from "redux-persist";
 
+// Slice'lar
 import authSlice from "./authSlice";
 import academySlice from "./academySlice";
 import adminSlice from "./adminSlice";
 import studentSlice from "./studentSlice";
 import classSlice from "./classSlice";
-import teacherSlice from "./teacherSlice"; // to‘g‘ri
+import teacherSlice from "./teacherSlice";
+import parentSlice from "./parentSlice";
+import attendancesSlice from "./attendancesSlice";
 
+// Barcha reducerlarni birlashtirish
 const rootReducer = combineReducers({
   auth: authSlice,
   academy: academySlice,
@@ -17,11 +21,11 @@ const rootReducer = combineReducers({
   student: studentSlice,
   class: classSlice,
   teacher: teacherSlice,
-  student: studentSlice, 
-  class: classSlice,     
-  teacher: teacherSlice, 
+  parent: parentSlice,
+  attendance: attendancesSlice,
 });
 
+// Transform faqat kerakli key'ga ishlaydi
 const SetMarkerTransform = createTransform(
   (inboundState, key) => {
     if (key === "map") {
@@ -32,19 +36,22 @@ const SetMarkerTransform = createTransform(
   (outboundState) => outboundState
 );
 
+// persist konfiguratsiyasi
 const persistConfig = {
   key: "root",
-  storage: storageSession,
-  transforms: [SetMarkerTransform],
+  storage: storageSession, // Session storage'ni ishlatish
+  transforms: [SetMarkerTransform], // Keraksiz key'ni transformatsiya qilish
 };
 
+// persist qilinadigan reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+// Store'ni yaratish
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
+      serializableCheck: false, // redux-persist uchun kerak
     }),
-  devTools: true,
+  devTools: true, // Redux devTools'ni faollashtirish
 });

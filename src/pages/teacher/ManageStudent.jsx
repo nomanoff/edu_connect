@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  max-width: 100%px;
+  max-width: 100%;
   margin: auto;
   padding: 14px;
   font-family: Arial, sans-serif;
@@ -24,6 +24,8 @@ const Title = styled.h2`
 const Form = styled.div`
   display: flex;
   gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
 `;
 
 const Input = styled.input`
@@ -32,6 +34,7 @@ const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 15px;
+  min-width: 200px;
 `;
 
 const Select = styled.select`
@@ -40,6 +43,9 @@ const Select = styled.select`
   border-radius: 4px;
   font-size: 15px;
 `;
+
+
+
 
 const Button = styled.button`
   background: ${(props) => (props.danger ? "#d9534f" : "#007bff")};
@@ -51,7 +57,6 @@ const Button = styled.button`
   font-size: 15px;
   display: flex;
   align-items: center;
-  margin-top: 5px;
   gap: 5px;
 
   &:hover {
@@ -78,44 +83,74 @@ const Td = styled.td`
   border-bottom: 1px solid #ddd;
 `;
 
-const RemoveIcon = styled.span`
-  color: red;
-  font-weight: bold;
+const StudentList = styled.ul`
+  margin-top: 10px;
+  list-style: none;
+  padding: 0;
 `;
 
-const ManageClasses = () => {
+const StudentItem = styled.li`
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  gap: 10px;
+`;
+
+const ManageStudent = () => {
   return (
     <Container>
+
+      {/* Add New Student */}
+      
+
+      {/* My Students */}
       <Section>
-        <Title>My Classes</Title>
+        <Title>My Students</Title>
         <Table>
           <thead>
             <tr>
-              <Th>Class Name</Th>
-              <Th>Subject</Th>
-              <Th>Students</Th>
+              <Th>Student Name</Th>
+              <Th>Email</Th>
+              <Th>Class</Th>
+              <Th>Actions</Th>
             </tr>
           </thead>
           <tbody>
             <tr>
+              <Td>John Doe</Td>
+              <Td>john@example.com</Td>
               <Td>Grade 10 - Math</Td>
-              <Td>Mathematics</Td>
-              <Td>25 Students</Td>
-
+              <Td>
+                <Button>Edit</Button> <Button danger>Remove</Button>
+              </Td>
             </tr>
             <tr>
+              <Td>Jane Smith</Td>
+              <Td>jane@example.com</Td>
               <Td>Grade 9 - Science</Td>
-              <Td>Physics</Td>
-              <Td>30 Students</Td>
-
+              <Td>
+                <Button>Edit</Button> <Button danger>Remove</Button>
+              </Td>
             </tr>
           </tbody>
         </Table>
       </Section>
 
-
+      {/* Assign Students to Class */}
+     
     </Container>
   );
 };
 
-export default ManageClasses;
+export default ManageStudent;
+
+
+
+
+
+
+
+
+
+
+

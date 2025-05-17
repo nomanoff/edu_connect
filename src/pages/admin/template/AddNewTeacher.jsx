@@ -12,10 +12,9 @@ import styled from "styled-components";
 import { EdButton_admin, EdH1 } from "../../../components/EdStyled";
 
 const Wrapper = styled.div`
-  width: calc(100% - 40px);
+  width: 100%;
+  background-color: #f9f9f9;
   border-radius: 5px;
-  margin: 20px;
-  border: 2px solid #808080;
   padding: 20px;
 `;
 
@@ -74,6 +73,8 @@ const AddNewTeacher = () => {
       <EdButton_admin
         textAlign="center"
         padding="8px"
+        fontSize={"1.3rem"}
+        fontWeight="900"
         margin="20px 0 0 0"
         borderRadius="5px"
         onClick={handleCreateTeacher}

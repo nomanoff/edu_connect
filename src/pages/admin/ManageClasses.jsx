@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteClassAsync } from "../../utils/redux/classSlice";
-
-
-
-
 
 import styled from "styled-components";
 import {
@@ -100,13 +96,10 @@ const ManageClasses = () => {
     }
   };
 
-
-
   return (
     <Container>
       <ContentWrapper>
         <FormSection>
-
           <Typography variant="h6">Add Class</Typography>
           <input
             placeholder="Class Name"
@@ -115,7 +108,7 @@ const ManageClasses = () => {
             style={{
               border: "none",
               borderRadius: "30px",
-              width: "420px",
+              width: "100%",
               height: "40px",
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
               marginTop: "10px",
@@ -124,8 +117,9 @@ const ManageClasses = () => {
             }}
           />
 
-
-          <Typography variant="h6" style={{ marginTop: "10px" }}>Start Time</Typography>
+          <Typography variant="h6" style={{ marginTop: "10px" }}>
+            Start Time
+          </Typography>
           <input
             fullWidth
             type="time"
@@ -135,18 +129,18 @@ const ManageClasses = () => {
             style={{
               border: "0px solid white",
               borderRadius: "30px",
-              width: "420px",
+              width: "100%",
               height: "40px",
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
               marginTop: "10px",
               paddingLeft: "15px",
-              paddingRight: "15px"
+              paddingRight: "15px",
             }}
-          >
-          </input>
+          ></input>
 
-
-          <Typography variant="h6" style={{ marginTop: "10px" }} >End Time</Typography>
+          <Typography variant="h6" style={{ marginTop: "10px" }}>
+            End Time
+          </Typography>
           <input
             fullWidth
             type="time"
@@ -156,16 +150,18 @@ const ManageClasses = () => {
             style={{
               border: "0px solid white",
               borderRadius: "30px",
-              width: "420px",
+              width: "100%",
               height: "40px",
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
               marginTop: "10px",
               paddingLeft: "15px",
-              paddingRight: "15px"
+              paddingRight: "15px",
             }}
           ></input>
 
-          <Typography variant="subtitle1" style={{ marginTop: "10px" }}>Class Days:</Typography>
+          <Typography variant="subtitle1" style={{ marginTop: "10px" }}>
+            Class Days:
+          </Typography>
           <RadioGroup
             row
             value={dayType}
@@ -175,43 +171,37 @@ const ManageClasses = () => {
             <FormControlLabel value={1} control={<Radio />} label="Even" />
           </RadioGroup>
 
-
-
           <input
-  type="text"
-  value={selectedTeacher ? selectedTeacher.name : ""}
-  readOnly
-  style={{
-    border: "0px solid white",
-    borderRadius: "30px",
-    width: "300px",
-    height: "40px",
-    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
-    marginTop: "10px",
-    paddingLeft: "15px"
-  }}
-/>
+            type="text"
+            value={selectedTeacher ? selectedTeacher.name : ""}
+            readOnly
+            style={{
+              border: "0px solid white",
+              borderRadius: "30px",
+              width: "100%",
+              height: "40px",
+              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
+              marginTop: "10px",
+              paddingLeft: "15px",
+            }}
+          />
 
-<Button
-  variant="contained"
-  color="secondary"
-  onClick={() => setOpenTeacherDialog(true)}
-  style={{
-    margin: "15px 0",
-    padding: "8px",
-    fontSize: "14px",
-    backgroundColor: "white",
-    color: "green",
-    borderRadius: "20px",
-    marginLeft: "20px"
-  }}
->
-  Choose
-</Button>
-
-
-
-
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setOpenTeacherDialog(true)}
+            style={{
+              margin: "15px 0",
+              padding: "8px",
+              fontSize: "14px",
+              backgroundColor: "white",
+              color: "green",
+              borderRadius: "20px",
+              marginLeft: "20px",
+            }}
+          >
+            Choose
+          </Button>
 
           <Button
             variant="contained"
@@ -219,12 +209,18 @@ const ManageClasses = () => {
             onClick={handleCreateClass}
             fullWidth
             disabled={!className || !startTime || !endTime || !selectedTeacher}
-            style={{ marginTop: "10px", padding: "15px", fontSize: "17px", backgroundColor: "white", color: "black", height: "40px" }}
+            style={{
+              marginTop: "10px",
+              padding: "15px",
+              fontSize: "17px",
+              backgroundColor: "white",
+              color: "black",
+              height: "40px",
+            }}
           >
             Create
           </Button>
         </FormSection>
-
 
         {isUploading ? (
           <Box sx={{ display: "flex" }}>
@@ -233,7 +229,6 @@ const ManageClasses = () => {
         ) : (
           <Box />
         )}
-
 
         <ClassListSection>
           <Typography variant="h6">Class List</Typography>
@@ -251,12 +246,11 @@ const ManageClasses = () => {
                 }}
               >
                 <CardContent>
-                  <p >{_class.name}</p>
+                  <p>{_class.name}</p>
                   <p style={{ marginTop: "10px" }}>
                     {_class.startTime} - {_class.endTime}
                   </p>
                 </CardContent>
-
 
                 <Button
                   variant="outlined"
@@ -276,15 +270,14 @@ const ManageClasses = () => {
                           .finally(() => setIsUploading(false));
                       })
                       .catch((error) => {
-                        alert("O'chirishda xatolik yuz berdi: " + JSON.stringify(error));
+                        alert(
+                          "O'chirishda xatolik yuz berdi: " +
+                            JSON.stringify(error)
+                        );
                         setIsUploading(false);
                       });
                   }}
                 />
-
-
-
-
               </Card>
             ))}
           </ClassList>
@@ -308,7 +301,13 @@ const ManageClasses = () => {
               <Typography>{teacher.name}</Typography>
               <Button
                 variant="contained"
-                style={{ fontSize: "14px", padding: "8px 16px", color: "black", backgroundColor: "white", borderRadius: "10px" }}
+                style={{
+                  fontSize: "14px",
+                  padding: "8px 16px",
+                  color: "black",
+                  backgroundColor: "white",
+                  borderRadius: "10px",
+                }}
               >
                 Select
               </Button>
@@ -352,7 +351,6 @@ const ClassList = styled.div`
   height: 420px;
   padding-right: 10px;
   overflow-y: auto;
-
 `;
 const TeacherItem = styled.div`
   display: flex;
@@ -365,7 +363,6 @@ const TeacherItem = styled.div`
   font-size: 20px;
   background-color: #1c94f6;
   color: white;
-
 `;
 
 export default ManageClasses;

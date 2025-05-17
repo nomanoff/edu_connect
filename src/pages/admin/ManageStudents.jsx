@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import {
   Button,
@@ -23,7 +23,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 50px;
   padding: 20px;
   font-family: "Segoe UI", sans-serif;
 `;
@@ -31,7 +31,7 @@ const Container = styled.div`
 const Header = styled.div`
   font-size: 28px;
   font-weight: 700;
-  margin-top: 30px;
+  margin-top: 10px;
   margin-bottom: 10px;
   text-align: left;
   width: 100%;
@@ -139,27 +139,26 @@ const ManageStudent = () => {
   const [studentList, setStudentList] = useState([]);
   const [studentName, setStudentName] = useState("");
   const [selectedClass, setSelectedClass] = useState(null);
+  const [selectedClassId, setSelectedClassId] = useState(null);
   const [open, setOpen] = useState(false);
 
+  const chooseButtonRef = useRef(); 
+
   useEffect(() => {
-    dispatch(getClassListAsync())
-      .unwrap()
-      .then(setClassList);
+    dispatch(getClassListAsync()).unwrap().then(setClassList);
 
     refreshStudentList();
   }, [dispatch]);
 
   const refreshStudentList = () => {
-    dispatch(getStudentListAsync())
-      .unwrap()
-      .then(setStudentList);
+    dispatch(getStudentListAsync()).unwrap().then(setStudentList);
   };
 
   const handleAddStudent = () => {
     if (studentName && selectedClass) {
       const newStudent = {
         name: studentName,
-        className: selectedClass.name,
+        classIds: [selectedClassId], 
       };
 
       dispatch(postStudentAsync(newStudent))
@@ -213,6 +212,7 @@ const ManageStudent = () => {
             variant="contained"
             color="secondary"
             onClick={() => setOpen(true)}
+            ref={chooseButtonRef} // ✅ ref added
           >
             Choose
           </Button>
@@ -252,7 +252,13 @@ const ManageStudent = () => {
       </ContentWrapper>
 
       {/* Dialog: Choose Class */}
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <Dialog
+        open={open}
+        onClose={() => {
+          setOpen(false);
+          setTimeout(() => chooseButtonRef.current?.focus(), 0); // ✅ Focus back to the button
+        }}
+      >
         <DialogTitle>Class List</DialogTitle>
         <DialogContent>
           {classList.map((teacher) => (
@@ -260,6 +266,7 @@ const ManageStudent = () => {
               key={teacher.id}
               onClick={() => {
                 setSelectedClass(teacher);
+                setSelectedClassId(teacher.id);
                 setOpen(false);
               }}
             >

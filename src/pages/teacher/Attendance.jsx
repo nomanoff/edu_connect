@@ -1,13 +1,25 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 40px auto 40px 30px;
-  background: #f9f9f9;
+import { getMyClassAsync, selectClass } from "../../utils/redux/classSlice";
+import {
+  postAttendanceAsync,
+  selectAttendance,
+} from "../../utils/redux/attendancesSlice";
+
+import styled from "styled-components";
+import DoneIcon from "@mui/icons-material/Done";
+import ClearIcon from "@mui/icons-material/Clear";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+
+// Styled components
+const Wrapper = styled.div`
+  width: 100%;
+  height: calc(100vh - 50px);
+  background-color: #f9f9f9;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
 `;
 
 const Header = styled.div`
@@ -29,175 +41,215 @@ const Subtitle = styled.p`
 const Section = styled.div`
   margin-bottom: 15px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  gap: 20px;
+  align-items: center;
 `;
 
 const Label = styled.label`
   font-weight: bold;
-  margin-bottom: 5px;
 `;
 
 const Select = styled.select`
-  width: 250px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
-`;
-
-const InputGroup = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Input = styled.input`
-  width: 250px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-right: 10px;
-`;
-
-const Button = styled.button`
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-
-  &:hover {
-    background: #0056b3;
-  }
 `;
 
 const TableWrapper = styled.div`
-  margin-top: 25px;
-  background: #fff;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-`;
-
-const TableContainer = styled.div`
-  max-height: 250px;
+  flex: 1;
   overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 `;
 
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
+  background-color: white;
+`;
+
+const Thead = styled.thead`
+  background-color: #007bff;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `;
 
 const Th = styled.th`
-  background: #007bff;
-  color: white;
-  padding: 12px;
+  padding: 12px 15px;
   text-align: left;
-  width: 33%;
-`;
+  font-weight: 600;
+  border-right: 1px solid #fff;
 
-const Td = styled.td`
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-  width: 33%;
-`;
-
-const DeleteButton = styled.button`
-  background: #dc3545;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-
-  &:hover {
-    background: #b02a37;
+  &:last-child {
+    border-right: none;
   }
 `;
 
-const classes = ["Frontend-001", "Frontend-002", "Frontend-003", "Frontend-004", "Frontend-005"];
+const Tbody = styled.tbody``;
+
+const Tr = styled.tr`
+  &:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+`;
+
+const Td = styled.td`
+  padding: 12px 23px;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+const ButtonGreen = styled.button`
+  border: none;
+  border-radius: 8px;
+  padding: 5px 15px;
+  font-size: 1.1rem;
+  align-items: center;
+  background-color: #18d118;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+`;
+
+const ButtonRed = styled.button`
+  border: none;
+  border-radius: 8px;
+  padding: 5px 15px;
+  font-size: 1.1rem;
+  align-items: center;
+  background-color: #ea2828;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+`;
+
+const ButtonYellow = styled.button`
+  border: none;
+  border-radius: 8px;
+  padding: 5px 15px;
+  font-size: 1.2rem;
+  align-items: center;
+  background-color: #ffbb3d;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+`;
+
+const Div = styled.div`
+  display: flex;
+  width: 100%;
+`;
 
 export default function Attendance() {
-  const [selectedClass, setSelectedClass] = useState("");
-  const [homeworkTitle, setHomeworkTitle] = useState("");
-  const [homeworkData, setHomeworkData] = useState([]);
+  const dispatch = useDispatch();
+  const { classList } = useSelector(selectClass);
+  const { attendanceList } = useSelector(selectAttendance);
+  const [selectedClassId, setSelectedClassId] = useState("");
 
-  const assignHomework = () => {
-    if (selectedClass && homeworkTitle) {
-      setHomeworkData([...homeworkData, { className: selectedClass, homework: homeworkTitle }]);
-      setHomeworkTitle("");
+  useEffect(() => {
+    dispatch(getMyClassAsync());
+  }, [dispatch]);
+
+  const handleAttendance = (studentId, status) => {
+    if (selectedClassId && studentId) {
+      const attendanceData = {
+        attendanceStatus: status,
+        studentId: studentId,
+        classId: selectedClassId,
+      };
+
+      dispatch(postAttendanceAsync(attendanceData))
+        .unwrap()
+        .then()
+        .catch((error) => {
+          alert(error);
+        });
     }
   };
 
-  const deleteHomework = (index) => {
-    setHomeworkData(homeworkData.filter((_, i) => i !== index));
-  };
+  const selectedClassObj = classList.find((cls) => cls.id === selectedClassId);
+
+  const fixedStudents =
+    selectedClassObj?.students?.map((s) => ({
+      ...s,
+      studentId: s.studentId || "Unknown",
+      studentName: s.studnetName || s.studentName || "Unknown",
+    })) || [];
 
   return (
-    <Container>
+    <Wrapper>
       <Header>
-        <Title>Manage Performance & Homework</Title>
-        <Subtitle>Assign homework and evaluate student performance.</Subtitle>
+        <Title>Manage Attendance</Title>
+        <Subtitle>Select class and mark attendance.</Subtitle>
       </Header>
 
       <Section>
-        <Label>Select Class:</Label>
-        <Select value={selectedClass} onChange={(e) => setSelectedClass(e.target.value)}>
+        <Label>Class:</Label>
+        <Select
+          value={selectedClassId}
+          onChange={(e) => setSelectedClassId(e.target.value)}
+        >
           <option value="">Select Class</option>
-          {classes.map((className) => (
-            <option key={className} value={className}>
-              {className}
+          {classList.map((cls) => (
+            <option key={cls.id} value={cls.id}>
+              {cls.name}
             </option>
           ))}
         </Select>
       </Section>
 
-      <Section>
-        <Label>Assagin Homework:</Label>
-        <InputGroup>
-          <Input
-            type="text"
-            placeholder="Enter Homework Title"
-            value={homeworkTitle}
-            onChange={(e) => setHomeworkTitle(e.target.value)}
-          />
-          <Button onClick={assignHomework}>+ Assign</Button>
-        </InputGroup>
-      </Section>
-
-
       <TableWrapper>
-        <h2>Homework</h2>
-        <TableContainer>
-          <Table>
-            <thead>
-              <tr>
-                <Th>Class Name</Th>
-                <Th>Homework Content</Th>
-                <Th>Actions</Th>
-              </tr>
-            </thead>
-            <tbody>
-              {homeworkData.map((entry, index) => (
-                <tr key={index}>
-                  <Td>{entry.className}</Td>
-                  <Td>{entry.homework}</Td>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Student Name</Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {fixedStudents.length > 0 ? (
+              fixedStudents.map((student) => (
+                <Tr key={student.studentId}>
+                  <Td>{student.studentName}</Td>
                   <Td>
-                    <DeleteButton onClick={() => deleteHomework(index)}>
-                      ✖️ Delete
-                    </DeleteButton>
+                    <Div>
+                      <ButtonGreen
+                        onClick={() => handleAttendance(student.studentId, 0)}
+                      >
+                        <DoneIcon />
+                        Present
+                      </ButtonGreen>
+                      <ButtonRed
+                        onClick={() => handleAttendance(student.studentId, 1)}
+                      >
+                        <ClearIcon />
+                        Absent
+                      </ButtonRed>
+                      <ButtonYellow
+                        onClick={() => handleAttendance(student.studentId, 2)}
+                      >
+                        <WarningAmberIcon />
+                        Tardy
+                      </ButtonYellow>
+                    </Div>
                   </Td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </TableContainer>
+                </Tr>
+              ))
+            ) : (
+              <Tr>
+                <Td colSpan="2">No students found!</Td>
+              </Tr>
+            )}
+          </Tbody>
+        </Table>
       </TableWrapper>
-    </Container>
+    </Wrapper>
   );
 }
