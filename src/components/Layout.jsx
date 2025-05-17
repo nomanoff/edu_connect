@@ -31,7 +31,7 @@ const Layout = ({ userRole, children }) => {
     ],
     teacher: [
       { name: "Dashboard", path: "/teacher" },
-      { name: "My Class", path: "/teacher/class-list" },
+      { name: "My Classes", path: "/teacher/class-list" },
       { name: "Manage Students", path: "/teacher/student"},
       { name: "Attendance", path: "/teacher/attendance" },
       { name: "Assignments", path: "/teacher/assignments" },
