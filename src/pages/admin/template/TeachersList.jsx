@@ -1,5 +1,7 @@
-import { useEffect } from "react";
+import React from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import styled from "styled-components";
 
 import {
@@ -23,6 +25,7 @@ const TableWrapper = styled.div`
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  cursor: pointer;
 `;
 
 const Table = styled.table`
@@ -77,9 +80,17 @@ const Button = styled.button`
   }
 `;
 
+const Div = styled.div`
+  font-style: italic;
+  color: red;
+  font-weight: 900;
+  text-align: center;
+`;
+
 const TeachersList = () => {
   const dispatch = useDispatch();
   const { teacherList } = useSelector(selectTeacher);
+  const [expandedRow, setExpandedRow] = useState(null);
 
   useEffect(() => {
     dispatch(getTeacherListAsync());
@@ -96,6 +107,10 @@ const TeachersList = () => {
       });
   };
 
+  const toggleRow = (id) => {
+    setExpandedRow((prev) => (prev === id ? null : id));
+  };
+
   return (
     <Wrapper>
       <TableWrapper>
@@ -104,18 +119,46 @@ const TeachersList = () => {
             <Tr>
               <Th>Teacher Name</Th>
               <Th>Teacher Email</Th>
+              <Th>Teacher's classes</Th>
               <Th>Actions</Th>
             </Tr>
           </Thead>
           <Tbody>
             {teacherList.map((teach) => (
-              <Tr key={teach.id}>
-                <Td>{teach?.name?.trim()}</Td>
-                <Td>{teach?.email?.trim()}</Td>
-                <Td>
-                  <Button onClick={() => handleDelete(teach.id)}>Remove</Button>
-                </Td>
-              </Tr>
+              <React.Fragment key={teach.id}>
+                <Tr>
+                  <Td>{teach?.name?.trim()}</Td>
+                  <Td>{teach?.email?.trim()}</Td>
+                  <Td
+                    onClick={() => toggleRow(teach.id)}
+                    style={{ color: "#007bff" }}
+                  >
+                    {teach?.classes?.length || 0}
+                  </Td>
+                  <Td>
+                    <Button onClick={() => handleDelete(teach.id)}>
+                      Remove
+                    </Button>
+                  </Td>
+                </Tr>
+
+                {/* Expanded Row */}
+                {expandedRow === teach.id && (
+                  <Tr>
+                    <Td colSpan={4}>
+                      {teach.classes.length > 0 ? (
+                        <ul>
+                          {teach.classes.map((cls) => (
+                            <li key={cls.classId}>{cls.className}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <Div>NO CLASS</Div>
+                      )}
+                    </Td>
+                  </Tr>
+                )}
+              </React.Fragment>
             ))}
           </Tbody>
         </Table>

@@ -313,7 +313,6 @@ const ManageStudent = () => {
             fullWidth
             disabled={!studentName || !selectedClass}
             style={{
-              marginTop: "10px",
               padding: "15px",
               fontSize: "17px",
               backgroundColor: "white",
