@@ -314,12 +314,7 @@ const ManageStudent = () => {
 
 
 
-          <input
-            label="About Student"
-            variant="outlined"
-            fullWidth
-            onChange={(e) => setStudentName(e.target.value)}
-            margin="normal"
+          <textarea
             placeholder="About Student..."
             style={{
               border: "none",
@@ -328,13 +323,13 @@ const ManageStudent = () => {
               height: "100px",
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
               marginTop: "40px",
-              paddingLeft: "15px",
-              fontSize: "16px",
-              paddingBottom: "70px"
+              padding: "15px",
+              fontSize: "12px",
+              resize: "none" 
             }}
           />
 
-          
+
 
           <Button
             variant="contained"

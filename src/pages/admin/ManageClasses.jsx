@@ -171,37 +171,42 @@ const ManageClasses = () => {
             <FormControlLabel value={1} control={<Radio />} label="Even" />
           </RadioGroup>
 
-          <input
-            type="text"
-            value={selectedTeacher ? selectedTeacher.name : ""}
-            readOnly
-            style={{
-              border: "0px solid white",
-              borderRadius: "30px",
-              width: "100%",
-              height: "40px",
-              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
-              marginTop: "10px",
-              paddingLeft: "15px",
-            }}
-          />
 
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => setOpenTeacherDialog(true)}
-            style={{
-              margin: "15px 0",
-              padding: "8px",
-              fontSize: "14px",
-              backgroundColor: "white",
-              color: "green",
-              borderRadius: "20px",
-              marginLeft: "20px",
-            }}
-          >
-            Choose
-          </Button>
+          <FlexContainer>
+
+
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => setOpenTeacherDialog(true)}
+              style={{
+                margin: "15px 0",
+                fontSize: "14px",
+                backgroundColor: "white",
+                color: "green",
+                borderRadius: "20px",
+
+              }}
+            >
+              Choose
+            </Button>
+
+            <input
+              type="text"
+              value={selectedTeacher ? selectedTeacher.name : ""}
+              readOnly
+              style={{
+                border: "0px solid white",
+                borderRadius: "30px",
+                width: "100%",
+                height: "40px",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
+                paddingLeft: "15px",
+              }}
+            />
+
+
+          </FlexContainer>
 
           <Button
             variant="contained"
@@ -272,7 +277,7 @@ const ManageClasses = () => {
                       .catch((error) => {
                         alert(
                           "O'chirishda xatolik yuz berdi: " +
-                            JSON.stringify(error)
+                          JSON.stringify(error)
                         );
                         setIsUploading(false);
                       });
@@ -369,4 +374,12 @@ const TeacherItem = styled.div`
   color: white;
 `;
 
+
+const FlexContainer = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+
+`;
 export default ManageClasses;
