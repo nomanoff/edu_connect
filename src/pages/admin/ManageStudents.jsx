@@ -248,6 +248,7 @@ const ManageStudent = () => {
         <LeftSection>
           <Typography variant="h6">Add Student</Typography>
 
+
           <input
             label="Student Name"
             variant="outlined"
@@ -255,7 +256,7 @@ const ManageStudent = () => {
             value={studentName}
             onChange={(e) => setStudentName(e.target.value)}
             margin="normal"
-
+            placeholder="Student Name..."
             style={{
               border: "none",
               borderRadius: "30px",
@@ -267,6 +268,9 @@ const ManageStudent = () => {
               fontSize: "16px",
             }}
           />
+
+
+
 
           {/* new not work code */}
 
@@ -307,6 +311,30 @@ const ManageStudent = () => {
               }}
             />
           </FlexContainer>
+
+
+
+          <input
+            label="About Student"
+            variant="outlined"
+            fullWidth
+            onChange={(e) => setStudentName(e.target.value)}
+            margin="normal"
+            placeholder="About Student..."
+            style={{
+              border: "none",
+              borderRadius: "5px",
+              width: "100%",
+              height: "100px",
+              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
+              marginTop: "40px",
+              paddingLeft: "15px",
+              fontSize: "16px",
+              paddingBottom: "70px"
+            }}
+          />
+
+          
 
           <Button
             variant="contained"
