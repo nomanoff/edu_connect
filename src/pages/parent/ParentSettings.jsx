@@ -161,7 +161,7 @@ export const ParentSettings = () => {
   };
 
   const handleGoToDashboard = () => {
-    navigate("/parent/dashboard");
+    navigate("/parent");
   };
 
   return (
