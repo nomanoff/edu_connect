@@ -19,6 +19,7 @@ import {
 import { getClassListAsync } from "../../utils/redux/classSlice";
 
 // Styled Components
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -56,7 +57,7 @@ const Section = styled.div`
   width: 45%;
   padding: 30px;
   border-radius: 20px;
-  height: 430px;
+  height: 100%;
   background-color: #1c94f6;
 
   color: white;
@@ -66,6 +67,9 @@ const Section = styled.div`
 
 const LeftSection = styled(Section)`
   flex: 1;
+  height: 500px;
+ 
+
 `;
 
 const RightSection = styled(Section)`
@@ -73,44 +77,42 @@ const RightSection = styled(Section)`
   display: flex;
   flex-direction: column;
   max-height: 500px;
-  overflow: hidden;
   height: 500px;
-`;
 
+`;
 const StudentList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  max-height: 400px;
+  gap: 10px;
+  /* max-height: 600px; */
+  height: 100%;
   overflow-y: auto;
-  padding-right: 10px;
-  padding-left: 10px;
-  margin-top: 10px;
+  padding-right: 8px;
+
 `;
 
 const StudentCard = styled.div`
-position: relative;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-padding: 16px 30px;
-border-left: 6px solid #1976d2;
-background-color: white;
-border-radius: 12px;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-transition: 0.3s ease;
-margin-top: 5px;
-overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 100%;
+  position: relative;
+  justify-content: space-between;
+  padding: 16px 30px;
+  border-left: 6px solid #1976d2;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease;
+  margin-top: 5px;
+  overflow: hidden;
 
-&:hover {
-  transform: scale(1.03);
-}
 
-&:hover .submit-wrapper {
-  height: 100px;
-  opacity: 1;
-  padding-top: 10px;
-}
+  &:hover .submit-wrapper {
+    height: 30px;
+    opacity: 1;
+    padding-top: 10px;
+  }
 `;
 
 const SubmitButtonWrapper = styled.div`
@@ -183,7 +185,7 @@ const ClassOption = styled.div`
 
 const FlexContainer = styled.div`
   display: flex;
-  margin-top: 30px;
+  margin-top: 40px;
   gap: 10px;
 `;
 
@@ -260,7 +262,7 @@ const ManageStudent = () => {
               width: "100%",
               height: "40px",
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
-              marginTop: "10px",
+              marginTop: "40px",
               paddingLeft: "15px",
               fontSize: "16px",
             }}
@@ -318,7 +320,7 @@ const ManageStudent = () => {
               backgroundColor: "white",
               color: "black",
               height: "40px",
-              marginTop: "30px",
+              marginTop: "40px",
               cursor: "pointer",
             }}
           >
