@@ -30,6 +30,9 @@ import {
   FaTwitter,
   FaInstagram,
   FaLinkedinIn,
+  FaTelegramPlane,
+  FaPhone
+
 } from "react-icons/fa";
 import { useNavigate } from "react-router";
 
@@ -122,17 +125,14 @@ export default function Footer() {
           <FooterSection>
             <Title2>Connect With Us</Title2>
             <SocialIcons>
-              <IconLink href="#">
-                <FaFacebookF />
+              <IconLink href="https://t.me/NextPageDev">
+                <FaTelegramPlane />
               </IconLink>
-              <IconLink href="#">
-                <FaTwitter />
-              </IconLink>
-              <IconLink href="https://www.instagram.com/ilmhub.uz/">
+              <IconLink href="https://www.instagram.com/_next_page_devs/">
                 <FaInstagram />
               </IconLink>
-              <IconLink href="#">
-                <FaLinkedinIn />
+              <IconLink href="tel:+998900500767">
+                <FaPhone />
               </IconLink>
             </SocialIcons>
           </FooterSection>
