@@ -108,35 +108,36 @@ const StudentCard = styled.div`
   overflow: hidden;
 
 
-  &:hover .submit-wrapper {
-    height: 30px;
-    opacity: 1;
-    padding-top: 10px;
-  }
+
 `;
 
 const SubmitButtonWrapper = styled.div`
-height: 0;
-overflow: hidden;
-transition: all 0.3s ease;
-opacity: 0;
+  height: ${({ isActive }) => (isActive ? '40px' : '0')};
+  opacity: ${({ isActive }) => (isActive ? '1' : '0')};
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: flex-end;
 
-display: flex;
-justify-content: flex-end;
-
-button {
+  button {
   background-color: #1976d2;
   color: white;
   border: none;
-
-  width: 300px;
-  border-radius: 6px;
+  width: 100%;
+  padding: 10px 0px;
+  border-radius: 15px;
   cursor: pointer;
-  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 320px;
+  margin-top: 10px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #1565c0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 `;
@@ -198,6 +199,14 @@ const ManageStudent = () => {
   const [selectedClassId, setSelectedClassId] = useState(null);
   const [open, setOpen] = useState(false);
 
+
+  const handleCardClick = (id) => {
+    setActiveCardId((prevId) => (prevId === id ? null : id));
+  };
+
+  const [activeCardId, setActiveCardId] = useState(null);
+
+
   const chooseButtonRef = useRef();
 
   useEffect(() => {
@@ -240,6 +249,10 @@ const ManageStudent = () => {
         alert("Error while deleting student: " + err);
       });
   };
+
+
+
+
 
   return (
     <Container>
@@ -325,7 +338,7 @@ const ManageStudent = () => {
               marginTop: "40px",
               padding: "15px",
               fontSize: "12px",
-              resize: "none" 
+              resize: "none"
             }}
           />
 
@@ -356,7 +369,7 @@ const ManageStudent = () => {
           <Typography variant="h6">Student List</Typography>
           <StudentList>
             {studentList.map((student) => (
-              <StudentCard key={student.id}>
+              <StudentCard key={student.id} onClick={() => handleCardClick(student.id)}>
                 <StudentInfo>
                   <div>
                     <h3>{student.name}</h3>
@@ -371,8 +384,17 @@ const ManageStudent = () => {
                   </IconButton>
                 </StudentInfo>
 
-                <SubmitButtonWrapper className="submit-wrapper">
-                  <button onClick={() => handleSubmit(student.id)}>Copy Token</button>
+                <SubmitButtonWrapper className="submit-wrapper" isActive={activeCardId === student.id}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation(); 
+                      handleSubmit(student.id);
+                      alert("copy token");
+                    }}
+                  >
+                    Copy Token
+                  </button>
+
                 </SubmitButtonWrapper>
               </StudentCard>
             ))}
