@@ -39,7 +39,7 @@ const Layout = ({ userRole, children }) => {
     ],
     parent: [
       { name: "Dashboard", path: "/parent" },
-      { name: "Settings", path: "/parent/settings" },
+      { name: "FindChildren", path: "/parent/settings" },
     ],
   };
 
