@@ -86,5 +86,7 @@ export const attendanceApi = {
 // ====== Parent API ======
 export const parentApi = {
   getParentList: () => axios.get(`${PARENT_API_PREFIX}`),
-  postParent: (data) => axios.post(`${PARENT_API_PREFIX}`, data),
+  postParent: (data) => axios.post(`${PARENT_API_PREFIX}`, data, {headers: {
+    "Content-Type": "application/json",
+  },}),
 };

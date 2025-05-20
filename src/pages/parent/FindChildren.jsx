@@ -7,6 +7,7 @@ import {
   getStudentByTokenAsync,
   selectStudent,
 } from "../../utils/redux/studentSlice";
+import { postParentAsync, selectParent, setSelectedStudentId } from "../../utils/redux/parentSlice";
 
 // Styled Components
 const TitleContainer = styled.div`
@@ -87,6 +88,24 @@ const Input = styled.input`
   }
 `;
 
+const AddButton = styled.button.withConfig({
+  shouldForwardProp: (prop) => prop !== "added",
+})`
+  padding: 12px 20px;
+  background-color: ${({ added }) => (added ? "#2ecc71" : "#27ae60")};
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: ${({ added }) => (added ? "default" : "pointer")};
+  transition: 0.3s;
+
+  &:hover {
+    background-color: ${({ added }) => (added ? "#2ecc71" : "#1e8449")};
+  }
+`;
+
 const Button = styled.button`
   padding: 12px 25px;
   background-color: #0390f4;
@@ -127,32 +146,13 @@ const StudentRow = styled.div`
   border: 2px solid #e0e0e0;
   border-radius: 16px;
   background-color: #f9f9f9;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 `;
 
 const StudentName = styled.h1`
-  font-size: 26px;
+  font-size: 1.4rem;
   font-weight: 700;
-  background: linear-gradient(to right, #4facfe, #00f2fe);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   margin: 0;
-`;
-
-const AddButton = styled.button`
-  padding: 12px 20px;
-  background-color: ${({ added }) => (added ? "#2ecc71" : "#27ae60")};
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
-  border: none;
-  border-radius: 10px;
-  cursor: ${({ added }) => (added ? "default" : "pointer")};
-  transition: 0.3s;
-
-  &:hover {
-    background-color: ${({ added }) => (added ? "#2ecc71" : "#1e8449")};
-  }
 `;
 
 const DashboardButton = styled.button`
@@ -181,10 +181,13 @@ const DashboardIcon = styled.span`
   font-size: 20px;
 `;
 
-export const ParentSettings = () => {
+export const FindChildren = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { studentDetail } = useSelector(selectStudent);
+  const { parentList } = useSelector(selectParent);
+
   const [selectedStudentToken, setSelectedStudentToken] = useState("");
   const [added, setAdded] = useState(false);
 
@@ -202,14 +205,15 @@ export const ParentSettings = () => {
   const handleAdd = () => {
     setAdded(true);
 
-    const savedChildren = JSON.parse(localStorage.getItem("addedChildren")) || [];
-    const newChild = {
-      name: studentDetail.name,
-      id: selectedStudentToken,
-    };
-
-    const updatedChildren = [...savedChildren, newChild];
-    localStorage.setItem("addedChildren", JSON.stringify(updatedChildren));
+    if (studentDetail) {
+      dispatch(postParentAsync(studentDetail.id))
+        .unwrap()
+        .then(() => {
+          setAdded(true);
+          dispatch(setSelectedStudentId(studentDetail.id));
+        })
+        .catch((error) => alert(error));
+    }
   };
 
   return (
@@ -245,7 +249,7 @@ export const ParentSettings = () => {
           </StudentRow>
 
           <DashboardButton onClick={handleGoToDashboard}>
-            <DashboardIcon>🧭</DashboardIcon> Go to Dashboard
+            Go to Dashboard
           </DashboardButton>
         </ResultContainer>
       )}
@@ -253,4 +257,4 @@ export const ParentSettings = () => {
   );
 };
 
-export default ParentSettings;
+export default FindChildren;

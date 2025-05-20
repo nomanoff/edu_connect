@@ -1,57 +1,82 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getStudentByIdAsync,
+  selectStudent,
+} from "../../utils/redux/studentSlice";
+import { selectParent } from "../../utils/redux/parentSlice";
 
-const Container = styled.div`
+// Styled components
+const Wrapper = styled.div`
+  width: 100%;
+  height: calc(100vh - 49px);
+  background-color: #f9f9f9;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-top: 80px;
-  min-height: 100vh;
-  background-color: #f8f9fa;
 `;
 
-const Title = styled.h1`
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 40px;
-  color: #196ff9;
-`;
-
-const Table = styled.div`
-  background: #fff;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 700px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  padding: 30px;
-`;
-
-const TableRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 15px 20px;
-  border-bottom: 1px solid #eee;
-
-  &:last-child {
-    border-bottom: none;
-  }
-`;
-
-const TableHeader = styled(TableRow)`
-  font-weight: bold;
-  font-size: 18px;
-  background: #f1f1f1;
+const TableWrapper = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 5px;
+  border: 1px solid #ccc;
   border-radius: 8px;
 `;
 
-const ChildName = styled.span`
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+`;
+
+const Thead = styled.thead`
+  background-color: #007bff;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+`;
+
+const Th = styled.th`
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-right: 1px solid #fff;
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+const Tbody = styled.tbody``;
+
+const Tr = styled.tr`
+  &:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+`;
+
+const Td = styled.td`
+  padding: 12px 23px;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+const Message = styled.p`
   font-size: 18px;
-  color: #333;
+  text-align: center;
+  margin-top: 30px;
 `;
 
 const BackButton = styled.button`
-  margin-top: 40px;
+  margin-top: 20px;
   padding: 12px 24px;
   background-color: #007bff;
   color: white;
@@ -65,45 +90,62 @@ const BackButton = styled.button`
   }
 `;
 
+// Time Formatter
+const formatClassTime = (startTime, endTime) => {
+  if (!startTime || !endTime) return "-";
+  const format = (t) => t.slice(0, 5); // HH:mm:ss -> HH:mm
+  return `${format(startTime)} ~ ${format(endTime)}`;
+};
+
 const ParentDashboard = () => {
-  const [children, setChildren] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { studentDetail } = useSelector(selectStudent);
+  const { selectedStudentId } = useSelector(selectParent);
 
   useEffect(() => {
-    const storedChildren = JSON.parse(localStorage.getItem("addedChildren")) || [];
-    setChildren(storedChildren);
-  }, []);
+    // dispatch(getStudentByIdAsync(selectedStudentId));
+  });
 
   const goToSettings = () => {
     navigate("/parent/settings");
   };
 
   return (
-    <Container>
-      <Title>Dashboard</Title>
-
-      {children.length > 0 ? (
-        <Table>
-          <TableHeader>
-            <span>#</span>
-            <span>Child Name</span>
-            <span>ID</span>
-          </TableHeader>
-
-          {children.map((child, index) => (
-            <TableRow key={index}>
-              <ChildName>{index + 1}</ChildName>
-              <ChildName>{child.name}</ChildName>
-              <ChildName>{child.id}</ChildName>
-            </TableRow>
-          ))}
-        </Table>
+    <Wrapper>
+      {studentDetail && Object.keys(studentDetail).length > 0 ? (
+        <TableWrapper>
+          <Table>
+            <Thead>
+              <Tr>
+                <Th>Child Name</Th>
+                <Th>Class Name</Th>
+                <Th>Class Time</Th>
+                <Th>Teacher Name</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td>{studentDetail?.name?.trim() || "-"}</Td>
+                <Td>{studentDetail?.classes?.[0]?.className || "-"}</Td>
+                <Td>
+                  {formatClassTime(
+                    studentDetail?.classes?.[0]?.startTime,
+                    studentDetail?.classes?.[0]?.endTime
+                  )}
+                </Td>
+                <Td>{studentDetail?.classes?.[0]?.teacherName || "-"}</Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableWrapper>
       ) : (
-        <p>No children added yet.</p>
+        <>
+          <Message>No children added yet.</Message>
+          <BackButton onClick={goToSettings}>Add More</BackButton>
+        </>
       )}
-
-      <BackButton onClick={goToSettings}>Add More</BackButton>
-    </Container>
+    </Wrapper>
   );
 };
 
