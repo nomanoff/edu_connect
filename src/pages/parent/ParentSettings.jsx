@@ -14,7 +14,7 @@ const TitleContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  margin-top: 68px;
+  margin-top: 75px;
   margin-bottom: 20px;
   padding-left: 30px;
 `;
@@ -32,7 +32,7 @@ const SubtitleContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 30px;
   margin-bottom: 20px;
 `;
 
@@ -90,7 +90,7 @@ const Input = styled.input`
 const Button = styled.button`
   padding: 12px 25px;
   background-color: #0390f4;
-  color: #000;
+  color: #fff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -100,68 +100,116 @@ const Button = styled.button`
   text-align: center;
 
   &:hover {
-    background-color: #b0b0b0;
+    background-color: #196ff9;
   }
 `;
 
 const ResultContainer = styled.div`
-  margin-top: 70px;
-  padding: 20px;
+  margin-top: 50px;
+  padding: 40px;
   background: #ffffff;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  width: 75%;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 600px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  max-height: 300px;
-  overflow-y: auto;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+`;
+
+const StudentRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  width: 100%;
+  padding: 20px 30px;
+  border: 2px solid #e0e0e0;
+  border-radius: 16px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
 `;
 
 const StudentName = styled.h1`
-  color: #222;
-  font-size: 32px;
-  margin-bottom: 30px;
+  font-size: 26px;
+  font-weight: 700;
+  background: linear-gradient(to right, #4facfe, #00f2fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+`;
+
+const AddButton = styled.button`
+  padding: 12px 20px;
+  background-color: ${({ added }) => (added ? "#2ecc71" : "#27ae60")};
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: ${({ added }) => (added ? "default" : "pointer")};
+  transition: 0.3s;
+
+  &:hover {
+    background-color: ${({ added }) => (added ? "#2ecc71" : "#1e8449")};
+  }
 `;
 
 const DashboardButton = styled.button`
-  margin-top: 20px;
-  padding: 10px 15px;
-  background-color: #d87f42;
+  margin-top: 30px;
+  padding: 15px 25px;
+  background: linear-gradient(to right, #ff9966, #ff5e62);
   color: white;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
+  border-radius: 12px;
+  font-size: 18px;
   font-weight: bold;
-  text-align: center;
-  width: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
 
   &:hover {
-    background-color: #c96c2b;
+    background: linear-gradient(to right, #ff5e62, #ff9966);
+    transform: translateY(-2px);
   }
+`;
+
+const DashboardIcon = styled.span`
+  font-size: 20px;
 `;
 
 export const ParentSettings = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const { studentDetail } = useSelector(selectStudent);
   const [selectedStudentToken, setSelectedStudentToken] = useState("");
+  const [added, setAdded] = useState(false);
 
   const handleFindChild = () => {
     if (selectedStudentToken.trim() !== "") {
       dispatch(getStudentByTokenAsync(selectedStudentToken));
+      setAdded(false);
     }
   };
 
   const handleGoToDashboard = () => {
-    navigate("/parent/dashboard");
+    navigate("/parent");
+  };
+
+  const handleAdd = () => {
+    setAdded(true);
+
+    const savedChildren = JSON.parse(localStorage.getItem("addedChildren")) || [];
+    const newChild = {
+      name: studentDetail.name,
+      id: selectedStudentToken,
+    };
+
+    const updatedChildren = [...savedChildren, newChild];
+    localStorage.setItem("addedChildren", JSON.stringify(updatedChildren));
   };
 
   return (
@@ -187,16 +235,20 @@ export const ParentSettings = () => {
         </InputWrapper>
       </InputContainer>
 
-      <ResultContainer>
-        {studentDetail?.name && (
-          <div>
+      {studentDetail?.name && (
+        <ResultContainer>
+          <StudentRow>
             <StudentName>{studentDetail.name}</StudentName>
-          </div>
-        )}
-        <DashboardButton onClick={handleGoToDashboard}>
-          Go to Dashboard
-        </DashboardButton>
-      </ResultContainer>
+            <AddButton onClick={handleAdd} added={added}>
+              {added ? "✔ Added" : "Add"}
+            </AddButton>
+          </StudentRow>
+
+          <DashboardButton onClick={handleGoToDashboard}>
+            <DashboardIcon>🧭</DashboardIcon> Go to Dashboard
+          </DashboardButton>
+        </ResultContainer>
+      )}
     </>
   );
 };
