@@ -47,10 +47,10 @@ const HowItWorks = () => {
 
       <Section>
         <Typography variant="h4" fontWeight="bold" gutterBottom>Key Features</Typography>
-        <Grid container spacing={2} justifyContent="center">
+        <Grid container spacing={2} justifyContent="center" >
           {features.map((feature, index) => (
-            <Grid item xs={12} sm={4} key={index}>
-              <Card sx={{ textAlign: "left", p: 3, borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}>
+            <Grid item xs={12} sm={4} key={index} >
+              <Card sx={{ textAlign: "left", p: 3, borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }} style={{backgroundColor: "#208FF6"}}>
                 <CardContent>
                   <FeatureBox>
                     <Avatar sx={{ backgroundColor: "#E3F2FD", width: "48px", height: "48px" }}>{feature.icon}</Avatar>

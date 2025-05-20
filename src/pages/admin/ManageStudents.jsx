@@ -19,6 +19,7 @@ import {
 import { getClassListAsync } from "../../utils/redux/classSlice";
 
 // Styled Components
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -56,7 +57,7 @@ const Section = styled.div`
   width: 45%;
   padding: 30px;
   border-radius: 20px;
-  height: 430px;
+  height: 100%;
   background-color: #1c94f6;
 
   color: white;
@@ -66,6 +67,9 @@ const Section = styled.div`
 
 const LeftSection = styled(Section)`
   flex: 1;
+  height: 500px;
+ 
+
 `;
 
 const RightSection = styled(Section)`
@@ -73,68 +77,67 @@ const RightSection = styled(Section)`
   display: flex;
   flex-direction: column;
   max-height: 500px;
-  overflow: hidden;
   height: 500px;
-`;
 
+`;
 const StudentList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  max-height: 400px;
+  gap: 10px;
+  /* max-height: 600px; */
+  height: 100%;
   overflow-y: auto;
-  padding-right: 10px;
-  padding-left: 10px;
-  margin-top: 10px;
+  padding-right: 8px;
+
 `;
 
 const StudentCard = styled.div`
-position: relative;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-padding: 16px 30px;
-border-left: 6px solid #1976d2;
-background-color: white;
-border-radius: 12px;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-transition: 0.3s ease;
-margin-top: 5px;
-overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 100%;
+  position: relative;
+  justify-content: space-between;
+  padding: 16px 30px;
+  border-left: 6px solid #1976d2;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease;
+  margin-top: 5px;
+  overflow: hidden;
 
-&:hover {
-  transform: scale(1.03);
-}
 
-&:hover .submit-wrapper {
-  height: 100px;
-  opacity: 1;
-  padding-top: 10px;
-}
+
 `;
 
 const SubmitButtonWrapper = styled.div`
-height: 0;
-overflow: hidden;
-transition: all 0.3s ease;
-opacity: 0;
+  height: ${({ isActive }) => (isActive ? '40px' : '0')};
+  opacity: ${({ isActive }) => (isActive ? '1' : '0')};
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: flex-end;
 
-display: flex;
-justify-content: flex-end;
-
-button {
+  button {
   background-color: #1976d2;
   color: white;
   border: none;
-
-  width: 300px;
-  border-radius: 6px;
+  width: 100%;
+  padding: 10px 0px;
+  border-radius: 15px;
   cursor: pointer;
-  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 320px;
+  margin-top: 10px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #1565c0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 `;
@@ -183,7 +186,7 @@ const ClassOption = styled.div`
 
 const FlexContainer = styled.div`
   display: flex;
-  margin-top: 30px;
+  margin-top: 40px;
   gap: 10px;
 `;
 
@@ -195,6 +198,14 @@ const ManageStudent = () => {
   const [selectedClass, setSelectedClass] = useState(null);
   const [selectedClassId, setSelectedClassId] = useState(null);
   const [open, setOpen] = useState(false);
+
+
+  const handleCardClick = (id) => {
+    setActiveCardId((prevId) => (prevId === id ? null : id));
+  };
+
+  const [activeCardId, setActiveCardId] = useState(null);
+
 
   const chooseButtonRef = useRef();
 
@@ -239,12 +250,17 @@ const ManageStudent = () => {
       });
   };
 
+
+
+
+
   return (
     <Container>
       <ContentWrapper>
         {/* Left Section: Add Student */}
         <LeftSection>
           <Typography variant="h6">Add Student</Typography>
+
 
           <input
             label="Student Name"
@@ -253,18 +269,21 @@ const ManageStudent = () => {
             value={studentName}
             onChange={(e) => setStudentName(e.target.value)}
             margin="normal"
-
+            placeholder="Student Name..."
             style={{
               border: "none",
               borderRadius: "30px",
               width: "100%",
               height: "40px",
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
-              marginTop: "10px",
+              marginTop: "40px",
               paddingLeft: "15px",
               fontSize: "16px",
             }}
           />
+
+
+
 
           {/* new not work code */}
 
@@ -306,6 +325,25 @@ const ManageStudent = () => {
             />
           </FlexContainer>
 
+
+
+          <textarea
+            placeholder="About Student..."
+            style={{
+              border: "none",
+              borderRadius: "5px",
+              width: "100%",
+              height: "100px",
+              boxShadow: "0 8px 24px rgba(0, 0, 0, 0.338)",
+              marginTop: "40px",
+              padding: "15px",
+              fontSize: "12px",
+              resize: "none"
+            }}
+          />
+
+
+
           <Button
             variant="contained"
             color="primary"
@@ -318,7 +356,7 @@ const ManageStudent = () => {
               backgroundColor: "white",
               color: "black",
               height: "40px",
-              marginTop: "30px",
+              marginTop: "40px",
               cursor: "pointer",
             }}
           >
@@ -331,7 +369,7 @@ const ManageStudent = () => {
           <Typography variant="h6">Student List</Typography>
           <StudentList>
             {studentList.map((student) => (
-              <StudentCard key={student.id}>
+              <StudentCard key={student.id} onClick={() => handleCardClick(student.id)}>
                 <StudentInfo>
                   <div>
                     <h3>{student.name}</h3>
@@ -346,8 +384,17 @@ const ManageStudent = () => {
                   </IconButton>
                 </StudentInfo>
 
-                <SubmitButtonWrapper className="submit-wrapper">
-                  <button onClick={() => handleSubmit(student.id)}>Copy Token</button>
+                <SubmitButtonWrapper className="submit-wrapper" isActive={activeCardId === student.id}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation(); 
+                      handleSubmit(student.id);
+                      alert("copy token");
+                    }}
+                  >
+                    Copy Token
+                  </button>
+
                 </SubmitButtonWrapper>
               </StudentCard>
             ))}
