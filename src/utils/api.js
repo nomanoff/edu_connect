@@ -28,6 +28,7 @@ const STUDENT_API_PREFIX = "/api/Students";
 const TEACHER_API_PREFIX = "/api/Teachers";
 const PARENT_API_PREFIX = "/api/Parents";
 const ATTENDANCE_API_PREFIX = "/api/Attendances"
+const TEACHERS_TOKEN = "/api/TokensForTeachers/generate"
 
 // ====== Auth API ======
 export const authApi = {

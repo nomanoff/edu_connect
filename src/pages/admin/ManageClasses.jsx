@@ -6,7 +6,6 @@ import { deleteClassAsync } from "../../utils/redux/classSlice";
 import styled from "styled-components";
 import {
   Button,
-  TextField,
   Card,
   CardContent,
   Typography,
@@ -18,7 +17,6 @@ import {
   FormControlLabel,
   Box,
   CircularProgress,
-  Input,
 } from "@mui/material";
 import {
   getClassListAsync,
@@ -43,13 +41,11 @@ const ManageClasses = () => {
     dispatch(getTeacherListAsync())
       .unwrap()
       .then((data) => {
-        console.log("teacher list data: ", data);
         setTeacherList(data);
       });
     dispatch(getClassListAsync())
       .unwrap()
       .then((data) => {
-        console.log("class list data: ", data);
         setClassList(data);
       });
   }, [dispatch]);
@@ -121,7 +117,6 @@ const ManageClasses = () => {
             Start Time
           </Typography>
           <input
-            fullWidth
             type="time"
             value={startTime}
             onChange={(e) => setStartTime(e.target.value)}
@@ -142,7 +137,6 @@ const ManageClasses = () => {
             End Time
           </Typography>
           <input
-            fullWidth
             type="time"
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}
@@ -157,7 +151,7 @@ const ManageClasses = () => {
               paddingLeft: "15px",
               paddingRight: "15px",
             }}
-          ></input>
+          />
 
           <Typography variant="subtitle1" style={{ marginTop: "10px" }}>
             Class Days:
@@ -171,10 +165,7 @@ const ManageClasses = () => {
             <FormControlLabel value={1} control={<Radio />} label="Even" />
           </RadioGroup>
 
-
           <FlexContainer>
-
-
             <Button
               variant="contained"
               color="secondary"
@@ -185,7 +176,6 @@ const ManageClasses = () => {
                 backgroundColor: "white",
                 color: "green",
                 borderRadius: "20px",
-
               }}
             >
               Choose
@@ -204,15 +194,12 @@ const ManageClasses = () => {
                 paddingLeft: "15px",
               }}
             />
-
-
           </FlexContainer>
 
           <Button
             variant="contained"
             color="primary"
             onClick={handleCreateClass}
-            fullWidth
             disabled={!className || !startTime || !endTime || !selectedTeacher}
             style={{
               marginTop: "10px",
@@ -277,7 +264,7 @@ const ManageClasses = () => {
                       .catch((error) => {
                         alert(
                           "O'chirishda xatolik yuz berdi: " +
-                          JSON.stringify(error)
+                            JSON.stringify(error)
                         );
                         setIsUploading(false);
                       });
@@ -326,13 +313,11 @@ const ManageClasses = () => {
 
 const Container = styled.div`
   padding: 40px;
-
 `;
 const ContentWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 30px;
-
 `;
 const FormSection = styled.div`
   width: 45%;
@@ -349,7 +334,6 @@ const ClassListSection = styled.div`
   border-radius: 20px;
   height: 430px;
   background-color: #1c94f6;
-
 
   color: white;
   box-shadow: 0 8px 24px rgba(47, 47, 47, 0.2);
@@ -374,12 +358,10 @@ const TeacherItem = styled.div`
   color: white;
 `;
 
-
 const FlexContainer = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 10px;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 `;
 export default ManageClasses;
