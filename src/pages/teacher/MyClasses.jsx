@@ -116,7 +116,7 @@ const MyClasses = () => {
     selectedClassObj?.students?.map((s) => ({
       ...s,
       studentId: s.studentId || "Unknown",
-      studentName: s.studentName || "Unknown", 
+      studentName: s.studnetName || s.studentName || "Unknown",
     })) || [];
 
   return (
@@ -150,7 +150,7 @@ const MyClasses = () => {
             {fixedStudents.length > 0 ? (
               fixedStudents.map((data, index) => (
                 <Tr key={index}>
-                  <Td>{data.studnetName}</Td>
+                  <Td>{data.studentName}</Td>
                   <Td>{data.studentId}</Td>
                 </Tr>
               ))

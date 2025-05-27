@@ -93,7 +93,7 @@ const MainRoutes = ({ isAuthenticated, userRole }) => {
             }
           >
             <Route path="" element={<ParentDashboard />} />
-            <Route path="settings" element={<FindChildren />} />
+            <Route path="search" element={<FindChildren />} />
           </Route>
         )}
       </Routes>
