@@ -68,8 +68,6 @@ const Section = styled.div`
 const LeftSection = styled(Section)`
   flex: 1;
   height: 500px;
- 
-
 `;
 
 const RightSection = styled(Section)`
@@ -78,7 +76,6 @@ const RightSection = styled(Section)`
   flex-direction: column;
   max-height: 500px;
   height: 500px;
-
 `;
 const StudentList = styled.div`
   display: flex;
@@ -88,7 +85,6 @@ const StudentList = styled.div`
   height: 100%;
   overflow-y: auto;
   padding-right: 8px;
-
 `;
 
 const StudentCard = styled.div`
@@ -106,61 +102,55 @@ const StudentCard = styled.div`
   transition: 0.3s ease;
   margin-top: 5px;
   overflow: hidden;
-
-
-
 `;
 
 const SubmitButtonWrapper = styled.div`
-  height: ${({ isActive }) => (isActive ? '40px' : '0')};
-  opacity: ${({ isActive }) => (isActive ? '1' : '0')};
+  height: ${({ isActive }) => (isActive ? "40px" : "0")};
+  opacity: ${({ isActive }) => (isActive ? "1" : "0")};
   overflow: hidden;
   transition: all 0.3s ease;
   display: flex;
   justify-content: flex-end;
 
   button {
-  background-color: #1976d2;
-  color: white;
-  border: none;
-  width: 100%;
-  padding: 10px 0px;
-  border-radius: 15px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10px;
-  font-weight: 700;
-  transition: all 0.3s ease;
-}
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 10px 0px;
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+  }
 
-button:hover {
-  background-color: #1565c0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
+  button:hover {
+    background-color: #1565c0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const StudentInfo = styled.div`
-display: flex;
-justify-content: space-between;
-align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-h3 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-}
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
 
-span {
-  font-size: 14px;
-  color: #888;
-}
+  span {
+    font-size: 14px;
+    color: #888;
+  }
 `;
-
-
 
 // const Button = styled.button `
 
@@ -199,13 +189,11 @@ const ManageStudent = () => {
   const [selectedClassId, setSelectedClassId] = useState(null);
   const [open, setOpen] = useState(false);
 
-
   const handleCardClick = (id) => {
     setActiveCardId((prevId) => (prevId === id ? null : id));
   };
 
   const [activeCardId, setActiveCardId] = useState(null);
-
 
   const chooseButtonRef = useRef();
 
@@ -250,17 +238,12 @@ const ManageStudent = () => {
       });
   };
 
-
-
-
-
   return (
     <Container>
       <ContentWrapper>
         {/* Left Section: Add Student */}
         <LeftSection>
           <Typography variant="h6">Add Student</Typography>
-
 
           <input
             label="Student Name"
@@ -281,9 +264,6 @@ const ManageStudent = () => {
               fontSize: "16px",
             }}
           />
-
-
-
 
           {/* new not work code */}
 
@@ -325,8 +305,6 @@ const ManageStudent = () => {
             />
           </FlexContainer>
 
-
-
           <textarea
             placeholder="About Student..."
             style={{
@@ -338,11 +316,9 @@ const ManageStudent = () => {
               marginTop: "40px",
               padding: "15px",
               fontSize: "12px",
-              resize: "none"
+              resize: "none",
             }}
           />
-
-
 
           <Button
             variant="contained"
@@ -369,7 +345,10 @@ const ManageStudent = () => {
           <Typography variant="h6">Student List</Typography>
           <StudentList>
             {studentList.map((student) => (
-              <StudentCard key={student.id} onClick={() => handleCardClick(student.id)}>
+              <StudentCard
+                key={student.id}
+                onClick={() => handleCardClick(student.id)}
+              >
                 <StudentInfo>
                   <div>
                     <h3>{student.name}</h3>
@@ -384,28 +363,25 @@ const ManageStudent = () => {
                   </IconButton>
                 </StudentInfo>
 
-                <SubmitButtonWrapper className="submit-wrapper" isActive={activeCardId === student.id}>
+                <SubmitButtonWrapper
+                  className="submit-wrapper"
+                  isActive={activeCardId === student.id}
+                >
                   <button
                     onClick={(e) => {
-                      e.stopPropagation(); 
+                      e.stopPropagation();
                       handleSubmit(student.id);
                       alert("copy token");
                     }}
                   >
                     Copy Token
                   </button>
-
                 </SubmitButtonWrapper>
               </StudentCard>
             ))}
           </StudentList>
-
         </RightSection>
       </ContentWrapper>
-
-
-
-
 
       {/* Dialog: Choose Class */}
       <Dialog
@@ -434,10 +410,6 @@ const ManageStudent = () => {
           ))}
         </DialogContent>
       </Dialog>
-
-
-
-
     </Container>
   );
 };
