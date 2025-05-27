@@ -7,7 +7,11 @@ import {
   getStudentByTokenAsync,
   selectStudent,
 } from "../../utils/redux/studentSlice";
-import { postParentAsync, selectParent, setSelectedStudentId } from "../../utils/redux/parentSlice";
+import {
+  postParentAsync,
+  selectParent,
+  setSelectedStudentId,
+} from "../../utils/redux/parentSlice";
 
 // Styled Components
 const TitleContainer = styled.div`
@@ -88,24 +92,6 @@ const Input = styled.input`
   }
 `;
 
-const AddButton = styled.button.withConfig({
-  shouldForwardProp: (prop) => prop !== "added",
-})`
-  padding: 12px 20px;
-  background-color: ${({ added }) => (added ? "#2ecc71" : "#27ae60")};
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
-  border: none;
-  border-radius: 10px;
-  cursor: ${({ added }) => (added ? "default" : "pointer")};
-  transition: 0.3s;
-
-  &:hover {
-    background-color: ${({ added }) => (added ? "#2ecc71" : "#1e8449")};
-  }
-`;
-
 const Button = styled.button`
   padding: 12px 25px;
   background-color: #0390f4;
@@ -177,8 +163,25 @@ const DashboardButton = styled.button`
   }
 `;
 
-const DashboardIcon = styled.span`
-  font-size: 20px;
+const AddButton = styled.button`
+  padding: 12px 20px;
+  background-color: ${(props) => (props.added ? "#2ecc71" : "#27ae60")};
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: ${(props) => (props.added ? "default" : "pointer")};
+  transition: 0.3s;
+
+  &:hover {
+    background-color: ${(props) => (props.added ? "#2ecc71" : "#1e8449")};
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 `;
 
 export const FindChildren = () => {
@@ -194,7 +197,6 @@ export const FindChildren = () => {
   const handleFindChild = () => {
     if (selectedStudentToken.trim() !== "") {
       dispatch(getStudentByTokenAsync(selectedStudentToken));
-      setAdded(false);
     }
   };
 
@@ -203,16 +205,18 @@ export const FindChildren = () => {
   };
 
   const handleAdd = () => {
-    setAdded(true);
-
     if (studentDetail) {
-      dispatch(postParentAsync(studentDetail.id))
+      const childrenData = {
+        studentId: studentDetail.id,
+      };
+
+      dispatch(postParentAsync(childrenData))
         .unwrap()
         .then(() => {
           setAdded(true);
           dispatch(setSelectedStudentId(studentDetail.id));
         })
-        .catch((error) => alert(error));
+        .catch((error) => alert("Failed to add child: " + error));
     }
   };
 
@@ -243,7 +247,7 @@ export const FindChildren = () => {
         <ResultContainer>
           <StudentRow>
             <StudentName>{studentDetail.name}</StudentName>
-            <AddButton onClick={handleAdd} added={added}>
+            <AddButton onClick={handleAdd} added={added} disabled={added}>
               {added ? "✔ Added" : "Add"}
             </AddButton>
           </StudentRow>

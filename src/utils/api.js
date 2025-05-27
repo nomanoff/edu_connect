@@ -27,8 +27,8 @@ const AUTH_API_PREFIX = "/api/auth";
 const STUDENT_API_PREFIX = "/api/Students";
 const TEACHER_API_PREFIX = "/api/Teachers";
 const PARENT_API_PREFIX = "/api/Parents";
-const ATTENDANCE_API_PREFIX = "/api/Attendances"
-const TEACHERS_TOKEN = "/api/TokensForTeachers/generate"
+const ATTENDANCE_API_PREFIX = "/api/Attendances";
+const TEACHERS_TOKEN = "/api/TokensForTeachers/generate";
 
 // ====== Auth API ======
 export const authApi = {
@@ -86,8 +86,8 @@ export const attendanceApi = {
 
 // ====== Parent API ======
 export const parentApi = {
-  getParentList: () => axios.get(`${PARENT_API_PREFIX}`),
-  postParent: (data) => axios.post(`${PARENT_API_PREFIX}`, data, {headers: {
-    "Content-Type": "application/json",
-  },}),
+  getParentList: () => axios.get(`${PARENT_API_PREFIX}/me`),
+  postParent: (data) => axios.post(`${PARENT_API_PREFIX}/attach-student`, data),
+  deleteChildren: (id) =>
+    axios.delete(`${PARENT_API_PREFIX}/detach-student/${id}`),
 };

@@ -27,12 +27,26 @@ export const getParentListAsync = createAsyncThunk(
 // Post new parent
 export const postParentAsync = createAsyncThunk(
   "parent/postParent",
-  async (parentData, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
-      const response = await parentApi.postParent(parentData);
+      const response = await parentApi.postParent(data);
       return response.data;
     } catch (error) {
       console.error("Error creating parent:", error);
+      return rejectWithValue(error?.response?.data || error.message);
+    }
+  }
+);
+
+// Post new parent
+export const deleteParentAsync = createAsyncThunk(
+  "parent/deleteParent",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await parentApi.deleteChildren(id);
+      return id;
+    } catch (error) {
+      console.error("Error deleting parent:", error);
       return rejectWithValue(error?.response?.data || error.message);
     }
   }
@@ -51,14 +65,26 @@ const parentSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Get all parents
       .addCase(getParentListAsync.fulfilled, (state, action) => {
         state.parentList = action.payload;
         state.loading = false;
       })
+
+      // Post Children
       .addCase(postParentAsync.fulfilled, (state, action) => {
         state.parentList.push(action.payload);
         state.loading = false;
       })
+
+      // Delete Children
+      .addCase(deleteParentAsync.fulfilled, (state, action) => {
+        state.parentList = state.parentList.filter(
+          (item) => item.id !== action.payload
+        );
+        state.loading = false;
+      })
+
       .addMatcher(
         (action) =>
           action.type.startsWith("parent/") && action.type.endsWith("/pending"),
