@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FaBell, FaUserCircle } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
 import useLogout from "../../utils/hooks/useLogout";
 import LogoutIcon from "@mui/icons-material/Logout";
 

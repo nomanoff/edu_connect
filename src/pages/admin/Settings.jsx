@@ -57,7 +57,7 @@ const Settings = () => {
   const authSliceObj = useSelector(selectAuth);
   const [formData, setFormData] = useState({
     input1: "",
-    input2: ""
+    input2: "",
   });
 
   useEffect(() => {
@@ -78,9 +78,9 @@ const Settings = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -93,20 +93,20 @@ const Settings = () => {
     <Container>
       <Card>
         <Label>Academy Name</Label>
-        <Input 
-          type="text" 
+        <Input
+          type="text"
           name="input1"
-          placeholder="Enter Academy Name"  
+          placeholder="Enter Academy Name"
           value={formData.input1}
-          onChange={handleChange} 
+          onChange={handleChange}
         />
         <Label>Academy Address</Label>
-        <Input 
-          type="text" 
+        <Input
+          type="text"
           name="input2"
-          placeholder="Academy Address"  
+          placeholder="Academy Address"
           value={formData.input2}
-          onChange={handleChange} 
+          onChange={handleChange}
         />
         <Button onClick={handleClick}>Save Changes</Button>
       </Card>
