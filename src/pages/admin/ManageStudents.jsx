@@ -363,7 +363,7 @@ const ManageStudent = () => {
                     onClick={() => {
                       navigator.clipboard.writeText(student.uniqueToken);
                       setCopy(true);
-                      setTimeout(() => setCopy(false), 1500)
+                      setTimeout(() => setCopy(false), 1500);
                     }}
                   >
                     {copy ? "✅" : "Copy Token"}

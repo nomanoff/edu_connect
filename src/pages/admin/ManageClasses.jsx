@@ -208,6 +208,7 @@ const ManageClasses = () => {
               backgroundColor: "white",
               color: "black",
               height: "40px",
+              width: "100%",
             }}
           >
             Create
