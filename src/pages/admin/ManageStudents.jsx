@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
+
 import {
   Button,
-  TextField,
   Typography,
   Dialog,
   DialogTitle,
@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import styled from "styled-components";
+
 import {
   getStudentListAsync,
   postStudentAsync,
@@ -27,16 +28,6 @@ const Container = styled.div`
   gap: 50px;
   padding: 20px;
   font-family: "Segoe UI", sans-serif;
-`;
-
-const Header = styled.div`
-  font-size: 28px;
-  font-weight: 700;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  text-align: left;
-  width: 100%;
-  padding-left: 20px;
 `;
 
 const ContentWrapper = styled.div`
@@ -81,7 +72,6 @@ const StudentList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  /* max-height: 600px; */
   height: 100%;
   overflow-y: auto;
   padding-right: 8px;
@@ -182,12 +172,14 @@ const FlexContainer = styled.div`
 
 const ManageStudent = () => {
   const dispatch = useDispatch();
+
   const [classList, setClassList] = useState([]);
   const [studentList, setStudentList] = useState([]);
   const [studentName, setStudentName] = useState("");
   const [selectedClass, setSelectedClass] = useState(null);
   const [selectedClassId, setSelectedClassId] = useState(null);
   const [open, setOpen] = useState(false);
+  const [copy, setCopy] = useState(null);
 
   const handleCardClick = (id) => {
     setActiveCardId((prevId) => (prevId === id ? null : id));
@@ -368,13 +360,13 @@ const ManageStudent = () => {
                   isActive={activeCardId === student.id}
                 >
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleSubmit(student.id);
-                      alert("copy token");
+                    onClick={() => {
+                      navigator.clipboard.writeText(student.uniqueToken);
+                      setCopy(true);
+                      setTimeout(() => setCopy(false), 1500)
                     }}
                   >
-                    Copy Token
+                    {copy ? "✅" : "Copy Token"}
                   </button>
                 </SubmitButtonWrapper>
               </StudentCard>
