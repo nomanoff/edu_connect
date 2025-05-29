@@ -34,5 +34,11 @@ export const IconLink = styled.a`
 export const Copyright = styled.p`
   text-align: center;
   font-size: 14px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #b0c4de;
+  
+
 `;

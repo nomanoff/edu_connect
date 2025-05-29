@@ -116,6 +116,12 @@ const ButtonGreen = styled.button`
   margin-right: 10px;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 const ButtonRed = styled.button`
@@ -128,6 +134,12 @@ const ButtonRed = styled.button`
   margin-right: 10px;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 const ButtonYellow = styled.button`
@@ -140,6 +152,13 @@ const ButtonYellow = styled.button`
   margin-right: 10px;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 const Div = styled.div`
@@ -152,6 +171,8 @@ export default function Attendance() {
   const { classList } = useSelector(selectClass);
   const { attendanceList } = useSelector(selectAttendance);
   const [selectedClassId, setSelectedClassId] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState({}); // { [studentId]: selectedStatus }
+
 
   useEffect(() => {
     dispatch(getMyClassAsync());
@@ -164,16 +185,18 @@ export default function Attendance() {
         studentId: studentId,
         classId: selectedClassId,
       };
-
+  
       dispatch(postAttendanceAsync(attendanceData))
         .unwrap()
-        .then()
+        .then(() => {
+          setSelectedStatus((prev) => ({ ...prev, [studentId]: status }));
+        })
         .catch((error) => {
           alert(error);
         });
     }
   };
-
+  
   const selectedClassObj = classList.find((cls) => cls.id === selectedClassId);
 
   const fixedStudents =
@@ -219,27 +242,47 @@ export default function Attendance() {
                 <Tr key={student.studentId}>
                   <Td>{student.studentName}</Td>
                   <Td>
-                    <Div>
-                      <ButtonGreen
-                        onClick={() => handleAttendance(student.studentId, 0)}
-                      >
-                        <DoneIcon />
-                        Present
-                      </ButtonGreen>
-                      <ButtonRed
-                        onClick={() => handleAttendance(student.studentId, 1)}
-                      >
-                        <ClearIcon />
-                        Absent
-                      </ButtonRed>
-                      <ButtonYellow
-                        onClick={() => handleAttendance(student.studentId, 2)}
-                      >
-                        <WarningAmberIcon />
-                        Tardy
-                      </ButtonYellow>
-                    </Div>
-                  </Td>
+  <Div>
+    {selectedStatus[student.studentId] === undefined && (
+      <>
+        <ButtonGreen onClick={() => handleAttendance(student.studentId, 0)}>
+          <DoneIcon />
+          Present
+        </ButtonGreen>
+        <ButtonRed onClick={() => handleAttendance(student.studentId, 1)}>
+          <ClearIcon />
+          Absent
+        </ButtonRed>
+        <ButtonYellow onClick={() => handleAttendance(student.studentId, 2)}>
+          <WarningAmberIcon />
+          Tardy
+        </ButtonYellow>
+      </>
+    )}
+
+    {selectedStatus[student.studentId] === 0 && (
+      <ButtonGreen style={{ width: "350px", justifyContent: "center" }}>
+        <DoneIcon />
+        Present
+      </ButtonGreen>
+    )}
+
+    {selectedStatus[student.studentId] === 1 && (
+      <ButtonRed style={{ width: "350px", justifyContent: "center" }}>
+        <ClearIcon />
+        Absent
+      </ButtonRed>
+    )}
+
+    {selectedStatus[student.studentId] === 2 && (
+      <ButtonYellow style={{ width: "350px", justifyContent: "center" }}>
+        <WarningAmberIcon />
+        Tardy
+      </ButtonYellow>
+    )}
+  </Div>
+</Td>
+
                 </Tr>
               ))
             ) : (
