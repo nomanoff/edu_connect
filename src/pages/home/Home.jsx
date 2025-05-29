@@ -50,8 +50,32 @@ const NavLink = styled.a`
   color: white;
   cursor: pointer;
   font-size: 18px;
+
+  transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+
+
   &:hover {
-    text-decoration: underline;
+      color: white;
+    transform: scale(1.05); 
+    color: #3e9df6;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 3px;
+    left: 0;
+    bottom: -5px;
+    background-color: #208FF6;
+    transition: width 0.3s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+
   }
 `;
 
@@ -157,7 +181,7 @@ const BtnStart = styled.button`
     white-space: nowrap;
     overflow: hidden;
     width: 0ch;
-    animation: typing 3s steps(20) infinite;
+    animation: typing 8s steps(20) infinite;
     border-right: 2px solid white;
   }
 

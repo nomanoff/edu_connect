@@ -344,7 +344,6 @@ const ManageStudent = () => {
                 <StudentInfo>
                   <div>
                     <h3>{student.name}</h3>
-                    <span>{student.className}</span>
                   </div>
                   <IconButton
                     onClick={() => handleDeleteStudent(student.id)}
