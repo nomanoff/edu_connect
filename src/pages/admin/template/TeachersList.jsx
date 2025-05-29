@@ -87,6 +87,26 @@ const Div = styled.div`
   text-align: center;
 `;
 
+const Dev = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+`;
+
+const Li = styled.li`
+  text-decoration: none;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 10px;
+`;
+
+const P = styled.p`
+  margin-bottom: 15px;
+  color: #007bff;
+  width: 100%;
+  text-align: center;
+`;
+
 const TeachersList = () => {
   const dispatch = useDispatch();
   const { teacherList } = useSelector(selectTeacher);
@@ -147,11 +167,18 @@ const TeachersList = () => {
                   <Tr>
                     <Td colSpan={4}>
                       {teach.classes.length > 0 ? (
-                        <ul>
-                          {teach.classes.map((cls) => (
-                            <li key={cls.classId}>{cls.className}</li>
-                          ))}
-                        </ul>
+                        <>
+                          <ol>
+                            <Dev>
+                              <P>Class Name:</P>
+                            </Dev>
+                            {teach.classes.map((cls) => (
+                              <Dev key={cls.classId}>
+                                <Li>{cls.className}</Li>
+                              </Dev>
+                            ))}
+                          </ol>
+                        </>
                       ) : (
                         <Div>NO CLASS</Div>
                       )}
