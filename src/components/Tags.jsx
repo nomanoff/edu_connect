@@ -8,7 +8,7 @@ const Quote = styled.p`
   margin-bottom: 15px;
 `;
 
-export const Title2 = styled.h3`
+export const Title = styled.h3`
 font-size: 18px;
 font-weight: bold;
 margin-bottom: 15px;
