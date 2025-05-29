@@ -13,7 +13,8 @@ import About from "./About";
 
 
 //image
-import Logo from "./home-logo.png";
+
+import Logo from "./images/home-logo.png";
 
 // import heroImage from "../../pages/home/images/image1.png";
 
@@ -138,7 +139,7 @@ const BtnStart = styled.button`
   letter-spacing: 3px;
   font-weight: 600;
   text-align: center;
-  
+
   cursor: pointer;
   margin-top: 50px;
   position: relative;

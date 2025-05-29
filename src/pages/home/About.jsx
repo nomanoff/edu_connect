@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { Title } from "../../components/Titles";
 
 // Images
-import Goal from "./goal.png";
-import Time from "./time.png";
-import Strong from "./strong.png";
+import Goal from "./images/goal.png";
+import Time from "./images/time.png";
+import Strong from "./images/strong.png";
 
 const AboutContainer = styled.div`
   width: 100%;
