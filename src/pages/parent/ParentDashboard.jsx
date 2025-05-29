@@ -105,11 +105,16 @@ const Div = styled.div`
 const Li = styled.li`
   text-decoration: none;
   list-style-type: none;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
 `;
 
 const P = styled.p`
   margin-bottom: 15px;
   color: #007bff;
+  width: 100%;
+  text-align: center;
 `;
 
 const Button = styled.button`
@@ -181,14 +186,14 @@ const ParentDashboard = () => {
 
   const handleDelete = (studentId) => {
     dispatch(deleteParentAsync(studentId))
-    .unwrap()
-    .then(() => {
-      dispatch(getStudentByIdAsync(studentId));
-    })
-    .catch((error) => {
-      console.log("Failed to delete children:", error);
-    })
-  }
+      .unwrap()
+      .then(() => {
+        dispatch(getStudentByIdAsync(studentId));
+      })
+      .catch((error) => {
+        console.log("Failed to delete children:", error);
+      });
+  };
 
   return (
     <Wrapper>
@@ -227,20 +232,25 @@ const ParentDashboard = () => {
                     <Tr>
                       <Td colSpan={4}>
                         {student.classes.length > 0 ? (
-                          <ul>
-                            {student.classes.map((cls, index) => (
-                              <Div key={index}>
-                                <Li>
-                                  <P>Teacher Name:</P>
-                                  {cls.teacherName}
-                                </Li>
-                                <Li>
-                                  <P>Class Time:</P>
-                                  {formatClassTime(cls.startTime, cls.endTime)}
-                                </Li>
+                          <>
+                            <ul>
+                              <Div>
+                                <P>Teacher Name:</P>
+                                <P>Class Time:</P>
                               </Div>
-                            ))}
-                          </ul>
+                              {student.classes.map((cls, index) => (
+                                <Div key={index}>
+                                  <Li>{cls.teacherName}</Li>
+                                  <Li>
+                                    {formatClassTime(
+                                      cls.startTime,
+                                      cls.endTime
+                                    )}
+                                  </Li>
+                                </Div>
+                              ))}
+                            </ul>
+                          </>
                         ) : (
                           <Div>NO INFORMATION</Div>
                         )}
