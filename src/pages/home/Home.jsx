@@ -1,22 +1,33 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 
+
+
+//pages
 import Features from "./Features";
 import Footer from "./Footer";
+import About from "./About";
+
+
+
+
+
+//image
+import Logo from "./home-logo.png";
 
 // import heroImage from "../../pages/home/images/image1.png";
 
 const Header = styled.header`
-  background-color: rgb(0, 158, 245);
+  background-color: black;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 20px;
 `;
 
 export const Container = styled.div`
-  max-width: 1440px;
+  max-width: 1400px;
   display: flex;
   gap: 691px;
 `;
@@ -46,6 +57,7 @@ const NavLink = styled.a`
 const HeroSection = styled.div`
   display: flex;
   max-width: 1340px;
+  height: 700px;
   margin: 0 auto;
   align-items: center;
   justify-content: space-between;
@@ -99,7 +111,7 @@ const BtnLogin = styled.button`
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: ${(props) => (props.$primary ? "#007bff" : "white")};
   color: ${(props) => (props.$primary ? "white" : "#007bff")};
-  border: ${(props) => (props.$primary ? "none" : "2px solid #007bff")};
+  border: 0;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 
   &:hover {
@@ -107,14 +119,55 @@ const BtnLogin = styled.button`
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   }
 `;
-
 const HeroImage = styled.img`
-  background-image:url("https://i.postimg.cc/0QFp3g9f/photo-2025-05-07-16-42-01.jpg");
   width: 550px;
-  background-size:cover;
   height: 330px;
-  border-radius: 11px;
+  border: none;
+  object-fit: cover;
 `;
+
+
+const BtnStart = styled.button`
+  width: 350px;
+  height: 60px;
+  color: white;
+  border-radius: 30px;
+  border: 0;
+  background-color: #208FF6;
+  font-size: 25px;
+  letter-spacing: 5px;
+  cursor: pointer;
+  margin-top: 50px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s ease, background-color 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    background-color: black;
+  }
+
+  span {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0ch;
+    animation: typing 3s steps(16) infinite;
+    border-right: 2px solid white;
+  }
+
+  @keyframes typing {
+    from {
+      width: 0ch;
+    }
+    to {
+      width: 18ch;
+    }
+  }
+`;
+
+
+
 
 const Home = () => {
   const navigate = useNavigate("");
@@ -122,13 +175,19 @@ const Home = () => {
     <>
       <Header>
         <Container>
-          <Title id="home">📖EduConnect</Title>
+          <Title id="home">Edu Connect</Title>
           <NavContainer>
-            <NavLink href="#home">Home</NavLink>
             <NavLink href="#features">Features</NavLink>
             <NavLink href="#about">About</NavLink>
             <NavLink href="#contact">Contact</NavLink>
-            <Button onClick={() => navigate("/signup")}>Sign Up</Button>
+
+            <ButtonGroup>
+            <Button $primary onClick={() => navigate("/signup")}>
+              Sign Up
+            </Button>
+            <BtnLogin onClick={() => navigate("/login")}>Log In</BtnLogin>
+          </ButtonGroup>
+
           </NavContainer>
         </Container>
       </Header>
@@ -145,17 +204,23 @@ const Home = () => {
             Keep track of attendance, student performance, and class updates
             effortlessly.
           </Description>
+
           <ButtonGroup>
-            <Button $primary onClick={() => navigate("/signup")}>
-              Sign Up
-            </Button>
-            <BtnLogin onClick={() => navigate("/login")}>Log In</BtnLogin>
+            <BtnStart onClick={() => navigate("/signup")}> <span>Get Started...</span></BtnStart>
           </ButtonGroup>
+
+
+
         </HeroText>
-        <HeroImage/>
-      </HeroSection>
+        <HeroImage src={Logo} alt="Hero" />
+
+        </HeroSection>
+
+
+
 
       <Features />
+      <About />
       <Footer />
     </>
   );

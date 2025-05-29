@@ -2,23 +2,40 @@ import styled from "styled-components";
 
 export const Section = styled.section`
   text-align: center;
-  padding: 50px 10%;
+  margin-top: 100px;
+`;
+
+
+
+export const Wrapper = styled.div`
+display: flex;
+width: 100%;
+align-items: center;
+justify-content: center;
+margin-top: 100px;
 `;
 
 export const CardsContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: stretch;
+  justify-content: center;
   gap: 50px;
   flex-wrap: wrap;
   width: 100%;
+  max-width: 1300px;
+  margin: auto;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 30px;
+  }
 `;
 
 export const Card = styled.div`
   background: #e3f2fd;
   padding: 20px;
   border-radius: 10px;
-  max-width: 300px;
+  max-width: 400px;
   min-height: 180px;
   text-align: left;
   font-family: Arial, sans-serif;
@@ -65,20 +82,22 @@ export const FlexContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 100px;
 `;
 
 export const CTAContainer = styled.div`
-  background: linear-gradient(to right, #007bff, #00aaff);
-  color: white;
-  text-align: center;
-  padding: 130px 10px;
-  width: 1220px;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
+background: linear-gradient(to right, #007bff, #00aaff);
+color: white;
+text-align: center;
+padding: 130px 10px;
+width: 100%;
+height:400px;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 50px;
 `;
+
 
 export const FooterContainer = styled.footer`
   margin: 0 auto; /* Markazga joylash */
@@ -105,4 +124,27 @@ export const FooterSection = styled.div`
 export const SocialIcons = styled.div`
   display: flex;
   gap: 15px;
+`;
+
+
+
+export const SubQuote = styled.div`
+  background: #e3f2fd;
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  position: relative;
+  line-height: 1.5;
+`;
+
+export const Arrow = styled.div`
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 12px solid #000;
+  margin: 12px auto;
 `;
