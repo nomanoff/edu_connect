@@ -137,6 +137,8 @@ const BtnStart = styled.button`
   font-size: 22px;
   letter-spacing: 3px;
   font-weight: 600;
+  text-align: center;
+  
   cursor: pointer;
   margin-top: 50px;
   position: relative;
