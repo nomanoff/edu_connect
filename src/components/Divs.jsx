@@ -98,14 +98,15 @@ align-items: center;
 margin-top: 50px;
 `;
 
+
 export const FooterContainer = styled.footer`
-  margin: 0 auto; 
-background: #00274d;
-color: white;
-padding: 40px 10%;
-text-align: left;
-width: 100%;
-height: 360px;
+  margin: 0 auto; /* Markazga joylash */
+  background: #00274d;
+  color: white;
+  padding: 40px 10%;
+  text-align: left;
+  width: 100%;
+  height: 360px;
 `;
 
 export const FooterContent = styled.div`

@@ -20,7 +20,7 @@ axios.interceptors.request.use(
   }
 );
 
-// API prefixlar
+// API Prefixes
 const ACADEMIES_API_PREFIX = "/api/Academies";
 const CLASS_API_PREFIX = "/api/Classes";
 const AUTH_API_PREFIX = "/api/auth";
