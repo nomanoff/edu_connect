@@ -13,7 +13,8 @@ import About from "./About";
 
 
 //image
-import Logo from "./home-logo.png";
+
+import Logo from "./images/home-logo.png";
 
 // import heroImage from "../../pages/home/images/image1.png";
 
@@ -132,19 +133,23 @@ const BtnStart = styled.button`
   height: 60px;
   color: white;
   border-radius: 30px;
-  border: 0;
-  background-color: #208FF6;
-  font-size: 25px;
-  letter-spacing: 5px;
+  border: none;
+  background: linear-gradient(135deg, #208FF6, #0D6EFD);
+  font-size: 22px;
+  letter-spacing: 3px;
+  font-weight: 600;
+  text-align: center;
+
   cursor: pointer;
   margin-top: 50px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.5s ease, background-color 0.2s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 
   &:hover {
-    transform: scale(1.05);
-    background-color: black;
+    transform: scale(1.06);
+    background: linear-gradient(135deg, #0D6EFD, #000000);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 
   span {
@@ -152,21 +157,22 @@ const BtnStart = styled.button`
     white-space: nowrap;
     overflow: hidden;
     width: 0ch;
-    animation: typing 3s steps(16) infinite;
+    animation: typing 3s steps(20) infinite;
     border-right: 2px solid white;
   }
 
   @keyframes typing {
-    from {
+    0% {
       width: 0ch;
     }
-    to {
+    50% {
       width: 18ch;
+    }
+    100% {
+      width: 0ch;
     }
   }
 `;
-
-
 
 
 const Home = () => {

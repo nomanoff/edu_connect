@@ -100,7 +100,7 @@ margin-top: 50px;
 
 
 export const FooterContainer = styled.footer`
-  margin: 0 auto; /* Markazga joylash */
+  margin: 0 auto;
   background: #00274d;
   color: white;
   padding: 40px 10%;
