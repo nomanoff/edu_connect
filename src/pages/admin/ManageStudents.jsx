@@ -240,7 +240,6 @@ const ManageStudent = () => {
           <input
             label="Student Name"
             variant="outlined"
-            fullWidth
             value={studentName}
             onChange={(e) => setStudentName(e.target.value)}
             margin="normal"
@@ -279,7 +278,6 @@ const ManageStudent = () => {
             <input
               label="Choose Class"
               variant="outlined"
-              fullWidth
               value={selectedClass ? selectedClass.name : ""}
               InputProps={{ readOnly: true }}
               margin="normal"
@@ -316,7 +314,6 @@ const ManageStudent = () => {
             variant="contained"
             color="primary"
             onClick={handleAddStudent}
-            fullWidth
             disabled={!studentName || !selectedClass}
             style={{
               padding: "15px",

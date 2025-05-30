@@ -189,11 +189,13 @@ const Signup = () => {
         </Typography>
 
         <TextField
-          fullWidth
           sx={{ mb: "5px", p: "3px" }}
           label="Name"
           variant="outlined"
           value={name}
+          style={{
+            width: "100%",
+          }}
           onChange={(e) => {
             setName(e.target.value);
             if (e.target.value.trim())
@@ -205,11 +207,13 @@ const Signup = () => {
 
         <TextField
           required
-          fullWidth
           sx={{ mb: "5px", p: "3px" }}
           label="Email"
           variant="outlined"
           value={email}
+          style={{
+            width: "100%",
+          }}
           onChange={(e) => {
             setEmail(e.target.value);
             if (e.target.value.trim())
@@ -220,8 +224,10 @@ const Signup = () => {
         />
 
         <TextField
-          fullWidth
           sx={{ mb: "5px", p: "3px" }}
+          style={{
+            width: "100%",
+          }}
           type="password"
           label="Password"
           variant="outlined"
@@ -236,7 +242,9 @@ const Signup = () => {
         />
 
         <TextField
-          fullWidth
+          style={{
+            width: "100%",
+          }}
           sx={{ mb: "5px", p: "3px" }}
           type="password"
           label="Confirm Password"
@@ -259,12 +267,16 @@ const Signup = () => {
             }
           }}
           error={errors.confirmPassword}
-          helperText={
-            errors.confirmPassword ? "Passwords do not match!" : ""
-          }
+          helperText={errors.confirmPassword ? "Passwords do not match!" : ""}
         />
 
-        <FormControl fullWidth sx={{ mb: "5px", p: "3px" }} error={errors.role}>
+        <FormControl
+          style={{
+            width: "100%",
+          }}
+          sx={{ mb: "5px", p: "3px" }}
+          error={errors.role}
+        >
           <InputLabel>Select Role</InputLabel>
           <Select
             value={role}
@@ -288,7 +300,9 @@ const Signup = () => {
 
         {role === "0" && (
           <TextField
-            fullWidth
+            style={{
+              width: "100%",
+            }}
             required
             sx={{ mb: "5px", p: "3px" }}
             type="password"
@@ -301,7 +315,9 @@ const Signup = () => {
 
         {role === "1" && (
           <TextField
-            fullWidth
+            style={{
+              width: "100%",
+            }}
             required
             sx={{ mb: "5px", p: "3px" }}
             type="password"
@@ -313,7 +329,9 @@ const Signup = () => {
         )}
 
         <Button
-          fullWidth
+          style={{
+            width: "100%",
+          }}
           variant="contained"
           color="primary"
           sx={{ mt: "10px" }}
