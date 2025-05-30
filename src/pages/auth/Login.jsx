@@ -90,24 +90,24 @@ const Login = () => {
           Login
         </Typography>
         <TextField
-          fullWidth
           margin="normal"
           label="Email"
           variant="outlined"
           value={email}
-          // error={error}
-          // helperText={error ? errorMessage : ""}
+          style={{
+            width: "100%",
+          }}
           onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
-          fullWidth
           margin="normal"
           type="password"
           label="Password"
           variant="outlined"
           value={password}
-          // error={error}
-          // helperText={error ? errorMessage : ""}
+          style={{
+            width: "100%",
+          }}
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -116,10 +116,12 @@ const Login = () => {
           }}
         />
         <Button
-          fullWidth
           variant="contained"
           color="primary"
-          style={{ marginTop: "15px" }}
+          style={{
+            marginTop: "15px",
+            width: "100%",
+          }}
           onClick={handleLogin}
         >
           LOGIN

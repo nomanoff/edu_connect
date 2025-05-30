@@ -91,17 +91,16 @@ const Dev = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-around;
+  padding: 12px 23px;
 `;
 
 const Li = styled.li`
   text-decoration: none;
   width: 100%;
   text-align: left;
-  margin-bottom: 10px;
 `;
 
 const P = styled.p`
-  margin-bottom: 15px;
   color: #007bff;
   width: 100%;
   text-align: center;
@@ -137,8 +136,8 @@ const TeachersList = () => {
         <Table>
           <Thead>
             <Tr>
-              <Th>Teacher Name</Th>
-              <Th>Teacher Email</Th>
+              <Th>Teacher's Name</Th>
+              <Th>Teacher's Email</Th>
               <Th>Teacher's classes</Th>
               <Th>Actions</Th>
             </Tr>

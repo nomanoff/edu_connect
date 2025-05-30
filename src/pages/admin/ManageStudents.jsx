@@ -95,8 +95,8 @@ const StudentCard = styled.div`
 `;
 
 const SubmitButtonWrapper = styled.div`
-  height: ${({ isActive }) => (isActive ? "40px" : "0")};
-  opacity: ${({ isActive }) => (isActive ? "1" : "0")};
+  height: ${({ $isActive }) => ($isActive ? "40px" : "0")};
+  opacity: ${({ $isActive }) => ($isActive ? "1" : "0")};
   overflow: hidden;
   transition: all 0.3s ease;
   display: flex;
@@ -141,10 +141,6 @@ const StudentInfo = styled.div`
     color: #888;
   }
 `;
-
-// const Button = styled.button `
-
-// `;
 
 const ClassOption = styled.div`
   display: flex;
@@ -240,7 +236,6 @@ const ManageStudent = () => {
           <input
             label="Student Name"
             variant="outlined"
-            fullWidth
             value={studentName}
             onChange={(e) => setStudentName(e.target.value)}
             margin="normal"
@@ -279,9 +274,7 @@ const ManageStudent = () => {
             <input
               label="Choose Class"
               variant="outlined"
-              fullWidth
               value={selectedClass ? selectedClass.name : ""}
-              InputProps={{ readOnly: true }}
               margin="normal"
               type="text"
               readOnly
@@ -316,7 +309,6 @@ const ManageStudent = () => {
             variant="contained"
             color="primary"
             onClick={handleAddStudent}
-            fullWidth
             disabled={!studentName || !selectedClass}
             style={{
               padding: "15px",
@@ -326,6 +318,7 @@ const ManageStudent = () => {
               height: "40px",
               marginTop: "40px",
               cursor: "pointer",
+              width: "100%",
             }}
           >
             Create
@@ -356,7 +349,7 @@ const ManageStudent = () => {
 
                 <SubmitButtonWrapper
                   className="submit-wrapper"
-                  isActive={activeCardId === student.id}
+                  $isActive={activeCardId === student.id}
                 >
                   <button
                     onClick={() => {
