@@ -12,7 +12,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import ClearIcon from "@mui/icons-material/Clear";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 
-// Styled components
+// Styled Components
 const Wrapper = styled.div`
   width: 100%;
   height: calc(100vh - 50px);
@@ -23,7 +23,6 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
-  text-align: left;
   margin-bottom: 20px;
 `;
 
@@ -80,12 +79,6 @@ const Thead = styled.thead`
 const Th = styled.th`
   padding: 12px 15px;
   text-align: left;
-  font-weight: 600;
-  border-right: 1px solid #fff;
-
-  &:last-child {
-    border-right: none;
-  }
 `;
 
 const Tbody = styled.tbody``;
@@ -97,73 +90,48 @@ const Tr = styled.tr`
 `;
 
 const Td = styled.td`
-  padding: 12px 23px;
+  padding: 12px 20px;
   border-top: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-
-  &:last-child {
-    border-right: none;
-  }
 `;
 
-const ButtonGreen = styled.button`
+const Button = styled.button`
   border: none;
   border-radius: 8px;
   padding: 5px 15px;
   font-size: 1.1rem;
+  margin-right: 10px;
+  display: flex;
   align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  justify-content: center;
+  width: 120px;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+`;
+
+const ButtonGreen = styled(Button)`
   background-color: #18d118;
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
 `;
 
-const ButtonRed = styled.button`
-  border: none;
-  border-radius: 8px;
-  padding: 5px 15px;
-  font-size: 1.1rem;
-  align-items: center;
+const ButtonRed = styled(Button)`
   background-color: #ea2828;
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
 `;
 
-const ButtonYellow = styled.button`
-  border: none;
-  border-radius: 8px;
-  padding: 5px 15px;
-  font-size: 1.2rem;
-  align-items: center;
+const ButtonYellow = styled(Button)`
   background-color: #ffbb3d;
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+`;
 
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
+const ButtonFixed = styled(Button)`
+  width: 350px;
 `;
 
 const Div = styled.div`
   display: flex;
-  width: 100%;
+  flex-wrap: wrap;
 `;
 
 export default function Attendance() {
@@ -171,40 +139,45 @@ export default function Attendance() {
   const { classList } = useSelector(selectClass);
   const { attendanceList } = useSelector(selectAttendance);
   const [selectedClassId, setSelectedClassId] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState({}); // { [studentId]: selectedStatus }
-
+  const [selectedStatus, setSelectedStatus] = useState({});
 
   useEffect(() => {
     dispatch(getMyClassAsync());
   }, [dispatch]);
 
   const handleAttendance = (studentId, status) => {
-    if (selectedClassId && studentId) {
-      const attendanceData = {
-        attendanceStatus: status,
-        studentId: studentId,
-        classId: selectedClassId,
-      };
-  
-      dispatch(postAttendanceAsync(attendanceData))
-        .unwrap()
-        .then(() => {
-          setSelectedStatus((prev) => ({ ...prev, [studentId]: status }));
-        })
-        .catch((error) => {
-          alert(error);
-        });
-    }
-  };
-  
-  const selectedClassObj = classList.find((cls) => cls.id === selectedClassId);
+    const alreadyMarked = getAttendanceStatus(studentId) !== undefined;
+    if (!selectedClassId || !studentId || alreadyMarked) return;
 
-  const fixedStudents =
-    selectedClassObj?.students?.map((s) => ({
-      ...s,
-      studentId: s.studentId || "Unknown",
-      studentName: s.studnetName || s.studentName || "Unknown",
-    })) || [];
+    const attendanceData = {
+      attendanceStatus: status,
+      studentId,
+      classId: selectedClassId,
+    };
+
+    dispatch(postAttendanceAsync(attendanceData))
+      .unwrap()
+      .then(() => {
+        setSelectedStatus((prev) => ({ ...prev, [studentId]: status }));
+      })
+      .catch((error) => {
+        alert(error.message || "Something went wrong");
+      });
+  };
+
+  const getAttendanceStatus = (studentId) => {
+    if (selectedStatus[studentId] !== undefined) {
+      return selectedStatus[studentId];
+    }
+    const record = attendanceList.find(
+      (att) =>
+        att.studentId === studentId && att.classId === selectedClassId
+    );
+    return record?.attendanceStatus;
+  };
+
+  const selectedClass = classList.find((cls) => cls.id === selectedClassId);
+  const students = selectedClass?.students || [];
 
   return (
     <Wrapper>
@@ -237,54 +210,68 @@ export default function Attendance() {
             </Tr>
           </Thead>
           <Tbody>
-            {fixedStudents.length > 0 ? (
-              fixedStudents.map((student) => (
-                <Tr key={student.studentId}>
-                  <Td>{student.studentName}</Td>
-                  <Td>
-  <Div>
-    {selectedStatus[student.studentId] === undefined && (
-      <>
-        <ButtonGreen onClick={() => handleAttendance(student.studentId, 0)}>
-          <DoneIcon />
-          Present
-        </ButtonGreen>
-        <ButtonRed onClick={() => handleAttendance(student.studentId, 1)}>
-          <ClearIcon />
-          Absent
-        </ButtonRed>
-        <ButtonYellow onClick={() => handleAttendance(student.studentId, 2)}>
-          <WarningAmberIcon />
-          Tardy
-        </ButtonYellow>
-      </>
-    )}
+            {students.length > 0 ? (
+              students.map((s) => {
+                const studentId = s.studentId || "Unknown";
+                const studentName = s.studentName || s.studnetName || "Unknown";
+                const status = getAttendanceStatus(studentId);
 
-    {selectedStatus[student.studentId] === 0 && (
-      <ButtonGreen style={{ width: "350px", justifyContent: "center" }}>
-        <DoneIcon />
-        Present
-      </ButtonGreen>
-    )}
-
-    {selectedStatus[student.studentId] === 1 && (
-      <ButtonRed style={{ width: "350px", justifyContent: "center" }}>
-        <ClearIcon />
-        Absent
-      </ButtonRed>
-    )}
-
-    {selectedStatus[student.studentId] === 2 && (
-      <ButtonYellow style={{ width: "350px", justifyContent: "center" }}>
-        <WarningAmberIcon />
-        Tardy
-      </ButtonYellow>
-    )}
-  </Div>
-</Td>
-
-                </Tr>
-              ))
+                return (
+                  <Tr key={studentId}>
+                    <Td>{studentName}</Td>
+                    <Td>
+                      <Div>
+                        {status === undefined && (
+                          <>
+                            <ButtonGreen
+                              onClick={() =>
+                                handleAttendance(studentId, 0)
+                              }
+                            >
+                              <DoneIcon />
+                              &nbsp;Present
+                            </ButtonGreen>
+                            <ButtonRed
+                              onClick={() =>
+                                handleAttendance(studentId, 1)
+                              }
+                            >
+                              <ClearIcon />
+                              &nbsp;Absent
+                            </ButtonRed>
+                            <ButtonYellow
+                              onClick={() =>
+                                handleAttendance(studentId, 2)
+                              }
+                            >
+                              <WarningAmberIcon />
+                              &nbsp;Tardy
+                            </ButtonYellow>
+                          </>
+                        )}
+                        {status === 0 && (
+                          <ButtonGreen as={ButtonFixed}>
+                            <DoneIcon />
+                            &nbsp;Present
+                          </ButtonGreen>
+                        )}
+                        {status === 1 && (
+                          <ButtonRed as={ButtonFixed}>
+                            <ClearIcon />
+                            &nbsp;Absent
+                          </ButtonRed>
+                        )}
+                        {status === 2 && (
+                          <ButtonYellow as={ButtonFixed}>
+                            <WarningAmberIcon />
+                            &nbsp;Tardy
+                          </ButtonYellow>
+                        )}
+                      </Div>
+                    </Td>
+                  </Tr>
+                );
+              })
             ) : (
               <Tr>
                 <Td colSpan="2">No students found!</Td>
