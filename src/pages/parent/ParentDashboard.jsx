@@ -177,7 +177,7 @@ const ParentDashboard = () => {
   }, [parentList, dispatch]);
 
   const goToSettings = () => {
-    navigate("/parent/settings");
+    navigate("/parent/search");
   };
 
   const toggleRow = (id) => {
@@ -188,7 +188,11 @@ const ParentDashboard = () => {
     dispatch(deleteParentAsync(studentId))
       .unwrap()
       .then(() => {
-        dispatch(getStudentByIdAsync(studentId));
+        // 1. Parent ro'yxatini yangilaymiz
+        dispatch(getParentListAsync());
+
+        // 2. Students local holatidan ham olib tashlaymiz
+        setStudents((prev) => prev.filter((s) => s.id !== studentId));
       })
       .catch((error) => {
         console.log("Failed to delete children:", error);
