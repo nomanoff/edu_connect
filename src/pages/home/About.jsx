@@ -35,7 +35,7 @@ const Cards = styled.div`
 `;
 
 const Card = styled.div`
-  background-color: #208FF6;
+  background-color: #208ff6;
   border-radius: 20px;
   padding: 30px;
   width: 340px;
@@ -47,7 +47,7 @@ const Card = styled.div`
   transition: transform 0.3s ease; /* Smooth transition */
 
   &:hover {
-    transform: scale(1.03); 
+    transform: scale(1.03);
   }
 `;
 
@@ -74,7 +74,7 @@ const Description = styled.p`
   font-size: 18px;
   line-height: 1.6;
   margin-top: 20px;
-  color: black;
+  color: #fff;
   font-weight: 600;
 `;
 
@@ -92,10 +92,11 @@ export default function About() {
               <CardTitle style={{ marginLeft: 10 }}>Our Goal</CardTitle>
             </ImgContainer>
             <Description>
-              We are dedicated to improving the connection between schools and parents.
-              Our platform provides real-time updates on student attendance, performance,
-              and communication. With our tools, parents can stay informed and involved
-              in their child's education journey.
+              We are dedicated to improving the connection between schools and
+              parents. Our platform provides real-time updates on student
+              attendance, performance, and communication. With our tools,
+              parents can stay informed and involved in their child's education
+              journey.
             </Description>
           </Card>
 
@@ -105,21 +106,24 @@ export default function About() {
               <CardTitle style={{ marginLeft: 10 }}>Real-Time Tools</CardTitle>
             </ImgContainer>
             <Description>
-              We believe every student deserves the best support. Our platform empowers
-              parents and teachers to collaborate more efficiently by providing real-time
-              data and communication tools. Together, we build a stronger educational future.
+              We believe every student deserves the best support. Our platform
+              empowers parents and teachers to collaborate more efficiently by
+              providing real-time data and communication tools. Together, we
+              build a stronger educational future.
             </Description>
           </Card>
 
           <Card>
             <ImgContainer>
               <img src={Strong} alt="Stronger Together" />
-              <CardTitle style={{ marginLeft: 10 }}>Stronger Together</CardTitle>
+              <CardTitle style={{ marginLeft: 10 }}>
+                Stronger Together
+              </CardTitle>
             </ImgContainer>
             <Description>
-              Our mission is to make school communication simple and effective. We help parents
-              stay updated about their child's attendance, performance, and messages from
-              teachers — all in one place.
+              Our mission is to make school communication simple and effective.
+              We help parents stay updated about their child's attendance,
+              performance, and messages from teachers — all in one place.
             </Description>
           </Card>
         </Cards>

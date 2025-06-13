@@ -27,7 +27,7 @@ const Title = styled(Typography)`
   font-size: 70px;
   font-weight: bold;
   margin-bottom: 100px;
-  
+  color: #0b4c8a;
 `;
 
 const TopCard = styled(Card)`
@@ -55,7 +55,7 @@ const Line = styled(Box)`
   height: 100px;
   width: 2px;
   background-color: black;
-  margin: 0 auto;
+  margin: 20px auto;
 `;
 
 const IconWrapper = styled(Avatar)`
