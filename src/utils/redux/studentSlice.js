@@ -3,28 +3,24 @@ import { studentApi } from "../api";
 
 const initialState = {
   studentList: [],
-  studentDetail: null, //  'byId' | 'byToken'
-  status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+  studentDetail: null,
+  status: "idle",
   error: null,
 };
 
-// THUNKS 
-
-// Get all students
+// THUNKS
 export const getStudentListAsync = createAsyncThunk(
   "student/getStudentList",
-  async (data, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await studentApi.getStudentList();
       return response.data;
     } catch (error) {
-      console.error("Error fetching student list:", error);
       return rejectWithValue("Failed to fetch student list");
     }
   }
 );
 
-// Post new student
 export const postStudentAsync = createAsyncThunk(
   "student/postStudent",
   async (data, { rejectWithValue }) => {
@@ -32,13 +28,11 @@ export const postStudentAsync = createAsyncThunk(
       const response = await studentApi.postStudent(data);
       return response.data;
     } catch (error) {
-      console.error("Error creating a student:", error);
       return rejectWithValue("Failed to create student");
     }
   }
 );
 
-// Get student by ID
 export const getStudentByIdAsync = createAsyncThunk(
   "student/getStudentById",
   async (id, { rejectWithValue }) => {
@@ -46,13 +40,11 @@ export const getStudentByIdAsync = createAsyncThunk(
       const response = await studentApi.getStudentById(id);
       return response.data;
     } catch (error) {
-      console.error("Error fetching student by ID:", error);
       return rejectWithValue("Failed to fetch student by ID");
     }
   }
 );
 
-// Delete student by ID
 export const deleteStudentAsync = createAsyncThunk(
   "student/deleteStudent",
   async (id, { rejectWithValue }) => {
@@ -60,13 +52,11 @@ export const deleteStudentAsync = createAsyncThunk(
       await studentApi.deleteStudent(id);
       return id;
     } catch (error) {
-      console.error("Error deleting student:", error);
       return rejectWithValue("Failed to delete student");
     }
   }
 );
 
-// Get student by token
 export const getStudentByTokenAsync = createAsyncThunk(
   "student/getStudentByToken",
   async (token, { rejectWithValue }) => {
@@ -74,13 +64,12 @@ export const getStudentByTokenAsync = createAsyncThunk(
       const response = await studentApi.getStudentByToken(token);
       return response.data;
     } catch (error) {
-      console.error("Error fetching student by token:", error);
       return rejectWithValue("Failed to fetch student by token");
     }
   }
 );
 
-// SLICE 
+// SLICE
 const studentSlice = createSlice({
   name: "student",
   initialState,
@@ -89,7 +78,7 @@ const studentSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Get list
+      // List
       .addCase(getStudentListAsync.pending, (state) => {
         state.status = "loading";
         state.error = null;
@@ -103,7 +92,7 @@ const studentSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Post student
+      // Create
       .addCase(postStudentAsync.pending, (state) => {
         state.status = "loading";
         state.error = null;
@@ -117,7 +106,7 @@ const studentSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Get by ID
+      // By ID
       .addCase(getStudentByIdAsync.pending, (state) => {
         state.status = "loading";
         state.error = null;
@@ -131,7 +120,7 @@ const studentSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Delete student
+      // Delete
       .addCase(deleteStudentAsync.pending, (state) => {
         state.status = "loading";
         state.error = null;
@@ -147,7 +136,7 @@ const studentSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Get by token
+      // By Token
       .addCase(getStudentByTokenAsync.pending, (state) => {
         state.status = "loading";
         state.error = null;
@@ -163,10 +152,7 @@ const studentSlice = createSlice({
   },
 });
 
-// SELECTORS & EXPORTS 
-
+// SELECTORS & EXPORTS
 export const selectStudent = (state) => state.student;
-
 export const { resetStudentSlice } = studentSlice.actions;
-
 export default studentSlice.reducer;

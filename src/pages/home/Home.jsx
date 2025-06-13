@@ -1,16 +1,10 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 
-
-
 //pages
 import Features from "./Features";
 import Footer from "./Footer";
 import About from "./About";
-
-
-
-
 
 //image
 
@@ -25,24 +19,40 @@ const Header = styled.header`
   align-items: center;
   justify-content: center;
   padding: 20px;
+
+  /* @media (max-width: 768px) {
+    
+  } */
 `;
 
 export const Container = styled.div`
   max-width: 1400px;
   display: flex;
   gap: 691px;
+
+  @media (max-width: 768px) {
+    gap: 0px;
+  }
 `;
 
 const NavContainer = styled.nav`
   display: flex;
   align-items: center;
   gap: 20px;
+
+  @media (max-width: 768px) {
+    gap: 5px;
+  }
 `;
 
 const Title = styled.h1`
   color: white;
   font-size: 25px;
   margin-right: auto;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
 `;
 
 const NavLink = styled.a`
@@ -52,13 +62,12 @@ const NavLink = styled.a`
   font-size: 18px;
 
   transition: all 0.3s ease;
-    cursor: pointer;
-    position: relative;
-
+  cursor: pointer;
+  position: relative;
 
   &:hover {
-      color: white;
-    transform: scale(1.05); 
+    color: white;
+    transform: scale(1.05);
     color: #3e9df6;
   }
 
@@ -69,13 +78,16 @@ const NavLink = styled.a`
     height: 3px;
     left: 0;
     bottom: -5px;
-    background-color: #208FF6;
+    background-color: #208ff6;
     transition: width 0.3s ease;
   }
 
   &:hover::after {
     width: 100%;
+  }
 
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
   }
 `;
 
@@ -149,8 +161,12 @@ const HeroImage = styled.img`
   height: 330px;
   border: none;
   object-fit: cover;
-`;
 
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 150px;
+  }
+`;
 
 const BtnStart = styled.button`
   width: 350px;
@@ -158,7 +174,7 @@ const BtnStart = styled.button`
   color: white;
   border-radius: 30px;
   border: none;
-  background: linear-gradient(135deg, #208FF6, #0D6EFD);
+  background: linear-gradient(135deg, #208ff6, #0d6efd);
   font-size: 22px;
   letter-spacing: 3px;
   font-weight: 600;
@@ -172,7 +188,7 @@ const BtnStart = styled.button`
 
   &:hover {
     transform: scale(1.06);
-    background: linear-gradient(135deg, #0D6EFD, #000000);
+    background: linear-gradient(135deg, #0d6efd, #000000);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 
@@ -198,7 +214,6 @@ const BtnStart = styled.button`
   }
 `;
 
-
 const Home = () => {
   const navigate = useNavigate("");
   return (
@@ -212,12 +227,11 @@ const Home = () => {
             <NavLink href="#contact">Contact</NavLink>
 
             <ButtonGroup>
-            <Button $primary onClick={() => navigate("/signup")}>
-              Sign Up
-            </Button>
-            <BtnLogin onClick={() => navigate("/login")}>Log In</BtnLogin>
-          </ButtonGroup>
-
+              <Button $primary onClick={() => navigate("/signup")}>
+                Sign Up
+              </Button>
+              <BtnLogin onClick={() => navigate("/login")}>Log In</BtnLogin>
+            </ButtonGroup>
           </NavContainer>
         </Container>
       </Header>
@@ -236,18 +250,14 @@ const Home = () => {
           </Description>
 
           <ButtonGroup>
-            <BtnStart onClick={() => navigate("/signup")}> <span>Get Started...</span></BtnStart>
+            <BtnStart onClick={() => navigate("/signup")}>
+              {" "}
+              <span>Get Started...</span>
+            </BtnStart>
           </ButtonGroup>
-
-
-
         </HeroText>
         <HeroImage src={Logo} alt="Hero" />
-
-        </HeroSection>
-
-
-
+      </HeroSection>
 
       <Features />
       <About />
@@ -256,4 +266,4 @@ const Home = () => {
   );
 };
 
-export default Home;  
+export default Home;
