@@ -13,12 +13,16 @@ import Logo from "./images/home-logo.png";
 // import heroImage from "../../pages/home/images/image1.png";
 
 const Header = styled.header`
-  background-color: black;
+  background: #00274d;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 
   /* @media (max-width: 768px) {
     
@@ -49,6 +53,11 @@ const Title = styled.h1`
   color: white;
   font-size: 25px;
   margin-right: auto;
+  display: flex;
+  align-items: center;
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+  letter-spacing: 2px;
 
   @media (max-width: 768px) {
     font-size: 1.1rem;
@@ -104,6 +113,7 @@ const HeroSection = styled.div`
 const HeroText = styled.div`
   text-align: left;
   max-width: 50%;
+  color: #0b4c8a;
 `;
 
 const HeroTitle = styled.h1`
@@ -114,7 +124,6 @@ const HeroTitle = styled.h1`
 
 const Description = styled.p`
   font-size: 18px;
-  color: #555;
   margin-bottom: 20px;
 `;
 
@@ -137,6 +146,8 @@ const Button = styled.button`
   &:hover {
     transform: scale(1.05);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #0d6efd, #000000);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -154,8 +165,12 @@ const BtnLogin = styled.button`
   &:hover {
     transform: scale(1.05);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #000000, #0d6efd);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    color: #fff;
   }
 `;
+
 const HeroImage = styled.img`
   width: 550px;
   height: 330px;
@@ -214,13 +229,24 @@ const BtnStart = styled.button`
   }
 `;
 
+const Img = styled.img`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 15px;
+`;
+
 const Home = () => {
   const navigate = useNavigate("");
   return (
     <>
       <Header>
         <Container>
-          <Title id="home">Edu Connect</Title>
+          <Title id="home">
+            {" "}
+            {/* <Img src={Logo} alt="" /> */}
+            EDU CONNECT
+          </Title>
           <NavContainer>
             <NavLink href="#features">Features</NavLink>
             <NavLink href="#about">About</NavLink>

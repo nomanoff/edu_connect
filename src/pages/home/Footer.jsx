@@ -11,7 +11,7 @@ import { FooterContainer } from "../../components/Divs";
 import { FooterContent } from "../../components/Divs";
 import { FooterSection } from "../../components/Divs";
 import { SocialIcons } from "../../components/Divs";
-import {Wrapper} from "../../components/Divs";
+import { Wrapper } from "../../components/Divs";
 
 import { FlexContainer } from "../../components/Divs";
 
@@ -24,96 +24,83 @@ import { Copyright } from "../../components/Tags";
 
 import { Title, Title2, Divider } from "../../components/Titles";
 
-
 import { Arrow, SubQuote } from "../../components/Divs";
 
-
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaInstagram,
-  FaLinkedinIn,
-  FaTelegramPlane,
-  FaPhone
-
-} from "react-icons/fa";
+import { FaInstagram, FaTelegramPlane, FaPhone } from "react-icons/fa";
 import { useNavigate } from "react-router";
 
 export default function Footer() {
   const navigate = useNavigate();
   return (
     <>
-  <Section>
-  <Title id="about">What People Say</Title>
-  <Wrapper>
-    <CardsContainer>
+      <Section>
+        <Title id="about">What People Say</Title>
+        <Wrapper>
+          <CardsContainer>
+            {/* 1 */}
+            <Card>
+              <Quote>
+                "EduConnect has transformed how I communicate with parents. It's
+                so much more efficient than emails or phone calls."
+              </Quote>
+              <UserInfo>
+                <Avatar>M</Avatar>
+                <div>
+                  <Name>Maria Johnson</Name>
+                  <Role>5th Grade Teacher</Role>
+                </div>
+              </UserInfo>
+              <Arrow />
+              <SubQuote>
+                💬 "With EduConnect, I can focus more on teaching and less on
+                chasing communication. Parents are always informed in
+                real-time!"
+              </SubQuote>
+            </Card>
 
-      {/* 1 */}
-      <Card>
-        <Quote>
-          "EduConnect has transformed how I communicate with parents.
-          It's so much more efficient than emails or phone calls."
-        </Quote>
-        <UserInfo>
-          <Avatar>M</Avatar>
-          <div>
-            <Name>Maria Johnson</Name>
-            <Role>5th Grade Teacher</Role>
-          </div>
-        </UserInfo>
-        <Arrow />
-        <SubQuote>
-          💬 "With EduConnect, I can focus more on teaching and less on
-          chasing communication. Parents are always informed in real-time!"
-        </SubQuote>
-      </Card>
+            {/* 2 */}
+            <Card>
+              <Quote>
+                "As a working parent, I love being able to check my son's
+                progress anytime. The instant notifications are a game-changer."
+              </Quote>
+              <UserInfo>
+                <Avatar>J</Avatar>
+                <div>
+                  <Name>James Wilson</Name>
+                  <Role>Parent of 2</Role>
+                </div>
+              </UserInfo>
+              <Arrow />
+              <SubQuote>
+                💬 "Now I never miss an update on my child's school life.
+                Whether it's grades or homework, everything’s just a tap away!"
+              </SubQuote>
+            </Card>
 
-      {/* 2 */}
-      <Card>
-        <Quote>
-          "As a working parent, I love being able to check my son's
-          progress anytime. The instant notifications are a game-changer."
-        </Quote>
-        <UserInfo>
-          <Avatar>J</Avatar>
-          <div>
-            <Name>James Wilson</Name>
-            <Role>Parent of 2</Role>
-          </div>
-        </UserInfo>
-        <Arrow />
-        <SubQuote>
-          💬 "Now I never miss an update on my child's school life.
-          Whether it's grades or homework, everything’s just a tap away!"
-        </SubQuote>
-      </Card>
+            {/* 3 */}
+            <Card>
+              <Quote>
+                "Our school has seen a 40% increase in parent engagement since
+                implementing EduConnect. It's been incredible."
+              </Quote>
+              <UserInfo>
+                <Avatar>S</Avatar>
+                <div>
+                  <Name>Sarah Thompson</Name>
+                  <Role>School Principal</Role>
+                </div>
+              </UserInfo>
+              <Arrow />
+              <SubQuote>
+                💬 "EduConnect has helped us build a stronger school community.
+                Parents feel more involved, and teachers feel more supported."
+              </SubQuote>
+            </Card>
+          </CardsContainer>
+        </Wrapper>
+      </Section>
 
-      {/* 3 */}
-      <Card>
-        <Quote>
-          "Our school has seen a 40% increase in parent engagement since
-          implementing EduConnect. It's been incredible."
-        </Quote>
-        <UserInfo>
-          <Avatar>S</Avatar>
-          <div>
-            <Name>Sarah Thompson</Name>
-            <Role>School Principal</Role>
-          </div>
-        </UserInfo>
-        <Arrow />
-        <SubQuote>
-          💬 "EduConnect has helped us build a stronger school community.
-          Parents feel more involved, and teachers feel more supported."
-        </SubQuote>
-      </Card>
-
-    </CardsContainer>
-  </Wrapper>
-</Section>
-
-
-      
       <FlexContainer>
         <CTAContainer>
           <h2>Ready to Transform Communication?</h2>
