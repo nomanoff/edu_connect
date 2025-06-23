@@ -21,6 +21,9 @@ const Container = styled(Box)`
   padding: 64px 24px;
   max-width: 1340px;
   margin: 0 auto;
+  @media (max-width: 768px) {
+    padding: 40px 16px;
+  }
 `;
 
 const Title = styled(Typography)`
@@ -28,6 +31,10 @@ const Title = styled(Typography)`
   font-weight: bold;
   margin-bottom: 100px;
   color: #0b4c8a;
+  @media (max-width: 768px) {
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
 `;
 
 const TopCard = styled(Card)`
@@ -39,6 +46,11 @@ const TopCard = styled(Card)`
   text-align: center;
   position: relative;
   font-size: 20px;
+  @media (max-width: 768px) {
+    height: auto;
+    padding: 20px;
+    font-size: 18px;
+  }
 `;
 
 const BottomCard = styled(Card)`
@@ -49,6 +61,10 @@ const BottomCard = styled(Card)`
   margin-top: 24px;
   text-align: center;
   height: 200px;
+  @media (max-width: 768px) {
+    padding: 24px;
+    height: auto;
+  }
 `;
 
 const Line = styled(Box)`
@@ -56,6 +72,10 @@ const Line = styled(Box)`
   width: 2px;
   background-color: black;
   margin: 20px auto;
+
+  @media (max-width: 768px) {
+    height: 40px;
+  }
 `;
 
 const IconWrapper = styled(Avatar)`
@@ -64,11 +84,18 @@ const IconWrapper = styled(Avatar)`
   margin: 0 auto 16px;
   width: 56px;
   height: 56px;
+  @media (max-width: 768px) {
+    width: 48px;
+    height: 48px;
+  }
 `;
 
 const FeatureText = styled(Typography)`
   color: white;
   margin-top: 8px;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 const HowItWorks = () => {

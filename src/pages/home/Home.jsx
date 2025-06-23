@@ -31,11 +31,14 @@ const Header = styled.header`
 
 export const Container = styled.div`
   max-width: 1400px;
+  align-items: center;
   display: flex;
   gap: 691px;
 
   @media (max-width: 768px) {
-    gap: 0px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
   }
 `;
 
@@ -45,14 +48,16 @@ const NavContainer = styled.nav`
   gap: 20px;
 
   @media (max-width: 768px) {
-    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
   }
 `;
 
 const Title = styled.h1`
-  color: white;
   font-size: 25px;
   margin-right: auto;
+  color: white;
   display: flex;
   align-items: center;
   font-family: "Raleway", sans-serif;
@@ -61,6 +66,7 @@ const Title = styled.h1`
 
   @media (max-width: 768px) {
     font-size: 1.1rem;
+    margin-left: 100px;
   }
 `;
 
@@ -108,23 +114,41 @@ const HeroSection = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 50px;
+  
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+    margin-top: 100px;
+  }
 `;
 
 const HeroText = styled.div`
   text-align: left;
   max-width: 50%;
   color: #0b4c8a;
+  @media (max-width: 768px) {
+    max-width: 100%;
+    text-align: center;
+  }
 `;
 
 const HeroTitle = styled.h1`
   font-size: 40px;
   font-weight: bold;
   line-height: 1.2;
+  @media (max-width: 768px) {
+    font-size: 28px;
+  }
 `;
 
 const Description = styled.p`
   font-size: 18px;
   margin-bottom: 20px;
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 const ButtonGroup = styled.div`
@@ -177,9 +201,10 @@ const HeroImage = styled.img`
   border: none;
   object-fit: cover;
 
+
   @media (max-width: 768px) {
-    width: 150px;
-    height: 150px;
+    width: 250px;
+    height: auto;
   }
 `;
 
@@ -226,6 +251,10 @@ const BtnStart = styled.button`
     100% {
       width: 0ch;
     }
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+    font-size: 18px;
   }
 `;
 
@@ -285,11 +314,18 @@ const Home = () => {
         <HeroImage src={Logo} alt="Hero" />
       </HeroSection>
 
-      <Features />
-      <About />
-      <Footer />
+
+
+<Features />
+<About />
+<Footer />
+
+  
     </>
   );
 };
 
 export default Home;
+
+
+
