@@ -57,6 +57,7 @@ const NavContainer = styled.nav`
 const Title = styled.h1`
   font-size: 25px;
   margin-right: auto;
+  color: white;
   display: flex;
   align-items: center;
   font-family: "Raleway", sans-serif;
